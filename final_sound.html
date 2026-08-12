@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Final Sound Sort · การจำแนกเสียง ed / s</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#050b10;
+    --navy-panel:rgba(13,26,34,0.62);
+    --navy-panel-2:rgba(9,19,26,0.72);
+    --gold:#8fe9ff;
+    --gold-dark:#2fa9c4;
+    --cream-gold:#f2fcff;
+    --ink:#dceef2;
+    --ink-dim:#7d9aa3;
+    --ok:#7fe7c4;
+    --ok-bg:rgba(127,231,196,0.14);
+    --bad:#ff8a8a;
+    --bad-bg:rgba(255,138,138,0.14);
+    --line: rgba(143,233,255,0.28);
+    --line-soft: rgba(220,238,242,0.10);
+    --shadow: 0 10px 40px rgba(0,0,0,0.55);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(900px 500px at 20% -8%, rgba(143,233,255,0.16), transparent 55%),
+      radial-gradient(800px 460px at 100% 15%, rgba(47,169,196,0.14), transparent 55%),
+      radial-gradient(700px 500px at 50% 60%, rgba(30,90,105,0.20), transparent 60%),
+      linear-gradient(180deg, #061016, #050b10 60%, #030709);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    min-height:100vh;
+    -webkit-tap-highlight-color: transparent;
+    padding: max(28px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 60px max(16px, env(safe-area-inset-left));
+  }
+  .wrap{max-width:980px; margin:0 auto;}
+
+  /* ---- header / plaque ---- */
+  .plaque{
+    position:relative;
+    border:1px solid var(--line);
+    background: linear-gradient(160deg, var(--navy-panel), var(--navy-panel-2));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius:16px;
+    padding:34px 28px 26px;
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+    overflow:hidden;
+  }
+  .plaque::before{
+    content:"";
+    position:absolute;
+    top:-140px; right:-110px;
+    width:340px; height:340px;
+    border-radius:50%;
+    border:1.5px solid rgba(143,233,255,0.55);
+    box-shadow:
+      0 0 40px 6px rgba(143,233,255,0.20),
+      inset 0 0 50px 4px rgba(143,233,255,0.10);
+    pointer-events:none;
+  }
+  .plaque::after{
+    content:"";
+    position:absolute;
+    top:-90px; right:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    border:1px solid rgba(143,233,255,0.30);
+    pointer-events:none;
+  }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Oswald', sans-serif;
+    letter-spacing:.28em; text-transform:uppercase;
+    font-size:11px; color:var(--gold);
+    margin-bottom:12px;
+    position:relative; z-index:1;
+  }
+  .eyebrow .chev{
+    display:inline-block; width:0; height:0;
+    border-top:5px solid transparent; border-bottom:5px solid transparent;
+    border-left:8px solid var(--gold);
+  }
+  h1{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size: clamp(28px, 5vw, 40px);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin:0 0 10px;
+    color: var(--cream-gold);
+    text-shadow: 0 0 24px rgba(143,233,255,0.35);
+    position:relative; z-index:1;
+  }
+  .sub{
+    font-size:14.5px; color:var(--ink-dim); line-height:1.6;
+    max-width:640px;
+    position:relative; z-index:1;
+  }
+
+  /* ---- tabs ---- */
+  .tabs{
+    display:flex; gap:8px; margin:22px 0 18px;
+    position:relative; z-index:1;
+  }
+  .tab{
+    flex:1;
+    font-family:'Oswald', sans-serif;
+    letter-spacing:.06em;
+    font-size:14px;
+    padding:12px 14px;
+    text-align:center;
+    border-radius:10px;
+    border:1px solid var(--line-soft);
+    background: rgba(255,255,255,0.02);
+    color: var(--ink-dim);
+    cursor:pointer;
+    transition:.18s ease;
+    user-select:none;
+  }
+  .tab:hover{ border-color:var(--line); color:var(--ink); }
+  .tab.active{
+    background: linear-gradient(160deg, rgba(143,233,255,0.18), rgba(143,233,255,0.06));
+    border-color: var(--gold);
+    color: var(--cream-gold);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .tab small{ display:block; font-family:'Inter'; font-weight:400; letter-spacing:0; color:var(--ink-dim); margin-top:2px; font-size:11.5px;}
+
+  /* ---- panel ---- */
+  .panel{
+    border:1px solid var(--line);
+    background: linear-gradient(160deg, var(--navy-panel), rgba(6,14,19,0.75));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius:16px;
+    padding:22px;
+    box-shadow: var(--shadow);
+  }
+
+  .instructions{
+    font-size:14px; color:var(--ink-dim); margin:0 0 16px; line-height:1.6;
+  }
+  .instructions b{ color:var(--cream-gold); font-weight:600; }
+
+  /* ---- word bank ---- */
+  .bank-label{
+    font-family:'Oswald', sans-serif; letter-spacing:.14em; text-transform:uppercase;
+    font-size:11px; color:var(--gold); margin-bottom:10px; display:flex; align-items:center; gap:8px;
+  }
+  .bank-label .count{ color:var(--ink-dim); font-family:'Inter'; letter-spacing:0; text-transform:none; }
+  #wordbank{
+    display:flex; flex-wrap:wrap; gap:10px;
+    min-height:64px;
+    padding:14px;
+    border:1.5px dashed var(--line);
+    border-radius:12px;
+    background: rgba(255,255,255,0.015);
+    margin-bottom:22px;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  #wordbank.dragover{ border-color:var(--gold); background: rgba(143,233,255,0.07); }
+  #wordbank:empty::after{
+    content:"— all words sorted —";
+    color: var(--ink-dim); font-size:13px; font-style:italic; padding:6px;
+  }
+
+  /* ---- chips ---- */
+  .chip{
+    display:inline-flex; align-items:center; gap:7px;
+    padding:9px 12px 9px 14px;
+    background: linear-gradient(160deg, #1a2540, #131d33);
+    border:1px solid var(--line-soft);
+    border-left:3px solid var(--gold-dark);
+    border-radius:9px;
+    font-size:14.5px; color:var(--ink);
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: border-color .15s, transform .1s, box-shadow .15s, opacity .15s;
+  }
+  .chip:hover{ border-left-color:var(--gold); }
+  .chip.selected{
+    border-color:var(--gold); border-left-color:var(--gold);
+    box-shadow: 0 0 0 2px rgba(143,233,255,0.28), 0 2px 8px rgba(0,0,0,0.3);
+    transform: translateY(-1px);
+  }
+  .chip.dragging-ghost{
+    position:fixed; z-index:999; pointer-events:none;
+    opacity:0.92; box-shadow: 0 14px 34px rgba(0,0,0,0.55);
+    transform: scale(1.04) rotate(-1.2deg);
+  }
+  .chip.dim{ opacity:0.28; }
+  .chip.correct{ border-color:var(--ok); border-left-color:var(--ok); background: linear-gradient(160deg, rgba(127,231,196,0.16), #0d1b1f); }
+  .chip.incorrect{ border-color:var(--bad); border-left-color:var(--bad); background: linear-gradient(160deg, rgba(255,138,138,0.16), #1b1414); }
+  .chip .say{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; border-radius:50%;
+    color:var(--gold); font-size:11px; opacity:.75;
+    border:1px solid var(--line-soft);
+  }
+  .chip .say:hover{ opacity:1; border-color:var(--gold); }
+
+  /* ---- columns ---- */
+  .columns{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:14px;
+  }
+  .column{
+    border:1px solid var(--line);
+    border-radius:12px;
+    background: rgba(255,255,255,0.015);
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .column-head{
+    padding:12px 14px;
+    background: linear-gradient(160deg, rgba(143,233,255,0.16), rgba(143,233,255,0.04));
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .column-head .ipa{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600;
+    font-size:20px; color:var(--cream-gold);
+  }
+  .column-head .n{
+    font-family:'Oswald', sans-serif; font-size:11px; color:var(--ink-dim);
+    background:rgba(0,0,0,0.25); padding:3px 8px; border-radius:20px;
+    border:1px solid var(--line-soft);
+  }
+  .dropzone{
+    flex:1; min-height:220px;
+    padding:12px;
+    display:flex; flex-direction:column; gap:8px; align-items:flex-start;
+    transition: background .15s ease;
+  }
+  .dropzone.dragover{ background: rgba(143,233,255,0.08); }
+  .dropzone .chip{ width:100%; justify-content:flex-start; }
+
+  /* ---- footer controls ---- */
+  .controls{
+    display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:22px;
+    padding-top:18px; border-top:1px solid var(--line-soft);
+  }
+  .btn{
+    font-family:'Oswald', sans-serif; letter-spacing:.06em; font-size:13.5px;
+    padding:11px 20px; border-radius:9px; cursor:pointer; border:1px solid transparent;
+    transition:.15s ease;
+  }
+  .btn-primary{
+    background: linear-gradient(160deg, var(--gold), var(--gold-dark));
+    color:#03141a; font-weight:600;
+    box-shadow: 0 4px 18px rgba(143,233,255,0.28);
+  }
+  .btn-primary:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .btn-ghost{
+    background:transparent; border-color:var(--line); color:var(--ink-dim);
+  }
+  .btn-ghost:hover{ color:var(--ink); border-color:var(--gold); }
+  .score{
+    margin-left:auto;
+    font-family:'Oswald', sans-serif; font-size:14px; letter-spacing:.03em;
+    color:var(--cream-gold);
+    background: rgba(0,0,0,0.25);
+    border:1px solid var(--line);
+    padding:9px 16px; border-radius:20px;
+    min-width:150px; text-align:center;
+  }
+  .score .num{ color:var(--gold); font-weight:700; }
+
+  @media (max-width: 900px){
+    .columns{ grid-template-columns: repeat(2, 1fr); }
+    .plaque::before{ width:220px; height:220px; top:-90px; right:-70px; }
+    .plaque::after{ width:140px; height:140px; top:-55px; right:-40px; }
+  }
+  @media (max-width: 640px){
+    .plaque{ padding:26px 20px 22px; }
+    .plaque::before{ width:160px; height:160px; top:-70px; right:-60px; }
+    .plaque::after{ display:none; }
+    .columns{ grid-template-columns: 1fr; }
+    .score{ margin-left:0; width:100%; }
+    .controls{ flex-direction:column; align-items:stretch; }
+    .btn{ text-align:center; }
+    .tabs{ flex-direction:column; }
+  }
+  @media (hover: none) and (pointer: coarse){
+    .chip{ padding:11px 14px 11px 16px; font-size:15px; }
+    .chip .say{ width:22px; height:22px; font-size:12px; }
+    .btn{ padding:13px 20px; }
+    .tab{ padding:14px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="plaque">
+    <div class="eyebrow"><span class="chev"></span> COMMUNICATIVE ENGLISH PHONOLOGY</div>
+    <h1>Final Sound Sort</h1>
+    <div class="sub">แบบฝึกหัดจำแนกเสียงลงท้าย — แตะหรือลากคำแต่ละคำไปวางในช่องเสียงที่ถูกต้อง แล้วกด <b>ตรวจคำตอบ</b> เพื่อดูผล</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-set="ed">Final 'ed'<small>เสียง -ed ท้ายคำ</small></div>
+    <div class="tab" data-set="s">Final 's'<small>เสียง -s / -es ท้ายคำ</small></div>
+  </div>
+
+  <div class="panel">
+    <p class="instructions" id="instructions"></p>
+
+    <div class="bank-label">คลังคำศัพท์ <span class="count" id="bankCount"></span></div>
+    <div id="wordbank"></div>
+
+    <div class="columns" id="columns"></div>
+
+    <div class="controls">
+      <button class="btn btn-primary" id="checkBtn">ตรวจคำตอบ</button>
+      <button class="btn btn-ghost" id="resetBtn">เริ่มใหม่</button>
+      <div class="score" id="score">ยังไม่ตรวจ</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DATA = {
+  ed: {
+    columns: [
+      {cat:'t', label:'/t/'},
+      {cat:'d', label:'/d/'},
+      {cat:'id', label:'/ɪd/'}
+    ],
+    instructions: 'จัดคำคุณศัพท์และกริยาช่อง 2 (past tense) ต่อไปนี้ลงในคอลัมน์ตามเสียง <b>-ed</b> ที่ออกเสียงจริง',
+    words: [
+      {w:'opened', cat:'d'}, {w:'danced', cat:'t'}, {w:'looked', cat:'t'}, {w:'covered', cat:'d'},
+      {w:'boasted', cat:'id'}, {w:'laughed', cat:'t'}, {w:'pointed', cat:'id'}, {w:'listened', cat:'d'},
+      {w:'stopped', cat:'t'}, {w:'screamed', cat:'d'}, {w:'wanted', cat:'id'}, {w:'shouted', cat:'id'},
+      {w:'played', cat:'d'}, {w:'asked', cat:'t'}, {w:'delighted', cat:'id'}, {w:'amazed', cat:'d'},
+      {w:'naked', cat:'id'}, {w:'used', cat:'d'}, {w:'wasted', cat:'id'}, {w:'pleased', cat:'d'},
+      {w:'packed', cat:'t'}, {w:'reiterated', cat:'id'}, {w:'drained', cat:'d'}, {w:'needed', cat:'id'}
+    ]
+  },
+  s: {
+    columns: [
+      {cat:'s', label:'/s/'},
+      {cat:'z', label:'/z/'},
+      {cat:'iz', label:'/ɪz/'}
+    ],
+    instructions: 'จัดคำนามพหูพจน์และกริยาเติม <b>-s / -es</b> ต่อไปนี้ลงในคอลัมน์ตามเสียงที่ออกเสียงจริง',
+    words: [
+      {w:'cheques', cat:'s'}, {w:'girls', cat:'z'}, {w:'places', cat:'iz'}, {w:'boys', cat:'z'},
+      {w:'lives', cat:'z'}, {w:'hours', cat:'z'}, {w:'earns', cat:'z'}, {w:'products', cat:'s'},
+      {w:'damages', cat:'iz'}, {w:'loves', cat:'z'}, {w:'minutes', cat:'s'}, {w:'closes', cat:'iz'},
+      {w:'graduates', cat:'s'}, {w:'lessons', cat:'z'}, {w:'wants', cat:'s'}, {w:'messages', cat:'iz'},
+      {w:'hates', cat:'s'}, {w:'cooks', cat:'s'}, {w:'things', cat:'z'}, {w:'roses', cat:'iz'},
+      {w:'faces', cat:'iz'}, {w:'paints', cat:'s'}, {w:'phrases', cat:'iz'}, {w:'sandwiches', cat:'iz'}
+    ]
+  }
+};
+
+let currentSet = 'ed';
+let selectedChip = null;
+
+const wordbankEl = document.getElementById('wordbank');
+const columnsEl = document.getElementById('columns');
+const instructionsEl = document.getElementById('instructions');
+const bankCountEl = document.getElementById('bankCount');
+const scoreEl = document.getElementById('score');
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function speak(word){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+function makeChip(item){
+  const chip = document.createElement('div');
+  chip.className = 'chip';
+  chip.dataset.cat = item.cat;
+  chip.dataset.word = item.w;
+
+  const label = document.createElement('span');
+  label.textContent = item.w;
+  chip.appendChild(label);
+
+  const say = document.createElement('span');
+  say.className = 'say';
+  say.textContent = '\u266B';
+  say.title = 'ฟังเสียง';
+  say.addEventListener('click', (e) => { e.stopPropagation(); speak(item.w); });
+  chip.appendChild(say);
+
+  attachPointer(chip);
+  return chip;
+}
+
+function attachPointer(chip){
+  let startX, startY, isDragging, ghost, pointerId;
+
+  chip.addEventListener('pointerdown', (e) => {
+    if(e.target.classList.contains('say')) return;
+    startX = e.clientX; startY = e.clientY;
+    isDragging = false;
+    pointerId = e.pointerId;
+    chip.setPointerCapture(pointerId);
+  });
+
+  chip.addEventListener('pointermove', (e) => {
+    if(pointerId === undefined || e.pointerId !== pointerId) return;
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    if(!isDragging && Math.hypot(dx,dy) > 8){
+      isDragging = true;
+      clearSelection();
+      ghost = chip.cloneNode(true);
+      ghost.classList.add('dragging-ghost');
+      ghost.style.width = chip.offsetWidth + 'px';
+      document.body.appendChild(ghost);
+      chip.classList.add('dim');
+    }
+    if(isDragging && ghost){
+      ghost.style.left = (e.clientX - chip.offsetWidth/2) + 'px';
+      ghost.style.top = (e.clientY - chip.offsetHeight/2) + 'px';
+      document.querySelectorAll('.dropzone, #wordbank').forEach(z => z.classList.remove('dragover'));
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      const zone = under && under.closest('.dropzone, #wordbank');
+      if(zone) zone.classList.add('dragover');
+    }
+  });
+
+  chip.addEventListener('pointerup', (e) => {
+    if(pointerId === undefined || e.pointerId !== pointerId) return;
+    chip.releasePointerCapture(pointerId);
+    document.querySelectorAll('.dropzone, #wordbank').forEach(z => z.classList.remove('dragover'));
+
+    if(isDragging){
+      chip.classList.remove('dim');
+      if(ghost){ ghost.remove(); ghost = null; }
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      const zone = under && under.closest('.dropzone, #wordbank');
+      if(zone){
+        zone.appendChild(chip);
+        clearResultStyling(chip);
+      }
+    } else {
+      handleTap(chip);
+    }
+    isDragging = false;
+    pointerId = undefined;
+  });
+}
+
+function clearResultStyling(chip){
+  chip.classList.remove('correct','incorrect');
+}
+
+function clearSelection(){
+  if(selectedChip){ selectedChip.classList.remove('selected'); selectedChip = null; }
+}
+
+function handleTap(chip){
+  const parentIsBank = chip.parentElement.id === 'wordbank';
+  if(!parentIsBank){
+    // tapping a placed chip sends it back to the bank
+    wordbankEl.appendChild(chip);
+    clearResultStyling(chip);
+    clearSelection();
+    updateCounts();
+    return;
+  }
+  if(selectedChip === chip){
+    clearSelection();
+    return;
+  }
+  clearSelection();
+  selectedChip = chip;
+  chip.classList.add('selected');
+}
+
+function buildBoard(){
+  const set = DATA[currentSet];
+  instructionsEl.innerHTML = set.instructions;
+  wordbankEl.innerHTML = '';
+  columnsEl.innerHTML = '';
+  scoreEl.textContent = 'ยังไม่ตรวจ';
+  clearSelection();
+
+  set.columns.forEach(col => {
+    const column = document.createElement('div');
+    column.className = 'column';
+
+    const head = document.createElement('div');
+    head.className = 'column-head';
+    head.innerHTML = `<span class="ipa">${col.label}</span><span class="n">0</span>`;
+    column.appendChild(head);
+
+    const zone = document.createElement('div');
+    zone.className = 'dropzone';
+    zone.dataset.cat = col.cat;
+    zone.addEventListener('click', (e) => {
+      if(e.target !== zone) return;
+      if(selectedChip){
+        zone.appendChild(selectedChip);
+        clearResultStyling(selectedChip);
+        clearSelection();
+        updateCounts();
+      }
+    });
+    column.appendChild(zone);
+    columnsEl.appendChild(column);
+  });
+
+  wordbankEl.addEventListener('click', (e) => {
+    if(e.target !== wordbankEl) return;
+    clearSelection();
+  });
+
+  shuffle(set.words).forEach(item => {
+    wordbankEl.appendChild(makeChip(item));
+  });
+
+  updateCounts();
+}
+
+function updateCounts(){
+  bankCountEl.textContent = `(${wordbankEl.children.length} เหลือในคลัง)`;
+  document.querySelectorAll('.column').forEach(col => {
+    const n = col.querySelector('.dropzone').children.length;
+    col.querySelector('.n').textContent = n;
+  });
+}
+
+document.getElementById('checkBtn').addEventListener('click', () => {
+  let correct = 0, total = 0;
+  document.querySelectorAll('.dropzone').forEach(zone => {
+    const cat = zone.dataset.cat;
+    Array.from(zone.children).forEach(chip => {
+      total++;
+      if(chip.dataset.cat === cat){
+        chip.classList.remove('incorrect'); chip.classList.add('correct');
+        correct++;
+      } else {
+        chip.classList.remove('correct'); chip.classList.add('incorrect');
+      }
+    });
+  });
+  const allWords = DATA[currentSet].words.length;
+  const unplaced = allWords - total;
+  scoreEl.innerHTML = `<span class="num">${correct}</span> / ${allWords} ถูกต้อง${unplaced ? ` · เหลือ ${unplaced} คำ` : ''}`;
+});
+
+document.getElementById('resetBtn').addEventListener('click', buildBoard);
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentSet = tab.dataset.set;
+    buildBoard();
+  });
+});
+
+buildBoard();
+</script>
+</body>
+</html>
