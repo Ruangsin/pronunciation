@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>The Journey · Final Sound Maze</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#0a0716;
+    --navy-panel:rgba(50,35,90,0.32);
+    --navy-panel-2:rgba(30,18,55,0.42);
+    --gold:#4fd8ff;
+    --gold-dark:#c94bef;
+    --cream-gold:#ffffff;
+    --ink:#e8e2f7;
+    --ink-dim:#a99cc9;
+    --ok:#6ee7b7;
+    --ok-bg:rgba(110,231,183,0.14);
+    --bad:#ff8ac2;
+    --bad-bg:rgba(255,138,194,0.14);
+    --line: rgba(200,160,255,0.30);
+    --line-soft: rgba(255,255,255,0.12);
+    --shadow: 0 20px 50px rgba(5,0,20,0.6);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(60% 45% at 8% 6%, rgba(79,216,255,0.20), transparent 60%),
+      radial-gradient(65% 50% at 100% 100%, rgba(201,75,239,0.24), transparent 60%),
+      radial-gradient(90% 60% at 50% 40%, rgba(60,30,95,0.35), transparent 70%),
+      linear-gradient(160deg, #0d0a22, #0a0716 55%, #060412);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    min-height:100vh;
+    -webkit-tap-highlight-color: transparent;
+    position:relative;
+    overflow-x:hidden;
+    padding: max(28px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 60px max(16px, env(safe-area-inset-left));
+  }
+  .beam{ position:fixed; z-index:0; pointer-events:none; width:5px; height:620px; border-radius:6px; filter: blur(2px); }
+  .beam-cyan{ top:-80px; left:-40px; transform:rotate(35deg);
+    background: linear-gradient(180deg, rgba(79,216,255,0), #4fd8ff 45%, rgba(79,216,255,0));
+    box-shadow: 0 0 40px 10px rgba(79,216,255,0.55), 0 0 90px 30px rgba(79,216,255,0.25); }
+  .beam-magenta{ bottom:-80px; right:-40px; transform:rotate(35deg);
+    background: linear-gradient(180deg, rgba(233,80,220,0), #e950dc 55%, rgba(233,80,220,0));
+    box-shadow: 0 0 40px 10px rgba(233,80,220,0.55), 0 0 90px 30px rgba(233,80,220,0.25); }
+  .wrap{max-width:640px; margin:0 auto; position:relative; z-index:1;}
+
+  .plaque{
+    position:relative; border:1px solid var(--line);
+    background: linear-gradient(160deg, var(--navy-panel), var(--navy-panel-2));
+    backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+    border-radius:28px; padding:30px 26px 24px;
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.08);
+    overflow:hidden; margin-bottom:16px;
+  }
+  .eyebrow{ display:flex; align-items:center; gap:10px; font-family:'Oswald', sans-serif; letter-spacing:.26em; text-transform:uppercase; font-size:11px; color:var(--gold); margin-bottom:10px; }
+  .eyebrow .chev{ display:inline-block; width:0;height:0; border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:8px solid var(--gold); }
+  h1{ font-family:'Oswald', sans-serif; font-weight:700; font-size: clamp(24px, 4.6vw, 34px); letter-spacing:.08em; text-transform:uppercase; margin:0 0 8px; color: var(--cream-gold); text-shadow: 0 0 30px rgba(255,255,255,0.25); }
+  .sub{ font-size:14px; color:var(--ink-dim); line-height:1.65; }
+  .sub b{ color:var(--cream-gold); font-weight:600; }
+
+  .panel{
+    border:1px solid var(--line);
+    background: linear-gradient(160deg, var(--navy-panel), rgba(20,12,40,0.55));
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border-radius:28px; padding:22px; box-shadow: var(--shadow);
+  }
+
+  .stat-row{ display:flex; gap:10px; margin-bottom:18px; }
+  .stat{
+    flex:1; text-align:center; padding:10px 8px; border-radius:16px;
+    border:1px solid var(--line-soft); background:rgba(255,255,255,0.03);
+  }
+  .stat .n{ font-family:'Oswald', sans-serif; font-weight:700; font-size:20px; color:var(--cream-gold); }
+  .stat .l{ font-family:'Oswald', sans-serif; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); margin-top:2px; }
+  .hangman-stat{ display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .hangman-svg{ width:44px; height:44px; }
+  .hm-part{ stroke:var(--ink-dim); stroke-width:2.4; fill:none; stroke-linecap:round; opacity:.18; transition:opacity .2s ease, stroke .2s ease; }
+  .hm-part.hm-head{ fill:none; }
+  .hm-part.hm-base, .hm-part.hm-pole, .hm-part.hm-beam, .hm-part.hm-rope{ opacity:.5; }
+  .hm-part.revealed{ opacity:1; stroke:var(--bad); }
+
+  .arrow-row{
+    display:grid; grid-template-columns: repeat(5, 1fr);
+  }
+  .arrow-marker{
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-family:'Oswald', sans-serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .arrow-start{ color:var(--gold); margin-bottom:8px; grid-column:1; }
+  .arrow-finish{ color:var(--gold-dark); margin-top:10px; grid-column:5; }
+  .arrow-shape{ width:0; height:0; }
+  .arrow-start .arrow-shape{ border-left:10px solid transparent; border-right:10px solid transparent; border-top:14px solid var(--gold); }
+  .arrow-finish .arrow-shape{ border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:14px solid var(--gold-dark); }
+
+  .grid-wrap{ position:relative; }
+  .path-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:1; }
+  .grid{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns: repeat(5, 1fr); gap:6px;
+  }
+  .tile{
+    font-family:'Fraunces', serif; font-size:13.5px; text-align:center;
+    padding:10px 4px; border-radius:10px; border:1px solid var(--line-soft);
+    background:rgba(255,255,255,0.03); color:var(--ink);
+    cursor:pointer; user-select:none; transition:.15s ease;
+    display:flex; align-items:center; justify-content:center; min-height:44px;
+    line-height:1.2;
+  }
+  .tile:hover{ border-color:var(--line); background:rgba(79,216,255,0.06); }
+  .tile.locked{ opacity:.28; cursor:default; pointer-events:none; }
+  .tile.active{
+    border-color:var(--gold); color:#0a0716; font-weight:700;
+    background: linear-gradient(100deg, var(--gold), var(--gold-dark));
+    box-shadow: 0 0 0 3px rgba(79,216,255,0.20), 0 6px 18px rgba(201,75,239,0.30);
+  }
+  .tile.path{
+    border-color: var(--ok); background: var(--ok-bg); color:var(--ok);
+  }
+  .tile.wrong{
+    animation: shake .3s ease;
+    border-color: var(--bad) !important; background: var(--bad-bg) !important; color:var(--bad) !important;
+  }
+  .tile.unreachable{
+    animation: shake .25s ease;
+    border-color: var(--line) !important;
+  }
+  @keyframes shake{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-4px); }
+    75%{ transform:translateX(4px); }
+  }
+
+  .footer-row{ display:flex; gap:10px; align-items:center; margin-top:20px; padding-top:18px; border-top:1px solid var(--line-soft); }
+  .footer-spacer{ flex:1; }
+  .btn{
+    font-family:'Oswald', sans-serif; letter-spacing:.06em; font-size:14px;
+    padding:13px 22px; border-radius:999px; cursor:pointer; border:1px solid transparent;
+    transition:.15s ease;
+  }
+  .btn-primary{
+    background: linear-gradient(100deg, var(--gold), var(--gold-dark));
+    color:#0a0716; font-weight:700; box-shadow: 0 6px 22px rgba(201,75,239,0.30), 0 4px 16px rgba(79,216,255,0.22);
+  }
+  .btn-primary:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .btn-ghost{ background:rgba(255,255,255,0.04); border-color:var(--line); color:var(--ink-dim); }
+  .btn-ghost:hover{ color:var(--ink); border-color:var(--gold); }
+
+  .win-overlay{
+    position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center;
+    background: rgba(5,2,15,0.72); backdrop-filter: blur(6px);
+    padding:20px;
+  }
+  .win-card{
+    max-width:380px; width:100%; text-align:center;
+    border:1px solid var(--line); border-radius:28px; padding:34px 28px;
+    background: linear-gradient(160deg, var(--navy-panel-2), rgba(10,5,20,0.9));
+    box-shadow: var(--shadow);
+  }
+  .win-card h2{ font-family:'Oswald', sans-serif; text-transform:uppercase; letter-spacing:.1em; color:var(--cream-gold); font-size:26px; margin:0 0 6px; text-shadow:0 0 30px rgba(201,75,239,0.4); }
+  .win-card p{ color:var(--ink-dim); font-size:14px; margin:0 0 20px; }
+  .win-stats{ display:flex; gap:10px; margin-bottom:22px; }
+
+  .hidden{ display:none !important; }
+
+  @media (max-width:480px){
+    .plaque{ padding:24px 18px 20px; }
+    .panel{ padding:16px; border-radius:22px; }
+    .tile{ font-size:11.5px; padding:8px 2px; min-height:38px; border-radius:8px; }
+    .grid{ gap:4px; }
+    .beam{ height:420px; }
+  }
+  @media (hover:none) and (pointer:coarse){
+    .tile{ min-height:46px; }
+    .btn{ padding:14px 22px; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+<div class="beam beam-cyan"></div>
+<div class="beam beam-magenta"></div>
+<div class="wrap">
+
+  <div class="plaque">
+    <div class="eyebrow"><span class="chev"></span> ENGLISH PRONUNCIATION · FINAL S SOUND</div>
+    <h1>The Journey</h1>
+    <div class="sub">เริ่มจาก <b>helps</b> แล้วแตะคำที่อยู่<b>ติดกัน</b> (แนวตั้ง แนวนอน หรือแนวทแยง) ที่มีเสียงลงท้ายเหมือนคำปัจจุบัน เดินต่อเนื่องไปเรื่อยๆ จนถึง <b>hopes</b> ที่จุด Finish — แตะคำที่เดินผ่านมาแล้วเพื่อย้อนกลับได้ แต่ถ้าแตะคำที่เสียงไม่ตรง จะเดินหน้าค่างแขวนคอ ผิดครบ 6 ครั้งต้องเริ่มใหม่</div>
+  </div>
+
+  <div class="panel">
+    <div class="stat-row">
+      <div class="stat"><div class="n" id="statTime">0:00</div><div class="l">เวลา</div></div>
+      <div class="stat"><div class="n" id="statMoves">0</div><div class="l">ก้าวที่เดินถูก</div></div>
+      <div class="stat hangman-stat">
+        <svg id="hangmanSvg" viewBox="0 0 60 60" class="hangman-svg">
+          <line x1="6" y1="56" x2="40" y2="56" class="hm-part hm-base" />
+          <line x1="14" y1="56" x2="14" y2="6" class="hm-part hm-pole" />
+          <line x1="14" y1="6" x2="38" y2="6" class="hm-part hm-beam" />
+          <line x1="38" y1="6" x2="38" y2="14" class="hm-part hm-rope" />
+          <circle cx="38" cy="20" r="6" class="hm-part hm-head" />
+          <line x1="38" y1="26" x2="38" y2="42" class="hm-part hm-body" />
+          <line x1="38" y1="30" x2="30" y2="24" class="hm-part hm-arm1" />
+          <line x1="38" y1="30" x2="46" y2="24" class="hm-part hm-arm2" />
+          <line x1="38" y1="42" x2="31" y2="52" class="hm-part hm-leg1" />
+          <line x1="38" y1="42" x2="45" y2="52" class="hm-part hm-leg2" />
+        </svg>
+        <div class="l">พลาด <span id="statMistakes">0</span>/6</div>
+      </div>
+    </div>
+
+    <div class="arrow-row">
+      <div class="arrow-marker arrow-start"><span>Start</span><span class="arrow-shape"></span></div>
+    </div>
+
+    <div class="grid-wrap" id="gridWrap">
+      <svg id="pathSvg" class="path-svg"></svg>
+      <div class="grid" id="grid"></div>
+    </div>
+
+    <div class="arrow-row">
+      <div class="arrow-marker arrow-finish"><span class="arrow-shape"></span><span>Finish</span></div>
+    </div>
+
+    <div class="footer-row">
+      <button class="btn btn-ghost" id="restartBtn">เริ่มใหม่</button>
+      <div class="footer-spacer"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="win-overlay hidden" id="loseOverlay">
+  <div class="win-card">
+    <h2>ยังไปไม่ถึงปลายทาง</h2>
+    <p>เดินผิดครบ 6 ครั้งแล้ว ลองใหม่อีกครั้งนะ</p>
+    <button class="btn btn-primary" id="tryAgainBtn" style="width:100%;">ลองใหม่</button>
+  </div>
+</div>
+
+<div class="win-overlay hidden" id="winOverlay">
+  <div class="win-card">
+    <h2>ถึง Finish แล้ว!</h2>
+    <p>เดินทางครบเส้นทางเสียง /s/ จาก helps ถึง hopes สำเร็จ</p>
+    <div class="win-stats">
+      <div class="stat"><div class="n" id="winTime">0:00</div><div class="l">เวลา</div></div>
+      <div class="stat"><div class="n" id="winMistakes">0</div><div class="l">พลาด</div></div>
+    </div>
+    <button class="btn btn-primary" id="playAgainBtn" style="width:100%;">เล่นอีกครั้ง</button>
+  </div>
+</div>
+
+<script>
+/* Grid data follows the printed "The Journey" worksheet, read row by row (5 columns).
+   sound: S = /s/, Z = /z/, IZ = /ɪz/, X = other (not part of the -s/-es family; a trap). */
+const WORDS = [
+  {w:'helps',sound:'S'},{w:'does',sound:'Z'},{w:'watches',sound:'IZ'},{w:'sees',sound:'Z'},{w:'takes',sound:'S'},
+  {w:'laughs',sound:'S'},{w:'goes',sound:'Z'},{w:'wants',sound:'S'},{w:'bees',sound:'Z'},{w:'keeps',sound:'S'},
+  {w:'coughs',sound:'S'},{w:'learns',sound:'Z'},{w:'throws',sound:'Z'},{w:'catches',sound:'IZ'},{w:'writes',sound:'S'},
+  {w:'fights',sound:'S'},{w:'takes',sound:'S'},{w:'thinks',sound:'S'},{w:'wishes',sound:'IZ'},{w:'hopes',sound:'S'},
+  {w:'closes',sound:'IZ'},{w:'saves',sound:'Z'},{w:'starts',sound:'S'},{w:'needs',sound:'Z'},{w:'washes',sound:'IZ'},
+  {w:'uses',sound:'IZ'},{w:'pulls',sound:'Z'},{w:'wants',sound:'S'},{w:'cars',sound:'Z'},{w:'likes',sound:'S'},
+  {w:'sings',sound:'Z'},{w:'hears',sound:'Z'},{w:'helps',sound:'S'},{w:'shaves',sound:'Z'},{w:'seems',sound:'Z'},
+  {w:'books',sound:'S'},{w:'picks',sound:'S'},{w:'starts',sound:'S'},{w:'sneeze',sound:'Z'},{w:'laughs',sound:'S'},
+  {w:'keeps',sound:'S'},{w:'plays',sound:'Z'},{w:'runs',sound:'Z'},{w:'believes',sound:'Z'},{w:'wants',sound:'S'},
+  {w:'jumps',sound:'S'},{w:'kicks',sound:'S'},{w:'cooks',sound:'S'},{w:'needs',sound:'Z'},{w:'thinks',sound:'S'},
+  {w:'takes',sound:'S'},{w:'likes',sound:'S'},{w:'starts',sound:'S'},{w:'bikes',sound:'S'},{w:'hopes',sound:'S'}
+];
+const FINISH_INDEX = WORDS.length - 1;
+const COLS = 5;
+const MAX_MISTAKES = 6;
+const HANGMAN_ORDER = ['hm-head','hm-body','hm-arm1','hm-arm2','hm-leg1','hm-leg2'];
+
+let current = -1; // -1 = not started
+let path = [];    // indices of tiles visited, in order
+let moves = 0;
+let mistakes = 0;
+let timerInterval = null;
+let elapsed = 0;
+let finished = false;
+let gameOver = false;
+
+const gridEl = document.getElementById('grid');
+const gridWrap = document.getElementById('gridWrap');
+const svg = document.getElementById('pathSvg');
+const tiles = [];
+
+WORDS.forEach((item, i) => {
+  const t = document.createElement('div');
+  t.className = 'tile';
+  t.textContent = item.w;
+  t.addEventListener('click', () => handleTileClick(i));
+  gridEl.appendChild(t);
+  tiles.push(t);
+});
+tiles[0].classList.add('active');
+
+function isAdjacent(a, b){
+  const ra = Math.floor(a/COLS), ca = a%COLS;
+  const rb = Math.floor(b/COLS), cb = b%COLS;
+  return Math.abs(ra-rb) <= 1 && Math.abs(ca-cb) <= 1 && a !== b;
+}
+
+function startTimerIfNeeded(){
+  if(timerInterval) return;
+  timerInterval = setInterval(() => {
+    elapsed++;
+    const m = Math.floor(elapsed/60), s = elapsed%60;
+    document.getElementById('statTime').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  }, 1000);
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function tileCenter(i){
+  const tRect = tiles[i].getBoundingClientRect();
+  const wRect = gridWrap.getBoundingClientRect();
+  return {
+    x: tRect.left - wRect.left + tRect.width/2,
+    y: tRect.top - wRect.top + tRect.height/2
+  };
+}
+
+function redrawPath(){
+  svg.innerHTML = '';
+  if(path.length < 2) return;
+  const wRect = gridWrap.getBoundingClientRect();
+  svg.setAttribute('viewBox', `0 0 ${wRect.width} ${wRect.height}`);
+  let d = '';
+  path.forEach((idx, k) => {
+    const p = tileCenter(idx);
+    d += (k === 0 ? `M ${p.x} ${p.y}` : ` L ${p.x} ${p.y}`);
+  });
+  const glow = document.createElementNS('http://www.w3.org/2000/svg','path');
+  glow.setAttribute('d', d);
+  glow.setAttribute('fill','none');
+  glow.setAttribute('stroke','url(#pathGrad)');
+  glow.setAttribute('stroke-width','3');
+  glow.setAttribute('stroke-linecap','round');
+  glow.setAttribute('stroke-linejoin','round');
+  glow.style.filter = 'drop-shadow(0 0 6px rgba(79,216,255,0.7)) drop-shadow(0 0 10px rgba(201,75,239,0.5))';
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  const grad = document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+  grad.setAttribute('id','pathGrad');
+  grad.setAttribute('x1','0%'); grad.setAttribute('y1','0%'); grad.setAttribute('x2','100%'); grad.setAttribute('y2','100%');
+  const stop1 = document.createElementNS('http://www.w3.org/2000/svg','stop');
+  stop1.setAttribute('offset','0%'); stop1.setAttribute('stop-color','#4fd8ff');
+  const stop2 = document.createElementNS('http://www.w3.org/2000/svg','stop');
+  stop2.setAttribute('offset','100%'); stop2.setAttribute('stop-color','#c94bef');
+  grad.appendChild(stop1); grad.appendChild(stop2);
+  defs.appendChild(grad);
+
+  svg.appendChild(defs);
+  svg.appendChild(glow);
+}
+
+function revealHangmanPart(){
+  const partClass = HANGMAN_ORDER[mistakes-1];
+  if(!partClass) return;
+  const el = document.querySelector(`.${partClass}`);
+  if(el) el.classList.add('revealed');
+}
+
+function handleTileClick(i){
+  if(finished || gameOver) return;
+
+  if(current === -1){
+    if(i === 0){
+      current = 0;
+      path = [0];
+      startTimerIfNeeded();
+      redrawPath();
+    }
+    return;
+  }
+  if(i === current) return;
+
+  // click an earlier tile already in the path -> rewind to it (free backtrack)
+  const existingIdx = path.indexOf(i);
+  if(existingIdx !== -1){
+    for(let k = existingIdx+1; k < path.length; k++){
+      tiles[path[k]].className = 'tile';
+    }
+    path = path.slice(0, existingIdx+1);
+    tiles[current].classList.remove('active');
+    tiles[i].classList.add('active');
+    current = i;
+    moves = path.length - 1;
+    document.getElementById('statMoves').textContent = moves;
+    redrawPath();
+    return;
+  }
+
+  if(!isAdjacent(current, i)){
+    tiles[i].classList.add('unreachable');
+    setTimeout(() => tiles[i].classList.remove('unreachable'), 250);
+    return;
+  }
+
+  if(WORDS[i].sound === WORDS[current].sound){
+    tiles[current].classList.remove('active');
+    tiles[current].classList.add('path');
+    tiles[i].classList.add('active');
+    current = i;
+    path.push(i);
+    moves++;
+    document.getElementById('statMoves').textContent = moves;
+    redrawPath();
+
+    if(i === FINISH_INDEX){
+      finished = true;
+      stopTimer();
+      tiles[i].classList.remove('active');
+      tiles[i].classList.add('path');
+      showWin();
+    }
+  } else {
+    mistakes++;
+    document.getElementById('statMistakes').textContent = mistakes;
+    revealHangmanPart();
+    tiles[i].classList.add('wrong');
+    setTimeout(() => tiles[i].classList.remove('wrong'), 350);
+
+    if(mistakes >= MAX_MISTAKES){
+      gameOver = true;
+      stopTimer();
+      document.getElementById('loseOverlay').classList.remove('hidden');
+    }
+  }
+}
+
+window.addEventListener('resize', redrawPath);
+
+function showWin(){
+  document.getElementById('winTime').textContent = document.getElementById('statTime').textContent;
+  document.getElementById('winMistakes').textContent = mistakes;
+  document.getElementById('winOverlay').classList.remove('hidden');
+}
+
+function resetGame(){
+  current = -1; path = []; moves = 0; mistakes = 0; elapsed = 0; finished = false; gameOver = false;
+  stopTimer();
+  document.getElementById('statTime').textContent = '0:00';
+  document.getElementById('statMoves').textContent = '0';
+  document.getElementById('statMistakes').textContent = '0';
+  document.querySelectorAll('.hm-part.revealed').forEach(el => el.classList.remove('revealed'));
+  tiles.forEach((t) => { t.className = 'tile'; });
+  tiles[0].classList.add('active');
+  svg.innerHTML = '';
+  document.getElementById('winOverlay').classList.add('hidden');
+  document.getElementById('loseOverlay').classList.add('hidden');
+}
+
+document.getElementById('restartBtn').addEventListener('click', resetGame);
+document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+document.getElementById('tryAgainBtn').addEventListener('click', resetGame);
+
+
+</script>
+</body>
+</html>
