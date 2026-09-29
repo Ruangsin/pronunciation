@@ -13,6 +13,7 @@
 | [`final-sound/`](https://ruangsin.github.io/pronunciation/final-sound/) | Final Sound — ฝึกการออกเสียงพยัญชนะท้ายคำ (final consonant sounds) รวมถึงการจำแนกเสียง ed และ s ท้ายคำ |
 | [`the-journey/`](https://ruangsin.github.io/pronunciation/the-journey/) | The Journey — เนื้อหาต่อเนื่องด้าน Final Sound เจาะลึกเพิ่มเติม |
 | [`IPA_Transcription_Practice.html`](https://ruangsin.github.io/pronunciation/IPA_Transcription_Practice.html) | IPA Transcription Practice — แบบฝึกหัดถอดเสียงสัทอักษรสากล (IPA) |
+| [`SentenceStress_Lesson.html`](https://ruangsin.github.io/pronunciation/SentenceStress_Lesson.html) | Sentence Stress — บทเรียนการเน้นเสียงในประโยค |
 
 ---
 
