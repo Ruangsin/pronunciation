@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W12 Sentence Stress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Noto+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF7FF; --text: #241F3D; --muted: #6B6485; --line: rgba(147, 51, 234, .16);
+  --purple: #9333EA; --violet: #7C3AED; --pink: #DB2777; --lilac: #C084FC; --rose: #F472B6;
+  --green: #059669; --red: #DC2626;
+  --s: #7C3AED; --n: #DB2777; --u: #8A83A3;
+  --glass: rgba(255, 255, 255, .62); --glass-strong: rgba(255, 255, 255, .82);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: 'Noto Sans', sans-serif; color: var(--text); background: var(--bg); overflow: hidden; line-height: 1.5;
+  background-image:
+    radial-gradient(760px 520px at 8% 12%, rgba(192, 132, 252, .38), transparent 62%),
+    radial-gradient(720px 520px at 92% 18%, rgba(244, 114, 182, .30), transparent 62%),
+    radial-gradient(820px 560px at 70% 100%, rgba(147, 51, 234, .22), transparent 62%),
+    radial-gradient(600px 420px at 10% 100%, rgba(236, 72, 153, .18), transparent 62%);
+}
+h1, h2, h3 { font-family: 'Sora', sans-serif; line-height: 1.2; margin: 0; }
+button { font-family: inherit; }
+
+/* ---------- stage & scaling ---------- */
+#viewport { position: fixed; inset: 0 0 76px 0; }
+#stage { position: absolute; width: 1280px; height: 720px; transform-origin: 0 0; }
+.slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 40px 56px 34px; overflow: hidden;
+  background: rgba(255, 255, 255, .38); border: 1px solid rgba(255, 255, 255, .9); border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(124, 58, 237, .12); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.slide.active { display: flex; animation: fade .28s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.eyebrow { font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--purple); display: flex; gap: 10px; align-items: center; }
+.eyebrow .pill { font-size: 12px; letter-spacing: .12em; padding: 3px 10px; border-radius: 99px; }
+.pill.pr { background: rgba(147, 51, 234, .12); color: var(--purple); }
+.pill.pa { background: rgba(219, 39, 119, .12); color: var(--pink); }
+.slide h2 { font-size: 38px; margin: 8px 0 18px; letter-spacing: -.01em; }
+.slide .lead { font-size: 21px; color: var(--muted); margin: -8px 0 18px; }
+.body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; font-size: 20px; }
+.body p { margin: 0; }
+.scroll { overflow: auto; min-height: 0; padding-right: 6px; }
+.foot { display: flex; justify-content: space-between; font-size: 13px; color: #A39CBB; margin-top: 12px; }
+
+.card { background: var(--glass); border: 1px solid rgba(255, 255, 255, .95); border-radius: 20px; padding: 18px 22px;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, .08); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.card.pk { background: linear-gradient(135deg, rgba(252, 231, 243, .85), rgba(255, 255, 255, .6)); }
+.card.pu { background: linear-gradient(135deg, rgba(243, 232, 255, .9), rgba(255, 255, 255, .6)); }
+.card h3 { font-size: 21px; margin-bottom: 6px; }
+.card .sm { font-size: 17px; color: var(--muted); }
+.row { display: grid; gap: 16px; }
+.c2 { grid-template-columns: 1fr 1fr; } .c3 { grid-template-columns: repeat(3, 1fr); } .c4 { grid-template-columns: repeat(4, 1fr); } .c5 { grid-template-columns: repeat(5, 1fr); }
+.ex { font-size: 26px; padding: 14px 20px; background: var(--glass-strong); border-radius: 16px; border: 1px solid var(--line); }
+.ex.big { font-size: 40px; text-align: center; padding: 22px; }
+.ipa { color: var(--purple); }
+.note { font-size: 17px; padding: 12px 16px; border-radius: 14px; background: rgba(147, 51, 234, .07); border: 1px solid var(--line); }
+.note.pk { background: rgba(219, 39, 119, .07); border-color: rgba(219, 39, 119, .22); }
+table.t { width: 100%; border-collapse: collapse; font-size: 18px; background: var(--glass-strong); border-radius: 16px; overflow: hidden; }
+table.t th, table.t td { text-align: left; padding: 9px 14px; border-bottom: 1px solid rgba(36, 31, 61, .07); vertical-align: top; }
+table.t th { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: rgba(147, 51, 234, .06); }
+ul.clean, ol.clean { margin: 0; padding-left: 24px; } ul.clean li, ol.clean li { margin: 5px 0; }
+.num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 20px 'Sora'; color: #fff;
+  background: linear-gradient(135deg, var(--purple), var(--pink)); flex: 0 0 44px; }
+.dotrow { display: flex; align-items: center; gap: 12px; min-height: 30px; margin: 10px 0; }
+.dotrow i { display: block; border-radius: 50%; }
+
+/* stress colours */
+.u { color: var(--u); } .s { color: var(--s); font-weight: 700; } .n { color: var(--n); font-weight: 800; font-size: 1.14em; }
+.legend { font-size: 15px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+.legend .n { font-size: 1em; }
+
+/* buttons */
+.btn { font: 600 17px 'Sora', sans-serif; padding: 11px 20px; border-radius: 14px; border: 0; cursor: pointer; min-height: 46px; color: #fff;
+  background: linear-gradient(135deg, var(--purple), var(--pink)); box-shadow: 0 6px 18px rgba(219, 39, 119, .22); }
+.btn.ghost { background: rgba(255, 255, 255, .85); color: var(--text); border: 1px solid var(--line); box-shadow: none; }
+.btn.sm { font-size: 14px; padding: 7px 13px; min-height: 36px; }
+.btn:disabled { opacity: .4; cursor: default; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+/* exercises */
+.exbox { flex: 1; min-height: 0; overflow: auto; }
+.ex-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; font-size: 19px; }
+.ex-meta { font-size: 15px; color: var(--muted); }
+.bar { height: 7px; background: rgba(147, 51, 234, .12); border-radius: 99px; margin: 12px 0 16px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width .3s; }
+.context { font-size: 18px; color: var(--muted); margin: 0 0 10px; } .context:empty { display: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.speaker-label { font: 700 17px 'Sora'; color: var(--pink); }
+.chip { font: 500 23px 'Noto Sans', sans-serif; padding: 9px 16px; border-radius: 14px; cursor: pointer; min-height: 52px;
+  background: rgba(255, 255, 255, .92); border: 1.5px solid rgba(36, 31, 61, .12); color: var(--text); transition: background .15s, border-color .15s, color .15s; }
+.chip:hover:not(:disabled) { border-color: var(--purple); }
+.chip.sel { background: rgba(124, 58, 237, .1); border-color: var(--violet); color: var(--violet); font-weight: 700; }
+.chip.ok { background: rgba(5, 150, 105, .1); border-color: var(--green); color: var(--green); }
+.chip.bad { background: rgba(220, 38, 38, .08); border-color: var(--red); color: var(--red); }
+.chip:disabled { cursor: default; }
+.feedback { margin-top: 12px; font-weight: 600; min-height: 1.5em; font-size: 18px; }
+.feedback.ok { color: var(--green); } .feedback.bad { color: var(--red); }
+.reveal { margin-top: 12px; padding: 12px 18px; border-radius: 14px; background: var(--glass-strong); border: 1px dashed var(--line); display: none; }
+.reveal.show { display: block; }
+.reveal .rl { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+.reveal .pattern { font-size: 25px; }
+.done-box { text-align: center; padding: 24px 8px; }
+.done-box .score { font: 800 56px 'Sora'; background: linear-gradient(135deg, var(--purple), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* MCQ (one question at a time) */
+.q-prompt { font-size: 22px; font-weight: 600; margin: 4px 0 14px; }
+.opts { display: grid; gap: 10px; }
+.opts.two { grid-template-columns: 1fr 1fr; }
+.opt { text-align: left; font: 19px 'Noto Sans', sans-serif; padding: 12px 16px; border-radius: 14px; cursor: pointer; min-height: 52px;
+  border: 1.5px solid rgba(36, 31, 61, .1); background: rgba(255, 255, 255, .92); color: var(--text); }
+.opt:hover:not(:disabled) { border-color: var(--purple); }
+.opt.ok { border-color: var(--green); background: rgba(5, 150, 105, .08); color: var(--green); font-weight: 600; }
+.opt.bad { border-color: var(--red); background: rgba(220, 38, 38, .06); color: var(--red); }
+.opt:disabled { cursor: default; }
+.q-why { font-size: 17px; margin-top: 12px; min-height: 1.4em; }
+.qdots { display: flex; gap: 6px; }
+.qdots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(147, 51, 234, .18); }
+.qdots i.on { background: var(--purple); } .qdots i.ok { background: var(--green); }
+
+/* rhythm */
+.rhythm-line { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px 8px; padding: 8px 16px; margin: 0 0 8px; background: var(--glass-strong); border-radius: 16px; border: 1px solid var(--line); cursor: pointer; }
+.rhythm-line.active { box-shadow: 0 0 0 2px var(--purple) inset; }
+.rl-lbl { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .1em; width: 76px; align-self: center; }
+.syl { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.syl .d { border-radius: 50%; background: #D8D0EA; transition: transform .08s, background .08s; }
+.syl.st .d { width: 20px; height: 20px; background: rgba(124, 58, 237, .35); }
+.syl.un .d { width: 9px; height: 9px; }
+.syl .w { font-size: 22px; color: var(--u); transition: color .08s; }
+.syl.st .w { color: var(--s); font-weight: 700; }
+.syl.hit .d { transform: scale(1.5); background: var(--pink); }
+.syl.hit .w { color: var(--pink); }
+.syl.gap { margin-right: 12px; }
+.tempo button[aria-pressed="true"] { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+/* forms */
+.field { width: 100%; font: 17px 'Noto Sans'; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, .92); margin: 4px 0 10px; color: var(--text); }
+.check { display: flex; gap: 12px; align-items: center; background: rgba(255, 255, 255, .85); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; cursor: pointer; font-size: 17px; }
+.check input { width: 22px; height: 22px; accent-color: var(--purple); }
+
+/* title slide */
+.title-wrap { flex: 1; display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; align-items: center; }
+.title-wrap h1 { font-size: 84px; letter-spacing: -.02em; background: linear-gradient(135deg, #6D28D9, var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.beats { display: flex; gap: 22px; align-items: flex-end; justify-content: center; }
+.beats .b { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.beats .b i { display: block; border-radius: 50%; }
+
+/* word-class explorer */
+.xp-host { flex: 1; min-height: 0; }
+.xp-grid { display: grid; grid-template-columns: 0.95fr 1.25fr; gap: 18px; height: 100%; }
+.xp-cards { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 10px; }
+.xp-card { position: relative; text-align: left; cursor: pointer; padding: 10px 14px; border-radius: 16px; border: 1.5px solid rgba(255, 255, 255, .95);
+  background: var(--glass); box-shadow: 0 6px 18px rgba(124, 58, 237, .08); transition: transform .15s, border-color .15s, box-shadow .15s; color: var(--text); }
+.xp-card:hover { transform: translateY(-2px); border-color: var(--lilac); }
+.xp-card b { display: block; font: 700 18px 'Sora'; } .xp-card span { font-size: 14px; color: var(--muted); }
+.xp-card.c b { color: var(--violet); }
+.xp-card.on { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(147, 51, 234, .18), 0 8px 22px rgba(124, 58, 237, .16); background: rgba(255, 255, 255, .95); }
+.xp-card.f.on { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(219, 39, 119, .15), 0 8px 22px rgba(219, 39, 119, .12); }
+.xp-tick { position: absolute; top: 8px; right: 10px; font-style: normal; font-size: 13px; width: 20px; height: 20px; border-radius: 50%; display: none; place-items: center; background: var(--green); color: #fff; }
+.xp-card.seen .xp-tick { display: grid; }
+.xp-panel { overflow: auto; min-height: 0; padding: 16px 20px; }
+.xp-empty { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 8px; color: var(--muted); font-size: 18px; }
+.xp-empty-ic { font-size: 40px; }
+.xp-body { animation: fade .25s ease; display: flex; flex-direction: column; gap: 8px; }
+.xp-kicker { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--pink); }
+.xp-title { font-size: 26px; }
+.xp-rule { font-size: 18px; }
+.xp-lbl .ex-meta { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.xp-lbl { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.xp-words { display: flex; flex-wrap: wrap; gap: 6px; }
+.xp-w { cursor: pointer; font: 600 16px 'Noto Sans'; padding: 4px 11px; border-radius: 99px; border: 1px solid var(--line); background: #fff; display: inline-flex; align-items: baseline; gap: 5px; }
+.xp-w.c { color: var(--s); } .xp-w.f { color: var(--u); font-weight: 500; }
+.xp-w small { font-size: 13px; color: var(--purple); font-weight: 500; }
+.xp-w:hover { border-color: var(--purple); }
+.xp-ex { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 22px; padding: 8px 14px; background: var(--glass-strong); border: 1px solid var(--line); border-radius: 14px; }
+.xp-tip { font-size: 15px; padding: 9px 13px; }
+body.fluid .xp-grid { grid-template-columns: 1fr; }
+body.fluid .xp-cards { grid-auto-rows: auto; }
+body.fluid .xp-ex { font-size: 18px; }
+
+/* drills */
+.dr-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; margin-bottom: 12px; }
+.dr-bubble { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px 18px 18px 4px; background: var(--glass-strong); border: 1px solid var(--line); font-size: 22px; }
+.dr-who { font: 700 13px 'Sora'; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dr-said { flex: 1; }
+.dr-cue { display: flex; flex-direction: column; justify-content: center; padding: 10px 16px; border-radius: 18px; background: linear-gradient(135deg, rgba(252, 231, 243, .95), rgba(243, 232, 255, .9)); border: 1px solid rgba(219, 39, 119, .25); }
+.dr-cue span { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--pink); }
+.dr-cue b { font: 800 30px 'Sora'; color: var(--pink); } .dr-cue small { font-size: 14px; color: var(--muted); }
+.dr-stage { min-height: 60px; }
+.dr-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
+.dr-foot .feedback { margin-top: 0; }
+/* cabin */
+.cab-parts { display: grid; gap: 8px; }
+.cab-part { display: flex; gap: 12px; align-items: center; padding: 6px 12px; border-radius: 14px; border: 1px solid transparent; opacity: .45; transition: opacity .2s; }
+.cab-part.on { opacity: 1; background: rgba(255, 255, 255, .85); border-color: var(--lilac); box-shadow: 0 4px 14px rgba(147, 51, 234, .1); }
+.cab-part.done { opacity: 1; transition: none; }
+.cab-part .chip { font-size: 19px; min-height: 42px; padding: 5px 12px; }
+.cab-n { width: 28px; height: 28px; flex: 0 0 28px; border-radius: 50%; display: grid; place-items: center; font: 700 13px 'Sora'; color: #fff; background: linear-gradient(135deg, var(--purple), var(--pink)); }
+.cab-pat { font-size: 22px; }
+/* speed round */
+.sp-home { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 10px; }
+.sp-top { display: flex; justify-content: space-between; align-items: center; font-size: 18px; color: var(--muted); }
+.sp-top b { color: var(--text); font: 800 24px 'Sora'; }
+.sp-time { font: 800 34px 'Sora'; color: var(--pink); }
+.sp-timebar { height: 8px; border-radius: 99px; background: rgba(219, 39, 119, .12); overflow: hidden; margin: 8px 0 10px; }
+.sp-timebar i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width 1s linear; }
+.sp-word { text-align: center; font: 800 64px 'Sora'; margin: 14px 0 4px; color: var(--text); }
+.sp-word.pop { animation: fade .2s ease; } .sp-word.good { color: var(--green); } .sp-word.miss { color: var(--red); animation: shake .3s; }
+@keyframes shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+.sp-group { text-align: center; min-height: 1.4em; margin-bottom: 10px; }
+.sp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.sp-btns .sort-btn { text-align: center; min-height: 80px; }
+/* beat tapper */
+.bt-lines { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.bt-pick.on { background: var(--purple); color: #fff; border-color: var(--purple); }
+.bt-track { position: relative; height: 34px; border-radius: 99px; background: rgba(147, 51, 234, .08); margin: 4px 0 8px; overflow: hidden; }
+.bt-mark { position: absolute; top: 5px; width: 24px; height: 24px; margin-left: -12px; border-radius: 50%; border: 3px solid var(--violet); }
+.bt-hit { position: absolute; top: 11px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--pink); }
+.bt-now { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text); opacity: .5; left: 0; }
+.bt-tap { width: 180px; height: 64px; border-radius: 20px; border: 0; font: 800 24px 'Sora'; color: #fff; cursor: pointer; background: linear-gradient(135deg, var(--pink), var(--purple)); box-shadow: 0 8px 20px rgba(219, 39, 119, .3); touch-action: manipulation; }
+.bt-tap:disabled { opacity: .35; cursor: default; }
+.bt-tap.pulse { animation: pulse .18s ease; }
+@keyframes pulse { 50% { transform: scale(.92); } }
+body.fluid .dr-row { grid-template-columns: 1fr; }
+body.fluid .dr-bubble { font-size: 18px; }
+body.fluid .sp-word { font-size: 42px; }
+body.fluid .cab-part .chip { font-size: 16px; }
+
+/* word sort */
+.sort-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 22px; height: 100%; }
+.sort-sent { font-size: 34px; padding: 20px 22px; background: var(--glass-strong); border: 1px solid var(--line); border-radius: 18px; margin-bottom: 16px; }
+.sort-w { background: linear-gradient(135deg, rgba(192, 132, 252, .28), rgba(244, 114, 182, .28)); border-radius: 10px; padding: 0 8px; font-weight: 700; box-shadow: inset 0 -3px 0 var(--purple); }
+.sort-w.is-c { color: var(--s); box-shadow: inset 0 -3px 0 var(--s); }
+.sort-w.is-f { color: var(--u); box-shadow: inset 0 -3px 0 var(--u); background: rgba(138, 131, 163, .15); }
+.sort-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.sort-btn { text-align: left; padding: 14px 18px; border-radius: 16px; cursor: pointer; border: 1.5px solid rgba(36, 31, 61, .12); background: rgba(255, 255, 255, .92); color: var(--text); min-height: 64px; }
+.sort-btn b { display: block; font: 700 21px 'Sora'; } .sort-btn small { font-size: 14px; color: var(--muted); }
+.sort-btn[data-c="1"] b { color: var(--s); }
+.sort-btn:hover:not(:disabled) { border-color: var(--purple); }
+.sort-btn.ok { border-color: var(--green); background: rgba(5, 150, 105, .08); } .sort-btn.ok b { color: var(--green); }
+.sort-btn.bad { border-color: var(--red); background: rgba(220, 38, 38, .06); } .sort-btn.bad b { color: var(--red); }
+.sort-btn:disabled { cursor: default; }
+.sort-bins { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; min-height: 0; }
+.sort-bin { border-radius: 16px; padding: 12px 14px; border: 1px dashed var(--line); background: rgba(255, 255, 255, .55); overflow: auto; }
+.sort-bin.bc { background: linear-gradient(135deg, rgba(243, 232, 255, .8), rgba(255, 255, 255, .5)); }
+.sort-bin-h { font: 700 14px 'Sora'; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 8px; }
+.sort-bin.bc .sort-bin-h { color: var(--s); }
+.sort-bin-w { display: flex; flex-wrap: wrap; gap: 6px; }
+.sort-bin-w span { font-size: 16px; padding: 3px 10px; border-radius: 99px; background: #fff; border: 1px solid var(--line); animation: fade .3s ease; }
+.sort-bin.bc .sort-bin-w span { color: var(--s); font-weight: 700; }
+.sort-bin.bf .sort-bin-w span { color: var(--u); }
+body.fluid .sort-grid { grid-template-columns: 1fr; }
+body.fluid .sort-sent { font-size: 22px; }
+body.fluid .sort-btns { grid-template-columns: 1fr 1fr; }
+body.fluid .sort-btn b { font-size: 17px; }
+body.fluid .sort-bins { grid-template-rows: auto; }
+
+/* ---------- control bar ---------- */
+#bar { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  background: rgba(255, 255, 255, .72); border: 1px solid rgba(255, 255, 255, .95); border-radius: 18px; box-shadow: 0 10px 30px rgba(124, 58, 237, .15);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 30; max-width: calc(100% - 20px); }
+#bar button { min-height: 40px; min-width: 40px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, .9); cursor: pointer; font: 600 14px 'Sora'; color: var(--text); padding: 0 12px; }
+#bar button.primary { background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; border: 0; }
+#bar button:disabled { opacity: .35; cursor: default; }
+#count { font: 600 14px 'Sora'; color: var(--muted); min-width: 66px; text-align: center; }
+#pbar { width: 120px; height: 6px; border-radius: 99px; background: rgba(147, 51, 234, .14); overflow: hidden; }
+#pbar i { display: block; height: 100%; background: linear-gradient(90deg, var(--purple), var(--pink)); transition: width .3s; }
+#toast { position: fixed; left: 50%; bottom: 82px; transform: translateX(-50%); z-index: 40; display: none; max-width: min(620px, calc(100% - 32px));
+  background: #2E1B4E; color: #fff; padding: 11px 16px; border-radius: 14px; font-size: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+
+/* overview */
+#overview { position: fixed; inset: 0; z-index: 50; display: none; background: rgba(250, 247, 255, .7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 24px; overflow: auto; }
+#overview.open { display: block; }
+.ov-inner { max-width: 980px; margin: 0 auto; }
+.ov-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.ov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.ov-item { text-align: left; cursor: pointer; display: flex; gap: 14px; align-items: center; font-size: 17px; }
+.ov-item .num { width: 38px; height: 38px; flex-basis: 38px; font-size: 16px; }
+.ov-item.done .num { background: var(--green); }
+.ov-item small { display: block; color: var(--muted); font-size: 13px; }
+
+/* ---------- fluid (phones / portrait) ---------- */
+body.fluid { overflow: auto; }
+body.fluid #viewport { position: static; padding: 12px 12px 96px; }
+body.fluid #stage { position: static; width: auto; height: auto; transform: none !important; }
+body.fluid .slide { position: relative; inset: auto; padding: 22px 18px 18px; border-radius: 22px; min-height: calc(100vh - 110px); overflow: visible; }
+body.fluid .slide h2 { font-size: 27px; }
+body.fluid .body { font-size: 17px; }
+body.fluid .row.c2, body.fluid .row.c3, body.fluid .row.c4, body.fluid .row.c5 { grid-template-columns: 1fr 1fr; }
+body.fluid .row.c2.stack, body.fluid .row.c3.stack { grid-template-columns: 1fr; }
+body.fluid .ex { font-size: 20px; } body.fluid .ex.big { font-size: 26px; }
+body.fluid .title-wrap { grid-template-columns: 1fr; }
+body.fluid .title-wrap h1 { font-size: 48px; }
+body.fluid .chip { font-size: 18px; min-height: 46px; padding: 7px 12px; }
+body.fluid .opts.two { grid-template-columns: 1fr; }
+body.fluid .opt { font-size: 17px; }
+body.fluid .q-prompt { font-size: 18px; }
+body.fluid .exbox, body.fluid .scroll { overflow: visible; }
+body.fluid table.t { font-size: 15px; }
+body.fluid #pbar { display: none; }
+body.fluid .syl .w { font-size: 18px; }
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage"></div></div>
+
+<nav id="bar" aria-label="Slide controls">
+  <button id="bMenu" title="All sections (M)">&#9776;</button>
+  <button id="bPrev" title="Previous (&larr;)">&larr;</button>
+  <span id="count"></span>
+  <button id="bNext" class="primary" title="Next (&rarr;)">&rarr;</button>
+  <div id="pbar"><i></i></div>
+  <button id="bFull" title="Full screen (F)">&#x26F6;</button>
+</nav>
+<div id="toast" role="status"></div>
+
+<div id="overview" role="dialog" aria-label="Sections">
+  <div class="ov-inner">
+    <div class="ov-head"><h2 style="font-size:28px">Week 12 · Sentence Stress</h2>
+      <div class="actions"><button class="btn ghost sm" id="ovReset">Reset progress</button><button class="btn sm" id="ovClose">Close</button></div></div>
+    <p class="ex-meta" id="ovProg" style="margin:0 0 12px"></p>
+    <div class="ov-grid" id="ovGrid"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA (RP) — shared with the PowerPoint deck and the quiz
+   +word stressed · *word focus word (strongest) · plain unstressed · token ending "-" joins next
+   ========================================================= */
+const BANK = [
+  "I +want to +book a *flight.",
+  "she's +going to *london.",
+  "+where did you +put my *passport?",
+  "we +can't +find the *gate.",
+  "the +train +leaves at *nine.",
+  "could you +help me with my *bag?",
+  "I've been +waiting for an *hour.",
+  "he +asked me to +call him *later.",
+  "they're +flying to +tokyo on *monday.",
+  "it's a +beautiful *day.",
+  "+ladies and +gentlemen, +welcome on *board.",
+  "we are +expecting some *turbulence.",
+  "we are +now +beginning our *descent.",
+  "we will be +landing in +twenty *minutes.",
+  "the +flight has been *delayed.",
+  "your +gate is at +terminal *two.",
+  "+cleared for *takeoff.",
+  "+hold +short of +runway +two- *seven.",
+  "+climb and +maintain +flight +level +three- +five- *zero.",
+  "+contact +bangkok *approach."
+];
+const CONTRAST = [
+  { ctx: "A: Is your flight at seven?", who: "B", line: "+no, it's at *eight." },
+  { ctx: "A: Gate twelve?", who: "B", line: "+no, gate *twenty." },
+  { ctx: "Passenger (at the wrong desk):", who: "", line: "I said *departures, not *arrivals." },
+  { ctx: "Cabin crew:", who: "", line: "I asked the *first officer, not the *captain." },
+  { ctx: "Pilot read back: “Descend to four thousand.”", who: "ATC", line: "*negative, +descend to *five +thousand +feet." }
+];
+const PROPER = new Set(['london', 'tokyo', 'monday', 'bangkok', 'osaka']);
+
+/* ---------- text helpers ---------- */
+function parse(m) {
+  return m.split(' ').map(t => {
+    let type = 'u', w = t;
+    if (t[0] === '*') { type = 'n'; w = t.slice(1); } else if (t[0] === '+') { type = 's'; w = t.slice(1); }
+    return { raw: w, type, join: w.endsWith('-') };
+  });
+}
+function cap(w) {
+  const core = w.replace(/[^A-Za-z']/g, '').toLowerCase();
+  if (core === 'i' || core.startsWith("i'")) return w.replace(/^i/, 'I');
+  if (PROPER.has(core)) return w.replace(/^[a-z]/, c => c.toUpperCase());
+  return w;
+}
+function plain(tokens) {
+  const s = tokens.map(t => cap(t.raw)).map((w, i) => (i === 0 ? w[0].toUpperCase() + w.slice(1) : w));
+  return s.map((w, i) => w + (i < s.length - 1 && !tokens[i].join ? ' ' : '')).join('');
+}
+function pattern(tokens) {
+  return tokens.map((t, i) => `<span class="${t.type}">${t.type === 'u' ? (i === 0 ? cap(t.raw).replace(/^[a-z]/, c => c.toUpperCase()) : cap(t.raw)) : t.raw.toUpperCase()}</span>` + (i < tokens.length - 1 && !t.join ? ' ' : '')).join('');
+}
+const P = m => pattern(parse(m));
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const LEGEND = `<div class="legend"><span><span class="s">CAPS</span> = stressed</span><span><span class="n">CAPS</span> = focus word</span><span><span class="u">lowercase</span> = unstressed</span><span>Reference accent: RP</span></div>`;
+
+/* ---------- audio ---------- */
+let voice = null;
+function pickVoice() { const vs = speechSynthesis.getVoices(); voice = vs.find(v => v.lang === 'en-GB') || vs.find(v => (v.lang || '').startsWith('en-GB')) || vs.find(v => (v.lang || '').startsWith('en')) || null; }
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/-\s?/g, ' '));
+  u.lang = 'en-GB'; u.rate = 0.85; if (voice) u.voice = voice;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- progress ---------- */
+const KEY = 'w12-sentence-stress-deck-v1';
+let progress = {};
+try { progress = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { progress = {}; }
+function saveProgress() { try { localStorage.setItem(KEY, JSON.stringify(progress)); } catch (e) {} }
+function markDone(id) { progress[id] = true; saveProgress(); updateBar(); updateAllDone(); }
+function updateAllDone() { const ad = document.getElementById('allDone'); if (ad) { const n = SECTIONS.filter(s => progress[s.id]).length; ad.textContent = n === SECTIONS.length ? `All ${SECTIONS.length} sections complete. Well done!` : `${n} of ${SECTIONS.length} sections complete (menu ☰ shows what is left).`; } }
+function part(id, key, needed) { progress['_' + id + key] = true; saveProgress(); if (needed.every(k => progress['_' + id + k])) markDone(id); }
+
+/* =========================================================
+   EXERCISE ENGINES
+   ========================================================= */
+// One question at a time; retry until correct (wrong = red + locked); options shuffled.
+function MCQ(el, qs, onDone) {
+  let k = 0, first = 0, tried = false;
+  function draw() {
+    if (k >= qs.length) {
+      el.innerHTML = `<div class="done-box"><div class="score">${first} / ${qs.length}</div><div class="ex-meta">correct on the first try</div>
+        <div class="actions" style="justify-content:center;margin-top:14px"><button class="btn ghost again">Try again</button></div></div>`;
+      el.querySelector('.again').onclick = () => { k = 0; first = 0; draw(); };
+      if (onDone) onDone();
+      return;
+    }
+    const q = qs[k]; tried = false;
+    const short = q.o.every(o => o.replace(/<[^>]+>/g, '').length < 34);
+    el.innerHTML = `<div class="ex-top"><span class="ex-meta">Question ${k + 1} of ${qs.length}</span><div class="qdots">${qs.map((_, j) => `<i class="${j < k ? 'ok' : j === k ? 'on' : ''}"></i>`).join('')}</div></div>
+      <div class="q-prompt">${q.q}</div><div class="opts ${short ? 'two' : ''}"></div><div class="q-why"></div>
+      <div class="actions" style="margin-top:12px"><button class="btn nextq" disabled>${k === qs.length - 1 ? 'Finish' : 'Next question'} &rarr;</button></div>`;
+    const opts = el.querySelector('.opts');
+    shuffle(q.o.map((t, i) => ({ t, ok: i === 0 }))).forEach(o => {
+      const b = document.createElement('button'); b.className = 'opt'; b.innerHTML = o.t;
+      b.onclick = () => {
+        if (o.ok) {
+          b.classList.add('ok'); if (!tried) first++;
+          el.querySelectorAll('.opt').forEach(x => x.disabled = true);
+          el.querySelector('.q-why').innerHTML = q.why || '';
+          el.querySelector('.nextq').disabled = false;
+        } else { tried = true; b.classList.add('bad'); b.disabled = true; }
+      };
+      opts.appendChild(b);
+    });
+    el.querySelector('.nextq').onclick = () => { k++; draw(); };
+  }
+  draw();
+}
+
+// Tap-word exercise. mode: 'content' | 'nucleus' | 'contrast'
+function TapEx(el, mode, perRound, onDone) {
+  const source = mode === 'contrast' ? CONTRAST.map(c => ({ ...c, tokens: parse(c.line) })) : BANK.map(m => ({ tokens: parse(m) }));
+  let list, idx, first, attempted, solved;
+  const want = t => (mode === 'content' ? t.type !== 'u' : t.type === 'n');
+  function start() { list = shuffle(source).slice(0, perRound || source.length); idx = 0; first = 0; draw(); }
+  function spoken(it) { return mode === 'contrast' ? it.ctx.replace(/^[^:]*:\s*/, '').replace(/[“”]/g, '') + ' ... ' + plain(it.tokens) : plain(it.tokens); }
+  function draw() {
+    const it = list[idx];
+    if (!it) return finish();
+    attempted = false; solved = false;
+    const instr = { content: 'Select every <b>content word</b>, then press Check.', nucleus: 'Tap the <b>focus word</b>: the strongest word.', contrast: 'Tap the word(s) with <b>contrastive stress</b>, then press Check.' }[mode];
+    el.innerHTML = `
+      <div class="ex-top"><div>${instr}</div><div class="ex-meta">${idx + 1} / ${list.length} · first try: <b class="ft">${first}</b></div></div>
+      <div class="bar"><i style="width:${idx / list.length * 100}%"></i></div>
+      <p class="context">${mode === 'contrast' ? '<b>' + it.ctx + '</b>' : ''}</p>
+      <div class="chips">${mode === 'contrast' && it.who ? `<span class="speaker-label">${it.who}:</span>` : ''}</div>
+      <div class="actions" style="margin-top:16px">
+        <button class="btn ghost play">&#128266; Listen</button>
+        ${mode !== 'nucleus' ? '<button class="btn chk">Check</button>' : ''}
+        <button class="btn next" disabled>Next &rarr;</button>
+      </div>
+      <div class="feedback"></div>
+      <div class="reveal"><div class="rl">Stress pattern (RP)</div><div class="pattern">${pattern(it.tokens)}</div></div>`;
+    const chips = el.querySelector('.chips');
+    it.tokens.forEach((t, i) => {
+      const b = document.createElement('button'); b.className = 'chip'; b.dataset.i = i;
+      b.textContent = cap(i === 0 ? t.raw[0].toUpperCase() + t.raw.slice(1) : t.raw);
+      b.onclick = () => tap(b, t); chips.appendChild(b);
+    });
+    el.querySelector('.play').onclick = () => speak(spoken(it));
+    el.querySelector('.next').onclick = () => { idx++; draw(); };
+    const c = el.querySelector('.chk'); if (c) c.onclick = check;
+  }
+  function fb(msg, cls) { const f = el.querySelector('.feedback'); f.textContent = msg; f.className = 'feedback ' + (cls || ''); }
+  function solve() {
+    solved = true; if (!attempted) first++;
+    el.querySelector('.ft').textContent = first;
+    el.querySelectorAll('.chip').forEach(c => c.disabled = true);
+    const c = el.querySelector('.chk'); if (c) c.disabled = true;
+    el.querySelector('.next').disabled = false;
+    el.querySelector('.reveal').classList.add('show');
+    speak(spoken(list[idx]));
+  }
+  function tap(b, t) {
+    if (solved) return;
+    if (mode === 'nucleus') {
+      if (t.type === 'n') { b.classList.add('ok'); fb('Correct. That is the focus word.', 'ok'); solve(); }
+      else { attempted = true; b.classList.add('bad'); b.disabled = true; fb(t.type === 's' ? 'Stressed, but not the strongest. Try again.' : 'That word is unstressed. Try again.', 'bad'); }
+      return;
+    }
+    if (b.classList.contains('bad')) b.classList.remove('bad'); else b.classList.toggle('sel');
+    fb('');
+  }
+  function check() {
+    const it = list[idx]; let wrong = 0, missing = 0;
+    el.querySelectorAll('.chip').forEach(c => {
+      const t = it.tokens[+c.dataset.i]; const sel = c.classList.contains('sel') || c.classList.contains('ok');
+      c.classList.remove('ok', 'bad');
+      if (sel && want(t)) { c.classList.remove('sel'); c.classList.add('ok'); c.disabled = true; }
+      else if (sel) { c.classList.remove('sel'); c.classList.add('bad'); wrong++; }
+      else if (want(t)) missing++;
+    });
+    if (!wrong && !missing) { fb(mode === 'content' ? 'All content words found.' : 'Correct. The contrast is clear.', 'ok'); solve(); }
+    else {
+      attempted = true; const p = [];
+      if (wrong) p.push(`${wrong} selected word${wrong > 1 ? 's are' : ' is'} not correct (red)`);
+      if (missing) p.push(`${missing} word${missing > 1 ? 's are' : ' is'} missing`);
+      fb(p.join('; ') + '. Fix and check again.', 'bad');
+    }
+  }
+  function finish() {
+    el.innerHTML = `<div class="done-box"><div class="score">${first} / ${list.length}</div><div class="ex-meta">correct on the first try</div>
+      <div class="actions" style="justify-content:center;margin-top:14px"><button class="btn ghost again">Practise another round</button></div></div>`;
+    el.querySelector('.again').onclick = start;
+    if (onDone) onDone();
+  }
+  start();
+}
+
+// Word sort: is the highlighted word a content word or a function word? Retry until correct.
+const SORT = [
+  { s: 'Hold short of runway two-seven.', w: 'runway', c: 1, why: 'Noun: it names a thing.' },
+  { s: 'I want to book a flight.', w: 'book', c: 1, why: 'Main verb: it names the action.' },
+  { s: "It's a beautiful day.", w: 'beautiful', c: 1, why: 'Adjective: it describes the day.' },
+  { s: 'We are now beginning our descent.', w: 'now', c: 1, why: 'Adverb: it tells us when.' },
+  { s: 'Where did you put my passport?', w: 'Where', c: 1, why: 'Wh-question word: it asks for new information.' },
+  { s: "We can't find the gate.", w: "can't", c: 1, why: 'Negative: it changes the whole meaning, so it is always stressed.' },
+  { s: 'We will be landing in twenty minutes.', w: 'twenty', c: 1, why: 'Number: key information.' },
+  { s: "I've been waiting for an hour.", w: 'waiting', c: 1, why: 'Main verb: it names the action.' },
+  { s: 'He asked me to call him later.', w: 'later', c: 1, why: 'Adverb: it tells us when.' },
+  { s: 'We are expecting some turbulence.', w: 'turbulence', c: 1, why: 'Noun: it names a thing.' },
+  { s: 'The flight has been delayed.', w: 'The', c: 0, why: 'Article: grammar only. Weak form /ðə/.' },
+  { s: 'The flight has been delayed.', w: 'has', c: 0, why: 'Auxiliary verb: it helps the main verb <i>delayed</i>. Weak form /həz/.' },
+  { s: 'We are expecting some turbulence.', w: 'are', c: 0, why: 'Form of <i>be</i> used as an auxiliary. Weak form /ə/.' },
+  { s: "She's going to London.", w: 'to', c: 0, why: 'Preposition. Weak form /tə/.' },
+  { s: 'Could you help me with my bag?', w: 'my', c: 0, why: 'Possessive determiner: grammar only.' },
+  { s: 'Could you help me with my bag?', w: 'me', c: 0, why: 'Pronoun: it refers back to the speaker, not new information.' },
+  { s: 'Ladies and gentlemen, welcome on board.', w: 'and', c: 0, why: 'Conjunction: it joins two words. Weak form /ən/.' },
+  { s: 'Your gate is at terminal two.', w: 'at', c: 0, why: 'Preposition. Weak form /ət/.' },
+  { s: 'We are expecting some turbulence.', w: 'some', c: 0, why: 'Quantifier in its weak use: /səm/.' },
+  { s: 'Could you help me with my bag?', w: 'Could', c: 0, why: 'Modal auxiliary: it helps the main verb <i>help</i>. Weak form /kəd/.' },
+];
+function SortEx(el, onDone) {
+  let list, idx, first, tried, bins;
+  function start() { list = shuffle(SORT); idx = 0; first = 0; bins = { 1: [], 0: [] }; draw(); }
+  function mark(it, reveal) {
+    const esc = it.w.replace(/[.*+?^${}()|[\]\\']/g, '\\$&');
+    return it.s.replace(new RegExp(`(^|[^A-Za-z'])(${esc})(?=[^A-Za-z']|$)`), (m, pre, w) =>
+      `${pre}<span class="sort-w ${reveal ? (it.c ? 'is-c' : 'is-f') : ''}">${w}</span>`);
+  }
+  function binHTML() {
+    const b = (k, label, cls) => `<div class="sort-bin ${cls}"><div class="sort-bin-h">${label} <span>${bins[k].length}</span></div><div class="sort-bin-w">${bins[k].map(w => `<span>${w}</span>`).join('')}</div></div>`;
+    return b(1, 'Content words', 'bc') + b(0, 'Function words', 'bf');
+  }
+  function draw() {
+    const it = list[idx];
+    if (!it) return finish();
+    tried = false;
+    el.innerHTML = `
+      <div class="sort-grid">
+        <div class="sort-main">
+          <div class="ex-top"><div>Is the <b>highlighted word</b> a content word or a function word?</div><div class="ex-meta">${idx + 1} / ${list.length} · first try: <b class="ft">${first}</b></div></div>
+          <div class="bar"><i style="width:${idx / list.length * 100}%"></i></div>
+          <div class="sort-sent">${mark(it, false)}</div>
+          <div class="sort-btns"><button class="sort-btn" data-c="1"><b>Content word</b><small>carries meaning · stressed</small></button>
+            <button class="sort-btn" data-c="0"><b>Function word</b><small>carries grammar · weak</small></button></div>
+          <div class="feedback"></div><div class="q-why sort-why"></div>
+          <div class="actions" style="margin-top:10px"><button class="btn ghost play">&#128266; Listen</button><button class="btn next" disabled>${idx === list.length - 1 ? 'Finish' : 'Next'} &rarr;</button></div>
+        </div>
+        <div class="sort-bins">${binHTML()}</div>
+      </div>`;
+    el.querySelectorAll('.sort-btn').forEach(b => b.onclick = () => {
+      const ok = +b.dataset.c === it.c;
+      if (!ok) { tried = true; b.classList.add('bad'); b.disabled = true; fb('Not this one. Think: does it carry meaning or grammar?', 'bad'); return; }
+      b.classList.add('ok'); if (!tried) first++;
+      el.querySelectorAll('.sort-btn').forEach(x => x.disabled = true);
+      el.querySelector('.ft').textContent = first;
+      el.querySelector('.sort-sent').innerHTML = mark(it, true);
+      fb(it.c ? `Yes: “${it.w}” is a content word.` : `Yes: “${it.w}” is a function word.`, 'ok');
+      el.querySelector('.sort-why').innerHTML = it.why;
+      bins[it.c].push(it.w.toLowerCase());
+      el.querySelector('.sort-bins').innerHTML = binHTML();
+      el.querySelector('.next').disabled = false;
+      speak(it.s);
+    });
+    el.querySelector('.play').onclick = () => speak(it.s);
+    el.querySelector('.next').onclick = () => { idx++; draw(); };
+  }
+  function fb(m, c) { const f = el.querySelector('.feedback'); f.textContent = m; f.className = 'feedback ' + (c || ''); }
+  function finish() {
+    el.innerHTML = `<div class="sort-grid"><div class="done-box" style="align-self:center"><div class="score">${first} / ${list.length}</div><div class="ex-meta">correct on the first try</div>
+      <div class="actions" style="justify-content:center;margin-top:14px"><button class="btn ghost again">Sort again</button></div></div><div class="sort-bins">${binHTML()}</div></div>`;
+    el.querySelector('.again').onclick = start;
+    if (onDone) onDone();
+  }
+  start();
+}
+
+/* ---------- word-class explorer (slides: content words / function words) ---------- */
+const XP = {
+  content: [
+    { name: 'Nouns', hint: 'runway, passport', rule: 'Name people, places, things and ideas. They carry the main information of the sentence.',
+      words: ['runway', 'passport', 'captain', 'gate', 'luggage', 'weather', 'altitude', 'passenger', 'ticket', 'airport', 'engine', 'visibility'],
+      ex: 'the +captain +checked the *engine.', tip: 'Compound nouns stress the first part: <b>BOARDING</b> pass, <b>SEAT</b> belt.' },
+    { name: 'Main verbs', hint: 'land, book', rule: 'Name the action or state. The verb that carries the meaning is stressed; helping verbs are not.',
+      words: ['land', 'book', 'climb', 'descend', 'check', 'fasten', 'board', 'depart', 'arrive', 'wait', 'repeat', 'confirm'],
+      ex: 'we +landed in *bangkok.', tip: '<i>have</i> as a main verb is stressed: I <b>HAVE</b> a ticket. As a helper it is weak: I’ve /v/ booked it.' },
+    { name: 'Adjectives', hint: 'late, smooth', rule: 'Describe a noun: what kind, what it is like.',
+      words: ['late', 'early', 'heavy', 'clear', 'busy', 'smooth', 'bumpy', 'safe', 'crowded', 'quiet', 'strong', 'beautiful'],
+      ex: 'it was a +smooth *landing.', tip: 'Adjective + noun: both are stressed, and the noun is usually stronger.' },
+    { name: 'Adverbs', hint: 'now, later', rule: 'Tell us how, when, where or how often something happens.',
+      words: ['now', 'later', 'soon', 'slowly', 'carefully', 'immediately', 'again', 'already', 'today', 'here', 'there', 'outside'],
+      ex: '+descend *immediately.', tip: 'Time and manner adverbs often come at the end, so they are often the focus word.' },
+    { name: 'Wh-words', hint: 'where, when', rule: 'Question words ask for new information, so they are stressed.',
+      words: ['where', 'when', 'why', 'how', 'what', 'which', 'who', 'whose', 'how long', 'how much'],
+      ex: '+where is the *gate?', tip: 'In a wh-question, both the wh-word and the last content word are stressed.' },
+    { name: 'Negatives', hint: 'not, can’t', rule: 'A negative changes the whole meaning, so it is always stressed.',
+      words: ['not', 'no', 'never', 'nothing', 'nobody', 'negative', 'can’t /kɑːnt/', 'don’t /dəʊnt/', 'won’t /wəʊnt/', 'isn’t /ɪznt/'],
+      ex: "we +can't +land *yet.", tip: 'Compare: I can /kən/ help (weak) vs I <b>CAN’T</b> /kɑːnt/ help (strong). The vowel tells the listener which one.' },
+    { name: 'Numbers', hint: 'two, seven', rule: 'Numbers are key information: times, gates, levels, frequencies. Say every digit clearly.',
+      words: ['one', 'two', 'seven', 'twelve', 'twenty', 'thirty', 'hundred', 'thousand', 'first', 'second', 'third', 'half'],
+      ex: 'the +flight +leaves at +seven *thirty.', tip: 'On the radio every digit is stressed: <b>TWO-SEVEN</b>, <b>THREE-FIVE-ZERO</b>.' },
+    { name: 'Demonstratives', hint: 'this, that', rule: 'Point to something. Used alone (as a pronoun), they are stressed.',
+      words: ['this', 'that', 'these', 'those'],
+      ex: "I'll +take *that.", tip: 'Before a noun they are usually lighter: this <b>FLIGHT</b>. Used alone they are strong: I’ll take <b>THAT</b>.' },
+  ],
+  function: [
+    { name: 'Articles', hint: 'a, an, the', rule: 'Signal that a noun is coming. Almost always weak.',
+      words: ['a /ə/', 'an /ən/', 'the /ðə/', 'the /ði/'],
+      ex: 'I +booked a *seat.', tip: '<i>the</i> is /ðə/ before a consonant (the gate) and /ði/ before a vowel (the airport).' },
+    { name: 'Auxiliaries & modals', hint: 'can, have, will', rule: 'Helping verbs: they show tense, possibility or obligation. The main verb after them is stressed.',
+      words: ['can /kən/', 'could /kəd/', 'would /wəd/', 'should /ʃəd/', 'must /məst/', 'have /həv/', 'has /həz/', 'had /həd/', 'do /də/', 'does /dəz/', 'shall /ʃəl/'],
+      ex: 'you should +fasten your *seat belt.', tip: 'Strong when final (Yes, I <b>CAN</b> /kæn/), negative (<b>CAN’T</b>) or emphatic (I <b>DID</b> check it!).' },
+    { name: 'Forms of be', hint: 'is, are, was', rule: 'Link the subject to the rest of the sentence, or help the main verb.',
+      words: ['am /əm/', 'is /z/', 'are /ə/', 'was /wəz/', 'were /wə/', 'been /bɪn/', 'be /bi/'],
+      ex: 'the +flight was *cancelled.', tip: 'Strong at the end: Yes, we <b>ARE</b> /ɑː/. Is it on time? Yes, it <b>IS</b> /ɪz/.' },
+    { name: 'Prepositions', hint: 'to, for, at', rule: 'Show place, time and direction. Short prepositions are weak.',
+      words: ['to /tə/', 'for /fə/', 'at /ət/', 'of /əv/', 'from /frəm/', 'on', 'in', 'with', 'by', 'into'],
+      ex: 'please +wait at the *gate.', tip: 'Strong at the end: Where are you <b>FROM</b> /frɒm/? Longer ones (between, before, under) keep their own stress.' },
+    { name: 'Pronouns', hint: 'I, you, them', rule: 'Replace a noun the listener already knows, so they carry no new information.',
+      words: ['I', 'you /jə/', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her /ə/', 'us /əs/', 'them /ðəm/'],
+      ex: 'he +asked me to +call him *later.', tip: 'Stressed in contrast: No, it’s for <b>HER</b>, not for <b>YOU</b>.' },
+    { name: 'Possessives', hint: 'my, your', rule: 'Show who something belongs to. The noun after them carries the meaning.',
+      words: ['my', 'your /jə/', 'his', 'her /ə/', 'its', 'our', 'their'],
+      ex: 'could you +help me with my *bag?', tip: 'Stressed only in contrast: It’s <b>MY</b> bag, not <b>YOUR</b> bag.' },
+    { name: 'Conjunctions', hint: 'and, but, or', rule: 'Join words and clauses. They are the glue, not the message.',
+      words: ['and /ən/', 'but /bət/', 'or /ə/', 'than /ðən/', 'as /əz/', 'that /ðət/'],
+      ex: '+tea or *coffee?', tip: 'Listen for the linking: tea or coffee sounds like “tea-ə-coffee”; fish and chips like “fish-ən-chips”.' },
+    { name: 'Quantifiers', hint: 'some, any', rule: 'In their weak use they just mean “an amount of”, so they are unstressed.',
+      words: ['some /səm/', 'any', 'a few', 'a little'],
+      ex: 'would you +like some *water?', tip: 'Strong when they mean “certain ones”: <b>SOME</b> /sʌm/ passengers are still boarding.' },
+  ],
+};
+function Explorer(el, kind) {
+  const data = XP[kind], seen = new Set();
+  const isC = kind === 'content';
+  el.innerHTML = `<div class="xp-grid">
+      <div class="xp-cards">${data.map((d, i) => `<button class="xp-card ${isC ? 'c' : 'f'}" data-i="${i}"><b>${d.name}</b><span>${d.hint}</span><i class="xp-tick">&#10003;</i></button>`).join('')}</div>
+      <div class="xp-panel card ${isC ? 'pu' : ''}"><div class="xp-empty"><div class="xp-empty-ic">&#128070;</div><p><b>Click a card</b> to see the rule, more example words and a sentence you can hear.</p><p class="ex-meta">Explored: <b class="xp-n">0</b> / ${data.length}</p></div></div>
+    </div>`;
+  const panel = el.querySelector('.xp-panel');
+  el.querySelectorAll('.xp-card').forEach(b => b.onclick = () => {
+    const d = data[+b.dataset.i];
+    el.querySelectorAll('.xp-card').forEach(x => x.classList.toggle('on', x === b));
+    seen.add(+b.dataset.i); b.classList.add('seen');
+    const chips = d.words.map(w => { const m = w.match(/^(.*?)\s*(\/[^/]+\/)?$/); return `<button class="xp-w ${isC ? 'c' : 'f'}" data-say="${m[1].replace(/’/g, "'")}">${m[1]}${m[2] ? `<small>${m[2]}</small>` : ''}</button>`; }).join('');
+    panel.innerHTML = `<div class="xp-body">
+        <div class="xp-kicker">${isC ? 'Content word · stressed' : 'Function word · usually weak'}</div>
+        <h3 class="xp-title">${d.name}</h3>
+        <p class="xp-rule">${d.rule}</p>
+        <div class="xp-lbl">Examples <span class="ex-meta">(click a word to hear it)</span></div>
+        <div class="xp-words">${chips}</div>
+        <div class="xp-lbl">In a sentence</div>
+        <div class="xp-ex"><span>${P(d.ex)}</span><button class="btn ghost sm xp-play">&#128266;</button></div>
+        <div class="note ${isC ? '' : 'pk'} xp-tip">${d.tip}</div>
+        <p class="ex-meta">Explored: <b>${seen.size}</b> / ${data.length}${seen.size === data.length ? ' · all done!' : ''}</p>
+      </div>`;
+    panel.querySelectorAll('.xp-w').forEach(w => w.onclick = () => speak(w.dataset.say));
+    panel.querySelector('.xp-play').onclick = () => speak(plain(parse(d.ex)));
+  });
+}
+
+/* ---------- shared: word chips for a markup line ---------- */
+function chipRow(tokens) {
+  return tokens.map((t, i) => `<button class="chip" data-i="${i}">${cap(i === 0 ? t.raw[0].toUpperCase() + t.raw.slice(1) : t.raw)}</button>`).join('');
+}
+// true when the slide that holds `el` is the one on screen
+const onScreen = el => !!el.closest('.slide.active');
+
+/* ---------- Contrast drill: say the correction, then find the focus ---------- */
+const DRILLS = [
+  { ctx: 'A: Are we landing in Tokyo?', cue: 'Osaka', line: "+no, we're landing in *osaka." },
+  { ctx: 'A: Is your seat fourteen A?', cue: '14C', line: "+no, it's fourteen *C." },
+  { ctx: 'A: Is the flight delayed?', cue: 'cancelled', line: "+no, it's *cancelled." },
+  { ctx: 'A: Did you say terminal one?', cue: 'terminal 2', line: '+no, terminal *two.' },
+  { ctx: 'A: Is boarding at nine?', cue: '9:30', line: '+no, at nine *thirty.' },
+  { ctx: 'Crew: Would you like a window seat?', cue: 'aisle', line: '+no, an *aisle seat, please.' },
+  { ctx: 'A: Is this your bag?', cue: 'his', line: "+no, it's *his bag." },
+  { ctx: 'A: Is the captain on board?', cue: 'first officer', line: '+no, the *first officer.' },
+  { ctx: 'Crew: Hot coffee?', cue: 'tea', line: '+no, hot *tea, please.' },
+  { ctx: 'Pilot: Climb flight level two-four-zero.', cue: 'ATC: FL 260', line: '*negative, +flight +level +two- *six- +zero.' },
+  { ctx: 'Pilot: Runway two-seven left.', cue: 'ATC: right', line: '*negative, +runway +two- +seven *right.' },
+  { ctx: 'Pilot: Contact Bangkok Approach.', cue: 'ATC: Tower', line: '*negative, +contact +bangkok *tower.' },
+];
+function Drill(el, onDone) {
+  let idx = 0, first = 0, tried;
+  const say = t => t.replace(/^[^:]*:\s*/, '');
+  function draw() {
+    const it = DRILLS[idx];
+    if (!it) return finish();
+    tried = false;
+    const radio = it.cue.startsWith('ATC');
+    el.innerHTML = `
+      <div class="ex-top"><div><b>1</b> Say the correction aloud. <b>2</b> Show the model. <b>3</b> Tap the focus word(s).</div><div class="ex-meta">${idx + 1} / ${DRILLS.length} · first try: <b class="ft">${first}</b></div></div>
+      <div class="bar"><i style="width:${idx / DRILLS.length * 100}%"></i></div>
+      <div class="dr-row">
+        <div class="dr-bubble"><span class="dr-who">${it.ctx.split(':')[0]}</span><span class="dr-said">${say(it.ctx)}</span><button class="btn ghost sm dr-hear">&#128266;</button></div>
+        <div class="dr-cue"><span>Correct it</span><b>${it.cue.replace('ATC: ', '')}</b><small>${radio ? 'start with “Negative, …”' : 'start with “No, …”'}</small></div>
+      </div>
+      <div class="dr-stage">
+        <button class="btn dr-show">I’ve said it: show the model</button>
+      </div>
+      <div class="dr-foot"><div class="feedback"></div><button class="btn next" disabled>${idx === DRILLS.length - 1 ? 'Finish' : 'Next'} &rarr;</button></div>
+      <div class="reveal"><div class="rl">Model (RP)</div><div class="pattern">${pattern(parse(it.line))}</div></div>`;
+    el.querySelector('.dr-hear').onclick = () => speak(say(it.ctx));
+    el.querySelector('.dr-show').onclick = () => {
+      const tokens = parse(it.line);
+      el.querySelector('.dr-stage').innerHTML = `<div class="ex-meta" style="margin-bottom:8px">Model answer: tap the focus word(s), then Check.</div>
+        <div class="chips">${chipRow(tokens)}</div><div class="actions" style="margin-top:12px"><button class="btn ghost sm dr-play">&#128266; Listen</button><button class="btn chk">Check</button></div>`;
+      el.querySelector('.dr-play').onclick = () => speak(plain(tokens));
+      el.querySelectorAll('.dr-stage .chip').forEach(c => c.onclick = () => { if (c.classList.contains('bad')) c.classList.remove('bad'); else c.classList.toggle('sel'); fb(''); });
+      el.querySelector('.chk').onclick = () => {
+        let wrong = 0, missing = 0;
+        el.querySelectorAll('.dr-stage .chip').forEach(c => {
+          const t = tokens[+c.dataset.i], sel = c.classList.contains('sel') || c.classList.contains('ok');
+          c.classList.remove('ok', 'bad');
+          if (sel && t.type === 'n') { c.classList.remove('sel'); c.classList.add('ok'); c.disabled = true; }
+          else if (sel) { c.classList.remove('sel'); c.classList.add('bad'); wrong++; }
+          else if (t.type === 'n') missing++;
+        });
+        if (!wrong && !missing) {
+          if (!tried) first++;
+          el.querySelector('.ft').textContent = first;
+          el.querySelectorAll('.dr-stage .chip').forEach(c => c.disabled = true);
+          el.querySelector('.chk').disabled = true;
+          fb(radio ? 'Correct: NEGATIVE and the corrected value stand out.' : 'Correct: the new information is the focus. Given words stay light.', 'ok');
+          el.querySelector('.reveal').classList.add('show');
+          el.querySelector('.next').disabled = false;
+          speak(plain(tokens));
+        } else {
+          tried = true;
+          fb([wrong ? `${wrong} not correct (red)` : '', missing ? `${missing} missing` : ''].filter(Boolean).join('; ') + '. Which word is new or corrected?', 'bad');
+        }
+      };
+    };
+    el.querySelector('.next').onclick = () => { idx++; draw(); };
+  }
+  function fb(m, c) { const f = el.querySelector('.feedback'); f.textContent = m; f.className = 'feedback ' + (c || ''); }
+  function finish() {
+    el.innerHTML = `<div class="done-box"><div class="score">${first} / ${DRILLS.length}</div><div class="ex-meta">focus found on the first try</div>
+      <p style="margin-top:10px">Now do it with a partner: one reads the question, the other corrects it without looking.</p>
+      <div class="actions" style="justify-content:center;margin-top:14px"><button class="btn ghost again">Drill again</button></div></div>`;
+    el.querySelector('.again').onclick = () => { idx = 0; first = 0; draw(); };
+    if (onDone) onDone();
+  }
+  draw();
+}
+
+/* ---------- Cabin announcements: find the focus in each part ---------- */
+const CABIN = [
+  { title: 'Welcome on board', parts: ['good *morning,', '+ladies and *gentlemen.', '+welcome on *board', '+flight +six- +two- *eight', 'to *bangkok.'] },
+  { title: 'Seat belt sign', parts: ['+ladies and *gentlemen,', 'the *seat belt sign', 'has been +switched *on.', '+please +return to your *seats', 'and +fasten your *seat belts.'] },
+  { title: 'Turbulence', parts: ['we are +expecting some *turbulence.', 'for your *safety,', '+please +keep your +seat belt *fastened.', '*thank you.'] },
+  { title: 'Delay', parts: ['this is your *captain speaking.', 'we are +waiting for a *gate,', 'and we +hope to be at the *terminal', 'in +five *minutes.'] },
+  { title: 'Descent', parts: ['we are +now +beginning our *descent', 'into *bangkok.', 'we will be +landing in about +twenty *minutes.', 'the +local +time is +three *fifteen.'] },
+];
+function Cabin(el, onDone) {
+  let a = 0, p, first, total, tried;
+  function draw() {
+    const an = CABIN[a];
+    if (!an) return finish();
+    p = 0; first = first || 0; total = total || 0;
+    el.innerHTML = `
+      <div class="ex-top"><div>Announcement ${a + 1} of ${CABIN.length}: <b>${an.title}</b>. Tap the <b>focus word</b> in the highlighted part.</div><div class="ex-meta">first try: <b class="ft">${first}</b> / ${total}</div></div>
+      <div class="bar"><i style="width:${a / CABIN.length * 100}%"></i></div>
+      <div class="cab-parts">${an.parts.map((m, k) => `<div class="cab-part" data-k="${k}"><span class="cab-n">${k + 1}</span><div class="chips">${chipRow(parse(m))}</div></div>`).join('')}</div>
+      <div class="feedback"></div>
+      <div class="actions cab-end" style="display:none;margin-top:8px"><button class="btn ghost cab-play">&#128266; Listen to the whole announcement</button><button class="btn next">${a === CABIN.length - 1 ? 'Finish' : 'Next announcement'} &rarr;</button></div>`;
+    el.querySelector('.next').onclick = () => { a++; draw(); };
+    el.querySelector('.cab-play').onclick = () => speak(an.parts.map(m => plain(parse(m))).join(' '));
+    activate();
+  }
+  function activate() {
+    const an = CABIN[a], rows = el.querySelectorAll('.cab-part');
+    rows.forEach((r, k) => { r.classList.toggle('on', k === p); r.querySelectorAll('.chip').forEach(c => c.disabled = k !== p); });
+    if (p >= an.parts.length) {
+      fb('Well done. Now read the whole announcement aloud like a crew member: short pause at each part, focus words strong.', 'ok');
+      el.querySelector('.cab-end').style.display = 'flex';
+      speak(an.parts.map(m => plain(parse(m))).join(' '));
+      return;
+    }
+    tried = false;
+    const tokens = parse(an.parts[p]), row = rows[p];
+    row.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+      const t = tokens[+c.dataset.i];
+      if (t.type === 'n') {
+        total++; if (!tried) first++;
+        el.querySelector('.ft').textContent = first;
+        el.querySelector('.ft').nextSibling.textContent = ` / ${total}`;
+        row.querySelector('.chips').innerHTML = `<span class="cab-pat">${pattern(tokens)}</span>`;
+        row.classList.add('done'); fb('');
+        p++; activate();
+      } else {
+        tried = true; c.classList.add('bad'); c.disabled = true;
+        fb(t.type === 's' ? 'Stressed, but not the strongest in this part.' : 'That word is weak. Look for the key information.', 'bad');
+      }
+    });
+  }
+  function fb(m, c) { const f = el.querySelector('.feedback'); f.textContent = m; f.className = 'feedback ' + (c || ''); }
+  function finish() {
+    el.innerHTML = `<div class="done-box"><div class="score">${first} / ${total}</div><div class="ex-meta">parts correct on the first try</div>
+      <div class="actions" style="justify-content:center;margin-top:14px"><button class="btn ghost again">Start again</button></div></div>`;
+    el.querySelector('.again').onclick = () => { a = 0; first = 0; total = 0; draw(); };
+    if (onDone) onDone();
+  }
+  draw();
+}
+
+/* ---------- Game: 60-second speed round ---------- */
+function SpeedRound(el) {
+  const strip = w => w.replace(/\s*\/[^/]+\/$/, '').replace(/’/g, "'");
+  const skip = new Set(['this', 'that', 'these', 'those', 'have', 'has', 'had', 'do', 'does', 'her', 'how long', 'how much', 'a few', 'a little', 'the']);
+  const pool = [];
+  XP.content.forEach(g => g.words.forEach(w => { const x = strip(w); if (!skip.has(x)) pool.push({ w: x, c: 1, g: g.name }); }));
+  XP.function.forEach(g => g.words.forEach(w => { const x = strip(w); if (!skip.has(x)) pool.push({ w: x, c: 0, g: g.name }); }));
+  pool.push({ w: 'the', c: 0, g: 'Articles' });
+  let best = 0; try { best = +localStorage.getItem('w12-speed-best') || 0; } catch (e) {}
+  let running = false, score, streak, tries, timeLeft, timer, cur, bag;
+  function home(msg) {
+    running = false; clearInterval(timer);
+    el.innerHTML = `<div class="sp-home">${msg || ''}
+      <p style="font-size:20px">A word appears. Is it a <b style="color:var(--s)">content</b> word or a <b style="color:var(--u)">function</b> word? Answer as many as you can in <b>60 seconds</b>.</p>
+      <p class="ex-meta">Keys: <b>&larr;</b> content · <b>&rarr;</b> function (or tap the buttons)</p>
+      <div class="actions" style="justify-content:center"><button class="btn sp-start">&#9654; Start</button></div>
+      <p class="ex-meta">Best score in this browser: <b>${best}</b></p></div>`;
+    el.querySelector('.sp-start').onclick = start;
+  }
+  function start() {
+    running = true; score = 0; streak = 0; tries = 0; timeLeft = 60; bag = shuffle(pool);
+    el.innerHTML = `<div class="sp-top"><span>Score <b class="sp-score">0</b></span><span>Streak <b class="sp-streak">0</b></span><span class="sp-time">60</span></div>
+      <div class="sp-timebar"><i></i></div>
+      <div class="sp-word"></div><div class="sp-group ex-meta"></div>
+      <div class="sp-btns"><button class="sort-btn" data-c="1"><b>&larr; Content</b><small>carries meaning</small></button><button class="sort-btn" data-c="0"><b>Function &rarr;</b><small>carries grammar</small></button></div>`;
+    el.querySelectorAll('.sp-btns .sort-btn').forEach(b => b.onclick = () => answer(+b.dataset.c));
+    next();
+    timer = setInterval(() => {
+      timeLeft--; el.querySelector('.sp-time').textContent = timeLeft;
+      el.querySelector('.sp-timebar i').style.width = (timeLeft / 60 * 100) + '%';
+      if (timeLeft <= 0 || !onScreen(el)) end();
+    }, 1000);
+  }
+  function next() { if (!bag.length) bag = shuffle(pool); cur = bag.pop(); const w = el.querySelector('.sp-word'); w.textContent = cur.w; w.className = 'sp-word pop'; el.querySelector('.sp-group').textContent = ''; }
+  function answer(c) {
+    if (!running) return;
+    tries++;
+    const w = el.querySelector('.sp-word');
+    if (c === cur.c) { score++; streak++; w.className = 'sp-word good'; }
+    else { streak = 0; w.className = 'sp-word miss'; el.querySelector('.sp-group').textContent = `${cur.w}: ${cur.c ? 'content' : 'function'} (${cur.g})`; }
+    el.querySelector('.sp-score').textContent = score; el.querySelector('.sp-streak').textContent = streak;
+    setTimeout(() => { if (running) next(); }, c === cur.c ? 180 : 900);
+  }
+  function end() {
+    if (!running) return;
+    running = false; clearInterval(timer);
+    const nb = score > best; if (nb) { best = score; try { localStorage.setItem('w12-speed-best', String(best)); } catch (e) {} }
+    home(`<div class="score">${score}</div><p class="ex-meta">${tries} answered · ${tries ? Math.round(score / tries * 100) : 0}% correct${nb ? ' · new best!' : ''}</p>`);
+  }
+  window.addEventListener('keydown', e => {
+    if (!running || !onScreen(el)) return;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); e.stopImmediatePropagation(); answer(e.key === 'ArrowLeft' ? 1 : 0); }
+  }, true);
+  home();
+}
+
+/* ---------- Game: beat tapper ---------- */
+function BeatTap(el) {
+  let li = 0, tempo = 850, state = 'idle', t0 = 0, beats = [], taps = [], timers = [], actx = null;
+  function click(strong, when) {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = actx.createOscillator(), g = actx.createGain(), at = actx.currentTime + Math.max(0, when / 1000);
+      o.frequency.value = strong ? 660 : 440; g.gain.setValueAtTime(strong ? .18 : .05, at); g.gain.exponentialRampToValueAtTime(.001, at + .08);
+      o.connect(g); g.connect(actx.destination); o.start(at); o.stop(at + .09);
+    } catch (e) {}
+  }
+  function draw() {
+    el.innerHTML = `
+      <div class="ex-top"><div>Tap on every <b style="color:var(--pink)">strong beat</b>: the big dots. Use the TAP button or the <b>space bar</b>.</div>
+        <div class="actions tempo"><button class="btn ghost sm" data-t="1100">Slow</button><button class="btn ghost sm" data-t="850">Normal</button><button class="btn ghost sm" data-t="650">Fast</button></div></div>
+      <div class="bt-lines">${['CATS CHASE MICE', 'the CATS will CHASE the MICE', 'the CATS have been CHAsing the MICE', 'CLEARED for TAKEoff', 'we are exPECting some TURbulence'].map((r, k) => `<button class="btn ghost sm bt-pick" data-k="${k}">${r}</button>`).join('')}</div>
+      <div class="rhythm-line bt-line">${RHYTHM[li].syl.map(([w, st, end]) => `<span class="syl ${st ? 'st' : 'un'} ${end ? 'gap' : ''}"><span class="d"></span><span class="w">${w}</span></span>`).join('')}</div>
+      <div class="bt-track"><div class="bt-now"></div></div>
+      <div class="actions" style="justify-content:center;margin-top:6px"><button class="btn bt-go">&#9654; Start (2 count-in clicks)</button><button class="bt-tap" disabled>TAP</button></div>
+      <div class="feedback bt-res"></div>`;
+    el.querySelectorAll('.tempo button').forEach(b => { b.setAttribute('aria-pressed', String(+b.dataset.t === tempo)); b.onclick = () => { tempo = +b.dataset.t; draw(); }; });
+    el.querySelectorAll('.bt-pick').forEach(b => { b.classList.toggle('on', +b.dataset.k === li); b.onclick = () => { li = +b.dataset.k; draw(); }; });
+    el.querySelector('.bt-go').onclick = go;
+    el.querySelector('.bt-tap').onpointerdown = e => { e.preventDefault(); tap(); };
+  }
+  function go() {
+    stop();
+    const data = RHYTHM[li].syl, syl = [...el.querySelectorAll('.bt-line .syl')], T = tempo;
+    const firstS = data.findIndex(s => s[1]);
+    const ev = []; beats = []; taps = [];
+    const lead = 2 * T; // count-in
+    for (let k = 0; k < firstS; k++) ev.push({ i: k, t: lead + T - (firstS - k) * Math.min(T / (firstS + 1), 220) });
+    let beat = 1, i = firstS;
+    while (i < data.length) {
+      let j = i + 1; while (j < data.length && !data[j][1]) j++;
+      const weak = j - i - 1, bt = lead + beat * T;
+      ev.push({ i, t: bt, strong: true }); beats.push(bt);
+      for (let k = 1; k <= weak; k++) ev.push({ i: i + k, t: bt + k * (T / (weak + 1)) });
+      beat++; i = j;
+    }
+    const endT = lead + beat * T;
+    state = 'run'; t0 = performance.now();
+    el.querySelector('.bt-tap').disabled = false; el.querySelector('.bt-go').disabled = true;
+    el.querySelector('.bt-res').textContent = 'Count in: 1 … 2 …'; el.querySelector('.bt-res').className = 'feedback bt-res';
+    click(true, 0); click(true, T);
+    const track = el.querySelector('.bt-track');
+    track.querySelectorAll('.bt-mark,.bt-hit').forEach(x => x.remove());
+    beats.forEach(b => { const m = document.createElement('i'); m.className = 'bt-mark'; m.style.left = (b / endT * 100) + '%'; track.appendChild(m); });
+    const now = el.querySelector('.bt-now');
+    ev.forEach(e => timers.push(setTimeout(() => { syl.forEach(x => x.classList.remove('hit')); syl[e.i].classList.add('hit'); if (e.strong) el.querySelector('.bt-res').textContent = ''; }, e.t)));
+    const anim = () => { if (state !== 'run') return; const t = performance.now() - t0; now.style.left = Math.min(100, t / endT * 100) + '%'; requestAnimationFrame(anim); };
+    requestAnimationFrame(anim);
+    timers.push(setTimeout(() => { syl.forEach(x => x.classList.remove('hit')); finish(endT); }, endT + 150));
+    track.dataset.end = endT;
+  }
+  function tap() {
+    if (state !== 'run') return;
+    const t = performance.now() - t0; taps.push(t);
+    const track = el.querySelector('.bt-track'), m = document.createElement('i');
+    m.className = 'bt-hit'; m.style.left = (t / +track.dataset.end * 100) + '%'; track.appendChild(m);
+    const b = el.querySelector('.bt-tap'); b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse');
+  }
+  function finish() {
+    state = 'idle';
+    el.querySelector('.bt-tap').disabled = true; el.querySelector('.bt-go').disabled = false;
+    let perfect = 0, good = 0; const used = new Set();
+    beats.forEach(bt => {
+      let bestK = -1, bestD = 1e9;
+      taps.forEach((t, k) => { const d = Math.abs(t - bt); if (!used.has(k) && d < bestD) { bestD = d; bestK = k; } });
+      if (bestK >= 0 && bestD <= 200) { used.add(bestK); if (bestD <= 100) perfect++; else good++; }
+    });
+    const extra = taps.length - used.size, n = beats.length, hit = perfect + good;
+    const r = el.querySelector('.bt-res');
+    r.className = 'feedback bt-res ' + (hit === n && extra === 0 ? 'ok' : hit >= n - 1 ? '' : 'bad');
+    r.innerHTML = `Beats hit: <b>${hit} / ${n}</b> (perfect ${perfect}, good ${good})${extra ? ` · ${extra} extra tap${extra > 1 ? 's' : ''} on weak syllables` : ''}. ` +
+      (hit === n && !extra ? 'Excellent rhythm!' : extra ? 'Tap only the big dots: the weak syllables go between the beats.' : 'Try again and listen for the steady beat.');
+  }
+  function stop() { timers.forEach(clearTimeout); timers = []; state = 'idle'; }
+  window.addEventListener('keydown', e => {
+    if (!onScreen(el) || e.key !== ' ') return;
+    if (state === 'run') { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) tap(); }
+  }, true);
+  draw();
+}
+
+/* ---------- Weak or strong? ---------- */
+const WEAKSTRONG = [
+  { s: 'I <u>can</u> help you.', o: ['/kən/ weak', '/kæn/ strong'], why: 'Before the main verb, <i>can</i> is weak.' },
+  { s: 'Yes, I <u>can</u>.', o: ['/kæn/ strong', '/kən/ weak'], why: 'At the end of a sentence, <i>can</i> is strong.' },
+  { s: 'I’m <u>from</u> Thailand.', o: ['/frəm/ weak', '/frɒm/ strong'], why: 'Inside the sentence, <i>from</i> is weak.' },
+  { s: 'Where are you <u>from</u>?', o: ['/frɒm/ strong', '/frəm/ weak'], why: 'A preposition at the end is strong.' },
+  { s: 'It’s <u>for</u> you.', o: ['/fə/ weak', '/fɔː/ strong'], why: 'Before its object, <i>for</i> is weak.' },
+  { s: 'What’s it <u>for</u>?', o: ['/fɔː/ strong', '/fə/ weak'], why: 'At the end, <i>for</i> is strong.' },
+  { s: 'Where <u>are</u> you?', o: ['/ə/ weak', '/ɑː/ strong'], why: 'In the middle, <i>are</i> is weak.' },
+  { s: 'Yes, we <u>are</u>.', o: ['/ɑː/ strong', '/ə/ weak'], why: 'At the end, <i>are</i> is strong.' },
+  { s: 'The flight <u>was</u> late.', o: ['/wəz/ weak', '/wɒz/ strong'], why: 'In the middle, <i>was</i> is weak.' },
+  { s: 'Yes, it <u>was</u>.', o: ['/wɒz/ strong', '/wəz/ weak'], why: 'At the end, <i>was</i> is strong.' },
+  { s: 'Look <u>at</u> the screen.', o: ['/ət/ weak', '/æt/ strong'], why: 'Before its object, <i>at</i> is weak.' },
+  { s: 'What are you looking <u>at</u>?', o: ['/æt/ strong', '/ət/ weak'], why: 'At the end, <i>at</i> is strong.' },
+];
+
+// Rhythm player
+const RHYTHM = [
+  { label: 'LINE 1', syl: [['CATS', 1, 1], ['CHASE', 1, 1], ['MICE', 1, 1]] },
+  { label: 'LINE 2', syl: [['the', 0, 1], ['CATS', 1, 1], ['will', 0, 1], ['CHASE', 1, 1], ['the', 0, 1], ['MICE', 1, 1]] },
+  { label: 'LINE 3', syl: [['the', 0, 1], ['CATS', 1, 1], ['have', 0, 1], ['been', 0, 1], ['CHA', 1, 0], ['sing', 0, 1], ['the', 0, 1], ['MICE', 1, 1]] },
+  { label: 'AVIATION', syl: [['CLEARED', 1, 1], ['for', 0, 1], ['TAKE', 1, 0], ['off', 0, 1]] },
+  { label: 'AVIATION', syl: [['we', 0, 1], ['are', 0, 1], ['ex', 0, 0], ['PEC', 1, 0], ['ting', 0, 1], ['some', 0, 1], ['TUR', 1, 0], ['bu', 0, 0], ['lence', 0, 1]] },
+];
+let rhythmTimers = [];
+function stopRhythm() { rhythmTimers.forEach(clearTimeout); rhythmTimers = []; document.querySelectorAll('.syl.hit').forEach(x => x.classList.remove('hit')); document.querySelectorAll('.rhythm-line.active').forEach(x => x.classList.remove('active')); }
+function Rhythm(el) {
+  let tempo = 850, actx = null;
+  el.innerHTML = `
+    <div class="ex-top" style="margin-bottom:12px"><div>Press a line. Clap on each <b style="color:var(--pink)">pink</b> beat and say the line with it.</div>
+      <div class="actions tempo"><span class="ex-meta">Tempo</span><button class="btn ghost sm" data-t="1100">Slow</button><button class="btn ghost sm" data-t="850" aria-pressed="true">Normal</button></div></div>
+    <div class="lines"></div>`;
+  el.querySelectorAll('.tempo button').forEach(b => b.onclick = () => { tempo = +b.dataset.t; el.querySelectorAll('.tempo button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+  const lines = el.querySelector('.lines');
+  RHYTHM.forEach((r, li) => {
+    const row = document.createElement('div'); row.className = 'rhythm-line'; row.title = 'Play';
+    row.innerHTML = `<span class="rl-lbl">${r.label}</span>` + r.syl.map(([w, st, end]) => `<span class="syl ${st ? 'st' : 'un'} ${end ? 'gap' : ''}"><span class="d"></span><span class="w">${w}</span></span>`).join('');
+    row.onclick = () => play(li, row);
+    lines.appendChild(row);
+  });
+  function click(strong) {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.frequency.value = strong ? 880 : 440; g.gain.setValueAtTime(strong ? .25 : .06, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, actx.currentTime + .08);
+      o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime + .09);
+    } catch (e) {}
+  }
+  function play(li, row) {
+    stopRhythm(); row.classList.add('active');
+    const syl = [...row.querySelectorAll('.syl')], data = RHYTHM[li].syl, T = tempo, events = [];
+    const firstS = data.findIndex(s => s[1]);
+    for (let k = 0; k < firstS; k++) events.push({ i: k, t: T - (firstS - k) * Math.min(T / (firstS + 1), 220), strong: false });
+    let beat = 1, i = firstS;
+    while (i < data.length) {
+      let j = i + 1; while (j < data.length && !data[j][1]) j++;
+      const weak = j - i - 1;
+      events.push({ i, t: beat * T, strong: true });
+      for (let k = 1; k <= weak; k++) events.push({ i: i + k, t: beat * T + k * (T / (weak + 1)), strong: false });
+      beat++; i = j;
+    }
+    events.forEach(ev => rhythmTimers.push(setTimeout(() => { syl.forEach(x => x.classList.remove('hit')); syl[ev.i].classList.add('hit'); click(ev.strong); }, ev.t)));
+    rhythmTimers.push(setTimeout(() => { syl.forEach(x => x.classList.remove('hit')); row.classList.remove('active'); }, beat * T + 150));
+  }
+}
+
+/* =========================================================
+   SECTIONS & SLIDES
+   ========================================================= */
+const SECTIONS = [
+  { id: 's1', title: 'Introduction' }, { id: 's2', title: 'From word to sentence' }, { id: 's3', title: 'Content vs function words' },
+  { id: 's4', title: 'Stress-timed rhythm' }, { id: 's6', title: 'Focus words & contrast' },
+  { id: 's7', title: 'Exceptions' }, { id: 's8', title: 'Aviation English' }, { id: 's9', title: 'Record yourself' }, { id: 's10', title: 'Summary' },
+];
+const SLIDES = [];
+// kind: 'pr' principle | 'pa' practice | '' plain
+function S(sec, kind, title, body, mount, lead) { SLIDES.push({ sec, kind, title, body, mount, lead }); }
+const card = (h, t, cls = '') => `<div class="card ${cls}"><h3>${h}</h3><div class="sm">${t}</div></div>`;
+const dots = (arr, c) => `<div class="dotrow">${arr.map(v => `<i style="width:${v ? 22 : 10}px;height:${v ? 22 : 10}px;background:${v ? c : '#D8D0EA'}"></i>`).join('')}</div>`;
+const exbox = id => `<div class="card exbox" id="${id}"></div>`;
+
+/* ---------- 1 Introduction ---------- */
+S('s1', '', '', `
+  <div class="title-wrap">
+    <div>
+      <div class="eyebrow">Week 12 · English Pronunciation · AIE46941N</div>
+      <h1 style="margin:14px 0 12px">Sentence Stress</h1>
+      <p style="font-size:24px;color:var(--muted)">Which words stand out in a sentence, and why</p>
+      <div class="actions" style="margin-top:28px"><button class="btn" data-next>Start the lesson &rarr;</button><span class="ex-meta">or press &rarr;</span></div>
+      <p class="ex-meta" style="margin-top:22px">Reference accent: RP (British English)</p>
+    </div>
+    <div class="card" style="padding:34px 20px">
+      <div class="beats">
+        <div class="b"><i style="width:30px;height:30px;background:var(--s)"></i><span style="font:700 34px Sora;color:var(--s)">CLEARED</span></div>
+        <div class="b"><i style="width:12px;height:12px;background:#D8D0EA"></i><span style="font-size:28px;color:var(--u)">for</span></div>
+        <div class="b"><i style="width:40px;height:40px;background:var(--n)"></i><span style="font:800 40px Sora;color:var(--n)">TAKEOFF</span></div>
+      </div>
+      <p class="ex-meta" style="text-align:center;margin-top:18px">big dot = strong beat · small dot = weak</p>
+    </div>
+  </div>`);
+S('s1', 'pr', 'Learning outcome', `
+  <div class="card pu"><p style="font:700 26px Sora">Pronounce sentences with stress on the appropriate words.</p><p class="ex-meta" style="margin-top:6px">CLO4 · assessed with the sentence-level pronunciation rubric</p></div>
+  <div class="row c4">
+    ${card('<span style="color:var(--violet)">Sort</span>', 'Tell content words from function words.')}
+    ${card('<span style="color:var(--purple)">Keep the beat</span>', 'Speak with stress-timed rhythm.')}
+    ${card('<span style="color:var(--pink)">Focus</span>', 'Put extra stress on the word that is new or corrected.')}
+    ${card('<span style="color:var(--violet)">On the radio</span>', 'Make key information stand out in clearances and readbacks.')}
+  </div>`);
+S('s1', 'pr', 'How to use this deck', `
+  <div class="row c2 stack">
+    <div class="card"><h3>Moving around</h3><ul class="clean sm">
+      <li><b>&rarr; / &larr;</b> or the buttons below: next and previous slide</li>
+      <li><b>&#9776;</b> or <b>M</b>: jump to any section</li>
+      <li><b>F</b> or <b>&#x26F6;</b>: full screen</li>
+      <li>Phone: scroll the slide, swipe left or right to change slides</li></ul></div>
+    <div class="card"><h3>Working through it</h3><ul class="clean sm">
+      <li><span class="pill pr" style="font-size:12px;font-weight:700">PRINCIPLE</span> slides explain. <span class="pill pa" style="font-size:12px;font-weight:700">PRACTICE</span> slides are interactive.</li>
+      <li>Press <b>&#128266; Listen</b> for a model, then say it aloud yourself.</li>
+      <li>A wrong answer turns red and locks. Keep trying.</li>
+      <li>Progress is saved in this browser.</li></ul></div>
+  </div>
+  <div class="ex">${P('I +want to +book a *flight.')}</div>${LEGEND}`);
+S('s1', 'pa', 'Warm-up: what do you already know?', exbox('ex1'), el => MCQ(el, [
+  { q: 'In <i>“I want to book a flight”</i>, which words are normally stressed?', o: ['want, book, flight', 'I, to, a', 'all six words equally', 'only “I”'], why: 'Content words (verbs, nouns) carry the meaning, so they are stressed.' },
+  { q: 'English rhythm is organised around…', o: ['stressed syllables', 'every syllable, equally long', 'the number of words', 'a tone on every syllable'], why: 'English is stress-timed: the beat falls on stressed syllables.' },
+  { q: 'A: <i>“Is your flight at seven?”</i> B: <i>“No, it’s at EIGHT.”</i> Why is EIGHT the strongest word?', o: ['It corrects the information', 'It is the longest word', 'Numbers are always the strongest', 'It is the first word'], why: 'Contrastive stress highlights corrected information.' },
+], () => markDone('s1')));
+
+/* ---------- 2 From word to sentence ---------- */
+S('s2', 'pr', 'Two levels of stress', `
+  <div class="row c2 stack">
+    <div class="card pu"><h3 style="color:var(--violet)">Word stress</h3><p class="sm">Which <b>syllable</b> is strong inside a word? Fixed: it is in the dictionary.</p>
+      <div class="ex" style="margin-top:14px"><span class="s">TUR</span><span class="u">·bu·lence</span> &nbsp;<span class="ipa" style="font-size:.8em">/tɜːbjələns/</span></div></div>
+    <div class="card pk"><h3 style="color:var(--pink)">Sentence stress</h3><p class="sm">Which <b>words</b> are strong in an utterance? It depends on meaning: the speaker chooses what to highlight.</p>
+      <div class="ex" style="margin-top:14px">${P('we are +expecting some *turbulence.')}</div></div>
+  </div>
+  <div class="note">They work together: a stressed word takes its beat on its word-stress syllable, ex<b>PEC</b>ting, <b>TUR</b>bulence.</div>`);
+S('s2', 'pr', 'What makes a syllable prominent?', `
+  <div class="row c4">
+    ${card('Louder', 'more energy')}${card('Longer', 'the vowel is held')}${card('Pitch change', 'the voice moves up or down')}${card('Full vowel', 'not reduced to /ə/')}
+  </div>
+  <p>Unstressed syllables are the opposite: <b>quieter, shorter, level</b> in pitch, and often reduced to schwa <span class="ipa">/ə/</span>.</p>
+  <table class="t"><tr><th>Level</th><th>What it is</th><th>Shown as</th></tr>
+    <tr><td>Unstressed</td><td>function words and weak syllables</td><td><span class="u">lowercase</span></td></tr>
+    <tr><td>Stressed</td><td>content words</td><td><span class="s">CAPS</span></td></tr>
+    <tr><td>Focus word</td><td>the word with the most stress: usually the last content word, or a new or corrected word</td><td><span class="n">CAPS</span></td></tr></table>`);
+S('s2', 'pa', 'Check your understanding', exbox('ex2'), el => MCQ(el, [
+  { q: 'Which of these is about <b>word</b> stress?', o: ['“turbulence” is stressed on its first syllable', '“flight” is the strongest word in “I want to book a flight”', '“EIGHT” is stressed to correct a time', '“the” is unstressed in “the gate”'], why: 'Word stress is about syllables inside one word.' },
+  { q: 'When a word is stressed in a sentence, where does the beat fall?', o: ['On its word-stress syllable', 'Always on its last syllable', 'Always on its first syllable', 'On every syllable'], why: 'ex<b>PEC</b>ting, <b>TUR</b>bulence.' },
+  { q: 'Which is <b>not</b> a cue of prominence?', o: ['A reduced vowel such as /ə/', 'Greater loudness', 'Greater length', 'A change in pitch'], why: 'Reduced vowels belong to unstressed syllables.' },
+  { q: 'In “we are ex-PEC-ting some TUR-bu-lence”, how many strong beats?', o: ['2', '1', '3', '9'], why: 'PEC and TUR.' },
+], () => markDone('s2')));
+
+/* ---------- 3 Content vs function ---------- */
+S('s3', 'pr', 'Content words: usually stressed', `
+  <p class="lead" style="margin:0">They carry the meaning. <span class="ex-meta">Click each card to explore.</span></p>
+  <div id="xpContent" class="xp-host"></div>`, () => Explorer(document.getElementById('xpContent'), 'content'));
+S('s3', 'pr', 'Function words: usually unstressed', `
+  <p class="lead" style="margin:0">They carry the grammar: quick, quiet, often reduced. <span class="ex-meta">Click each card to explore.</span></p>
+  <div id="xpFunction" class="xp-host"></div>`, () => Explorer(document.getElementById('xpFunction'), 'function'));
+S('s3', 'pa', 'Sort 20 words: content or function?', exbox('ex3sort'), el => SortEx(el, () => part('s3', 'a', ['a', 'b'])));
+S('s3', 'pr', 'The telegram test', `
+  <p>Keep only the content words. If the message still works, you found them.</p>
+  <div class="ex big">${P('+where did you +put my *passport?')}</div>
+  <div class="ex" style="text-align:center"><span class="s">WHERE … PUT … PASSPORT?</span> &nbsp;<span class="ex-meta">still understandable</span></div>
+  <div class="note pk"><b>Not a fixed rule.</b> Function words become stressed when they are final, negative, emphatic or contrasted. Content words can lose stress when their information is already known. You will meet both later.</div>
+  ${LEGEND}`);
+S('s3', 'pa', 'Content or function? (10 sentences per round)', exbox('ex3'), el => TapEx(el, 'content', 10, () => part('s3', 'b', ['a', 'b'])));
+
+S('s3', 'pa', 'Game: 60-second speed round', exbox('gSpeed'), el => SpeedRound(el));
+/* ---------- 4 Rhythm ---------- */
+S('s4', 'pr', 'English is stress-timed', `
+  <div class="row c2 stack">
+    <div class="card pu"><h3 style="color:var(--violet)">English: stress-timed</h3>${dots([1, 0, 0, 1, 0, 1, 0, 0, 1], 'var(--violet)')}
+      <p class="sm">Stressed syllables come at roughly regular intervals. Weak syllables between them are shortened to fit.</p></div>
+    <div class="card pk"><h3 style="color:var(--pink)">Thai: tends to be syllable-timed</h3>${dots([1, 1, 1, 1, 1, 1, 1, 1], 'var(--pink)')}
+      <p class="sm">Syllables have more similar length. Each one gets its own beat.</p></div>
+  </div>
+  <p>This is a tendency, not a stopwatch rule. English listeners hear the beat on stressed syllables and expect the small words to be quick and light.</p>
+  <div class="note pk"><b>Risk for Thai speakers:</b> giving every word the same weight. It sounds mechanical, and the key information does not stand out.</div>`);
+S('s4', 'pr', 'Weak syllables and a method', `
+  <div class="row c3">
+    ${card('Shorter', 'said quickly, with less energy')}
+    ${card('Reduced', 'vowels become schwa: <i>to</i> <span class="ipa">/tə/</span>, <i>for</i> <span class="ipa">/fə/</span>, <i>and</i> <span class="ipa">/ən/</span>')}
+    ${card('Linked', 'joined to the words around them (connected speech)')}
+  </div>
+  <div class="card pu"><h3>A method for any sentence</h3>
+    <div style="display:grid;gap:12px;margin-top:10px">
+      ${['Find the content words and their stressed syllables.', 'Say only those syllables, on a steady beat.', 'Fit the small words in between. Keep the beat.']
+        .map((t, k) => `<div style="display:flex;gap:14px;align-items:center"><span class="num">${k + 1}</span><span>${t}</span></div>`).join('')}
+    </div></div>
+  <p class="ex-meta">More syllables between two beats means you say them faster, not that the sentence takes longer.</p>`);
+S('s4', 'pa', 'Rhythm player: keep the beat', exbox('ex4a'), el => Rhythm(el));
+S('s4', 'pa', 'Game: beat tapper', exbox('gBeat'), el => BeatTap(el));
+S('s4', 'pa', 'Count the beats', exbox('ex4b'), el => MCQ(el, [
+  { q: 'How many strong beats: <i>“The flight has been delayed.”</i>', o: ['2', '3', '5', '6'], why: 'FLIGHT and de<b>LAYED</b>.' },
+  { q: 'How many strong beats: <i>“Cleared for takeoff.”</i>', o: ['2', '1', '3', '4'], why: 'CLEARED and <b>TAKE</b>off.' },
+  { q: 'How many strong beats: <i>“We will be landing in twenty minutes.”</i>', o: ['3', '2', '4', '7'], why: '<b>LAN</b>ding, <b>TWEN</b>ty, <b>MIN</b>utes.' },
+  { q: 'A learner gives every word the same weight. What is the main effect?', o: ['The key information does not stand out', 'The speech becomes faster', 'Function words disappear', 'Nothing: English works the same way'], why: 'On the radio, that is a safety issue.' },
+], () => markDone('s4')));
+
+/* ---------- 6 Contrastive stress ---------- */
+const v6 = w => ['I', "didn't", 'book', 'this', 'flight.'].map((x, k) => k === w ? `<span class="n">${x.toUpperCase()}</span>` : `<span class="u">${x}</span>`).join(' ');
+S('s6', 'pr', 'The focus word', `
+  <div class="ex big">${P('I +want to +book a *flight.')}</div>
+  <p>All content words are stressed, but one usually sounds a little stronger than the others: the <b>focus word</b>. In this lesson it is shown in <span class="n">pink</span>.</p>
+  <div class="row c2 stack">
+    <div class="card pu"><h3>Neutral sentence</h3><p class="sm">The focus is usually on the <b>last content word</b>, where new information comes.</p>
+      <div class="ex" style="margin-top:10px;font-size:21px">${P('your +gate is at +terminal *two.')}</div></div>
+    <div class="card pk"><h3>Contrast or correction</h3><p class="sm">The focus moves to the word that is <b>new</b> or <b>corrected</b>, even if it is not the last one.</p>
+      <div class="ex" style="margin-top:10px;font-size:21px">${P("+no, it's at *eight.")}</div></div>
+  </div>
+  <p class="ex-meta">Stress the focus word on its word-stress syllable: de<b style="color:var(--n)">SCENT</b>, <b style="color:var(--n)">MIN</b>utes.</p>`);
+S('s6', 'pr', 'New, given and contrasted', `
+  <p>Speakers highlight what is <b>new</b>. Information that is <b>given</b> (already said) loses stress. To <b>contrast</b> or <b>correct</b>, put the focus on that word.</p>
+  <div class="ex big">${P('I said *departures, not *arrivals.')}</div>
+  <div class="card"><p class="u" style="font-size:22px">A: Is your flight at seven?</p><p style="font-size:26px">B: ${P('+no, it\'s at *eight.')}</p>
+    <p class="sm" style="margin-top:6px">“Flight” and “at” are given. Only the time is new, so it is the focus word.</p></div>
+  <div class="note">Given information: A: <i>Would you like some tea?</i> B: No, I don’t <span class="n">DRINK</span> <span class="u">tea.</span></div>`);
+S('s6', 'pr', 'One sentence, many meanings', `
+  <table class="t" style="font-size:22px"><tr><th>Stress</th><th>Meaning</th></tr>
+    <tr><td>${v6(0)}</td><td>Someone else booked it.</td></tr>
+    <tr><td>${v6(1)}</td><td>Strong denial.</td></tr>
+    <tr><td>${v6(2)}</td><td>I did something else with it.</td></tr>
+    <tr><td>${v6(3)}</td><td>I booked a different flight.</td></tr>
+    <tr><td>${v6(4)}</td><td>I booked something else (neutral reading).</td></tr></table>
+  <div class="note">Function words can be contrasted too: <span class="u">Is it</span> <span class="n">FOR</span> <span class="u">you or</span> <span class="n">FROM</span> <span class="u">you?</span> <span class="ipa">/fɔː/ /frɒm/</span> strong forms.</div>`);
+S('s6', 'pr', 'On the radio: correcting a readback', `
+  <div class="card"><p class="sm">PILOT</p><p style="font-size:25px">${P('+descend to *four +thousand, +thai +two-one-four.')}</p></div>
+  <div class="card pk"><p class="sm" style="color:var(--pink)">ATC</p><p style="font-size:25px">${P('+thai +two-one-four, *negative, +descend to *five +thousand +feet.')}</p></div>
+  <p><b>NEGATIVE</b> and the corrected value are both focus words. The listener hears at once what was wrong.</p>${LEGEND}`);
+S('s6', 'pa', 'What does the speaker mean?', exbox('ex6a'), el => MCQ(el, [
+  { q: `${v6(0)}`, o: ['Someone else booked it', 'I booked a different flight', 'I booked a hotel instead', 'I only looked at it'], why: 'Stress on <b>I</b> contrasts the person.' },
+  { q: `${v6(3)}`, o: ['I booked a different flight', 'Someone else booked it', 'I booked a hotel, not a flight', 'A strong denial'], why: 'Stress on <b>THIS</b> contrasts one flight with another.' },
+  { q: `${v6(2)}`, o: ['I did something else with it', 'Someone else booked it', 'I booked a different flight', 'I booked a hotel instead'], why: 'Stress on <b>BOOK</b> contrasts the action.' },
+  { q: `${v6(1)}`, o: ['A strong denial', 'Someone else booked it', 'I booked a different flight', 'I booked a hotel'], why: 'Stressing the negative auxiliary makes an emphatic denial.' },
+], () => part('s6', 'a', ['a', 'b', 'c'])));
+S('s6', 'pa', 'Tap the contrasted word(s)', exbox('ex6b'), el => TapEx(el, 'contrast', 0, () => part('s6', 'b', ['a', 'b', 'c'])));
+
+S('s6', 'pa', 'Drill: correct it!', exbox('exDrill'), el => Drill(el, () => part('s6', 'c', ['a', 'b', 'c'])));
+/* ---------- 7 Exceptions ---------- */
+S('s7', 'pr', 'Compound nouns and phrasal verbs', `
+  <div class="row c2 stack">
+    <div class="card pu"><h3>1 · Compound nouns: first part</h3><p class="sm">Two words used as one name. The first part is stronger, so it becomes the focus word.</p>
+      <div style="font-size:26px;line-height:1.9;margin-top:8px"><span class="n">BOARDING</span> <span class="u">pass</span><br><span class="n">SEAT</span> <span class="u">belt</span><br><span class="n">CONTROL</span> <span class="u">tower</span><br><span class="n">FLIGHT</span> <span class="u">deck</span></div></div>
+    <div class="card pk"><h3>2 · Phrasal verbs: the particle</h3><p class="sm">The particle (off, down, up, in) is stressed. At the end of a phrase it is the focus word.</p>
+      <div style="font-size:24px;line-height:1.9;margin-top:8px">${P('the +plane has +just +taken *off.')}<br>${P('+please +sit *down.')}</div>
+      <p class="sm" style="margin-top:8px">With a noun object, the noun takes it: fill in the <span class="n">FORM</span>.</p></div>
+  </div>`);
+S('s7', 'pr', 'Strong forms at the end', `
+  <p>Function words are weak inside a sentence, but at the <b>end</b> they keep their <b>strong form</b>, with a full vowel.</p>
+  <table class="t" style="font-size:21px"><tr><th>Word</th><th>Weak (inside)</th><th>Strong (at the end)</th></tr>
+    <tr><td>can</td><td>I can help. <span class="ipa">/kən/</span></td><td>Yes, I <b>CAN</b>. <span class="ipa">/kæn/</span></td></tr>
+    <tr><td>are</td><td>Where are you? <span class="ipa">/ə/</span></td><td>Yes, we <b>ARE</b>. <span class="ipa">/ɑː/</span></td></tr>
+    <tr><td>from</td><td>I’m from Thailand. <span class="ipa">/frəm/</span></td><td>Where are you <b>FROM</b>? <span class="ipa">/frɒm/</span></td></tr>
+    <tr><td>for</td><td>It’s for you. <span class="ipa">/fə/</span></td><td>What’s it <b>FOR</b>? <span class="ipa">/fɔː/</span></td></tr></table>
+  <p class="ex-meta">IPA: RP, shown without stress marks. Length marks (ː) are part of the symbol.</p>`);
+S('s7', 'pr', 'Negatives, emphasis and pronouns', `
+  <div class="row c3 stack">
+    <div class="card pu"><h3>Negatives: always stressed</h3><p style="font-size:21px;margin-top:6px">We <span class="s">CAN’T</span> land yet. <span class="ipa">/kɑːnt/</span><br>I <span class="s">DON’T</span> know. <span class="ipa">/dəʊnt/</span></p></div>
+    <div class="card pk"><h3>Emphatic auxiliaries</h3><p style="font-size:21px;margin-top:6px">I <span class="n">DID</span> check it! <span class="ipa">/dɪd/</span><br>It <span class="n">IS</span> on time! <span class="ipa">/ɪz/</span></p></div>
+    <div class="card"><h3>Pronouns in contrast</h3><p style="font-size:21px;margin-top:6px">No, it’s for <span class="n">HER</span>.<br>I’ll call <span class="n">YOU</span>.</p></div>
+  </div>
+  <div class="note">The speaker <b>insists</b> (emphatic) or <b>contrasts</b> (pronoun), so a normally weak word becomes the focus word.</div>`);
+S('s7', 'pa', 'Apply the exceptions', exbox('ex7'), el => MCQ(el, [
+  { q: 'Strongest word? <i>“Please fasten your seat belt.”</i>', o: ['SEAT', 'belt', 'fasten', 'please'], why: 'Compound noun: <b>SEAT</b> belt.' },
+  { q: 'Strongest word? <i>“I forgot my boarding pass.”</i>', o: ['BOARDING', 'pass', 'forgot', 'I'], why: 'Compound noun: <b>BOARDING</b> pass.' },
+  { q: 'Strongest word? <i>“The plane has just taken off.”</i>', o: ['OFF', 'plane', 'taken', 'just'], why: 'Phrasal verb at the end: taken <b>OFF</b>.' },
+  { q: 'A: <i>“Can you help me?”</i> B: <i>“Yes, I can.”</i> How is <i>can</i> pronounced?', o: ['/kæn/, strong', '/kən/, weak', '/kn/, weak', 'It is silent'], why: 'At the end, an auxiliary is strong.' },
+  { q: 'How is <i>can</i> pronounced in <i>“I can help you.”</i>?', o: ['/kən/, weak', '/kæn/, strong', '/kɑːnt/', '/kɑːn/'], why: 'Inside the sentence, <i>can</i> is weak.' },
+  { q: 'How is <i>from</i> pronounced in <i>“Where are you from?”</i>?', o: ['/frɒm/, strong', '/frəm/, weak', '/fəm/', '/frʌm/'], why: 'A final preposition keeps its strong form (RP).' },
+  { q: 'Which is stressed in <i>“We can’t land yet.”</i>?', o: ['can’t, with land and yet', 'only land', 'only yet', 'we'], why: 'Negative auxiliaries are always stressed: /kɑːnt/.' },
+  { q: '<i>“You didn’t check the fuel!” “I did check it!”</i> Strongest word in the reply?', o: ['DID', 'check', 'it', 'I'], why: 'Emphatic <i>do</i>.' },
+  { q: 'A: <i>“Is this seat for me?”</i> B: <i>“No, it’s for her.”</i> Strongest word in B?', o: ['HER', 'for', 'it’s', 'no'], why: 'A contrasted pronoun is stressed.' },
+], () => part('s7', 'a', ['a', 'b'])));
+
+S('s7', 'pa', 'Weak or strong?', exbox('exWS'), el => MCQ(el, shuffle(WEAKSTRONG).map(w => ({ q: `How is the underlined word pronounced? <span style="font-size:1.3em">${w.s}</span>`, o: w.o, why: w.why + ' (RP)' })), () => part('s7', 'b', ['a', 'b'])));
+/* ---------- 8 Aviation ---------- */
+const O = m => P(m);
+S('s8', 'pr', 'Radiotelephony: key information stands out', `
+  <p>Standard ICAO phraseology removes most function words, so nearly every word is stressed. The message is still said in short parts, and the <b>key information</b> in each part must stand out clearly.</p>
+  <div class="ex" style="font-size:24px"><span class="s">THAI TWO-ONE-FOUR</span> <span class="u">|</span> <span class="s">DESCEND</span> <span class="u">to</span> <span class="s">FIVE THOUSAND</span> <span class="n">FEET</span> <span class="u">|</span> <span class="s">CONTACT BANGKOK</span> <span class="n">APPROACH</span></div>
+  <div class="row c4">
+    ${card('Callsign', 'every part: THAI TWO-ONE-FOUR', 'pu')}${card('Instruction', 'CLIMB, DESCEND, HOLD SHORT, CONTACT, CLEARED', 'pu')}
+    ${card('Value', 'numbers, runway, level, frequency, unit', 'pk')}${card('Correction', 'NEGATIVE, CORRECTION, AFFIRM', 'pk')}
+  </div>`);
+S('s8', 'pr', 'Numbers and readbacks', `
+  <div class="row c2 stack">
+    <div class="card pu"><h3>Numbers are content words</h3><p class="sm">Say every digit clearly with full stress. A weak digit is a common source of readback errors.</p>
+      <div class="note" style="margin-top:10px;font-size:15px">Real radiotelephony uses ICAO pronunciation for some numbers (e.g. <i>TREE</i>, <i>FIFE</i>, <i>NIN-er</i>). This lesson uses RP for rhythm practice.</div></div>
+    <div class="card pk"><h3>Correct only what was wrong</h3>
+      <p class="sm" style="margin-top:6px">ATC</p><p style="font-size:20px">${P('+climb +flight +level +three- +five- *zero.')}</p>
+      <p class="sm" style="margin-top:6px">PILOT</p><p style="font-size:20px">${P('+climb +flight +level +three- +three- *zero.')}</p>
+      <p class="sm" style="margin-top:6px;color:var(--pink)">ATC</p><p style="font-size:20px">${P('*negative, +climb +flight +level +three- *five- +zero.')}</p></div>
+  </div>`);
+S('s8', 'pr', 'Cabin announcements', `
+  <p>Announcements to passengers are natural English. All the normal rules apply: weak function words, stress-timed rhythm, focus on the last content word.</p>
+  <div class="ex">${P('+ladies and +gentlemen, +welcome on *board.')}</div>
+  <div class="ex">${P('we are +expecting some *turbulence.')}</div>
+  <div class="ex">${P('we will be +landing in +twenty *minutes.')}</div>
+  ${LEGEND}`);
+S('s8', 'pa', 'Cabin announcements: find the focus', exbox('exCabin'), el => Cabin(el, () => part('s8', 'b', ['a', 'b'])));
+S('s8', 'pa', 'Readback corrections', exbox('ex8'), el => MCQ(el, [
+  { q: 'ATC: <i>“Climb flight level three-five-zero.”</i> Pilot: <i>“Climb flight level three-three-zero.”</i> Best correction?',
+    o: [O('*negative, +climb +flight +level +three- *five- +zero.'), O('+negative, +climb +flight *level +three- +five- +zero.'), O('+negative, *climb +flight +level +three- +five- +zero.'), O('+negative, +climb *flight +level +three- +five- +zero.')], why: 'Only the middle digit was wrong: NEGATIVE and <b>FIVE</b>.' },
+  { q: 'ATC: <i>“Hold short of runway two-seven.”</i> Pilot: <i>“Line up runway two-seven.”</i> Best correction?',
+    o: [O('*negative, +hold *short of +runway +two- +seven.'), O('+negative, +hold +short of +runway +two- *seven.'), O('+negative, +hold +short of *runway +two- +seven.'), O('+negative, +hold +short *of +runway +two- +seven.')], why: 'The instruction was wrong, so HOLD <b>SHORT</b>.' },
+  { q: 'ATC: <i>“One-two-four decimal six.”</i> Pilot: <i>“One-two-six decimal four.”</i> Best correction?',
+    o: [O('*negative, +one- +two- *four +decimal *six.'), O('+negative, *one- +two- +four +decimal +six.'), O('+negative, +one- +two- +four *decimal +six.'), O('*negative, +contact +bangkok *approach.')], why: 'Both corrected digits stand out.' },
+  { q: 'Announcement: <i>“landing in twenty minutes.”</i> Passenger: <i>“Twelve minutes?”</i> Natural reply?',
+    o: [O('+no, *twenty +minutes.'), O('+no, +twenty *minutes.'), O('+no, +twenty +minutes *now.'), O('*no, +twenty +minutes.')], why: '“Minutes” is given; TWENTY contrasts with twelve.' },
+  { q: 'Why are almost all words stressed in <i>“Climb and maintain flight level three-five-zero”</i>?',
+    o: ['Phraseology leaves out most function words', 'Radio speech has no rhythm', 'Pilots must shout', 'Numbers are always the strongest word'], why: 'The few function words (<i>and, of, to</i>) are still weak.' },
+], () => part('s8', 'a', ['a', 'b'])));
+S('s8', 'pa', 'Pair work: wrong readback', `
+  <div class="row c2 stack" style="flex:1">
+    <div class="card pu"><h3>Steps</h3><div style="display:grid;gap:14px;margin-top:12px">
+      ${['<b>ATC</b> reads a clearance.', '<b>Pilot</b> reads it back with <b>one deliberate error</b>.', '<b>ATC</b> corrects: NEGATIVE + the correct item, with extra stress on the corrected part.', '<b>Pilot</b> reads back correctly. Swap roles.']
+        .map((t, k) => `<div style="display:flex;gap:14px;align-items:center"><span class="num">${k + 1}</span><span>${t}</span></div>`).join('')}</div></div>
+    <div class="card pk"><h3>Clearances to use</h3><div style="font-size:21px;line-height:2;margin-top:8px">
+      ${P('+cleared for *takeoff.')}<br>${P('+hold +short of +runway +two- *seven.')}<br>${P('+climb and +maintain +flight +level +three- +five- *zero.')}<br>${P('+contact +bangkok *approach.')}</div></div>
+  </div>`);
+
+/* ---------- 9 Shadowing ---------- */
+S('s9', 'pa', 'Record and compare', `
+  <p style="margin:0">Listen to the model, then record yourself saying the sentence. Compare the beats: are the content words strong and the small words quick?</p>
+  <div class="card exbox" id="rec"></div>`, el => mountRecorder());
+/* ---------- 10 Summary ---------- */
+S('s10', 'pr', 'The rules at a glance', `
+  <div class="row c3">
+    ${[['Content vs function', 'Content words stressed; function words weak.', 's3'], ['Stress-timed rhythm', 'Beats on stressed syllables; squeeze the rest.', 's4'], ['Focus words', 'Usually the last content word; it moves to new or corrected information.', 's6'],
+       ['Given information', 'Words already said lose their stress: I don’t DRINK tea.', 's6'], ['Exceptions', 'Compounds, phrasal verbs, strong forms, negatives, emphasis, pronouns.', 's7'], ['Aviation', 'Key items stand out; every digit clear; NEGATIVE + contrast.', 's8']]
+      .map(([t, d, id], k) => `<div class="card ${k % 2 ? 'pk' : 'pu'}"><h3>${t}</h3><div class="sm">${d}</div><button class="btn ghost sm" style="margin-top:10px" data-jump="${id}">Review</button></div>`).join('')}
+  </div>
+  <div class="ex" style="text-align:center">${P('we are +now +beginning our *descent.')}</div>`);
+S('s10', 'pa', 'Final self-check', exbox('ex10') + `<div class="actions"><a class="btn" style="text-decoration:none;display:inline-flex;align-items:center" href="W12_SentenceStress_Quiz.html">Open the Week 12 quiz &rarr;</a><span class="ex-meta" id="allDone"></span></div>`, el => MCQ(el, [
+  { q: 'Which shows the correct stress pattern?', o: [P('+where did you +put my *passport?'), P('+where +did +you +put +my *passport?'), P('where did *you put my passport?'), P('+where did you +put *my passport?')], why: 'Content words stressed, function words weak, focus on the last content word.' },
+  { q: 'More unstressed syllables between two beats means you…', o: ['say them faster', 'slow down', 'add another beat', 'stress them more'], why: 'The beats stay steady.' },
+  { q: 'A: <i>“Gate twelve?”</i> B: <i>“No, gate twenty.”</i> Which word gets the most stress in B?', o: ['TWENTY', 'gate', 'no', 'all equally'], why: 'TWENTY is the corrected information, so it is the focus word.' },
+  { q: 'In <i>“I said departures, not arrivals”</i>, why do both nouns get extra stress?', o: ['They are contrasted', 'They are the longest words', 'They are compound nouns', 'They follow a verb'], why: 'Contrastive stress.' },
+  { q: 'How is <i>are</i> pronounced in <i>“Yes, we are.”</i> (RP)?', o: ['/ɑː/', '/ə/', '/eə/', '/ɜː/'], why: 'Strong form at the end.' },
+], () => markDone('s10')));
+
+/* ---------- recorder & clip log ---------- */
+function mountRecorder() {
+  const el = document.getElementById('rec');
+  let k = 12, mr = null, stream = null, takes = [];
+  el.innerHTML = `<label class="ex-meta" for="recSel">Choose a sentence</label>
+    <select id="recSel" class="field">${BANK.map((m, j) => `<option value="${j}" ${j === k ? 'selected' : ''}>${j + 1}. ${plain(parse(m))}</option>`).join('')}</select>
+    <div class="ex" id="recPat"></div>
+    <div class="actions" style="margin-top:12px"><button class="btn ghost" id="recListen">&#128266; Listen</button><button class="btn" id="recStart">&#9679; Record</button><button class="btn ghost" id="recStop" disabled>&#9632; Stop</button></div>
+    <div class="feedback" id="recMsg"></div><div id="recTakes" style="display:grid;gap:8px"></div>`;
+  const sel = el.querySelector('#recSel');
+  const show = () => { k = +sel.value; el.querySelector('#recPat').innerHTML = pattern(parse(BANK[k])); };
+  sel.onchange = show; show();
+  el.querySelector('#recListen').onclick = () => speak(plain(parse(BANK[k])));
+  const msg = (t, c) => { const m = el.querySelector('#recMsg'); m.textContent = t; m.className = 'feedback ' + (c || ''); };
+  el.querySelector('#recStart').onclick = async () => {
+    if (!navigator.mediaDevices || !window.MediaRecorder) { msg('Recording is not supported here. Use a phone recorder and the self-check.', 'bad'); return; }
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+    catch (e) { msg('Microphone access was blocked. Allow the microphone for this page and try again.', 'bad'); return; }
+    const chunks = []; mr = new MediaRecorder(stream);
+    mr.ondataavailable = e => chunks.push(e.data);
+    mr.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType || 'audio/webm' }));
+      takes.unshift({ url, s: plain(parse(BANK[k])) });
+      if (takes.length > 3) URL.revokeObjectURL(takes.pop().url);
+      el.querySelector('#recTakes').innerHTML = takes.map((t, j) => `<div><span class="ex-meta">Take ${takes.length - j} · ${t.s}</span><audio controls src="${t.url}" style="width:100%;height:38px"></audio></div>`).join('');
+      msg('Saved. Listen to the model, then your take. Compare the beats.', 'ok');
+      markDone('s9');
+    };
+    mr.start(); msg('Recording… say the sentence, then press Stop.');
+    el.querySelector('#recStart').disabled = true; el.querySelector('#recStop').disabled = false;
+  };
+  el.querySelector('#recStop').onclick = () => {
+    if (mr && mr.state !== 'inactive') mr.stop();
+    el.querySelector('#recStart').disabled = false; el.querySelector('#recStop').disabled = true;
+  };
+
+}
+/* =========================================================
+   DECK ENGINE
+   ========================================================= */
+const stage = document.getElementById('stage');
+const secTitle = id => SECTIONS.find(s => s.id === id).title;
+const secNum = id => SECTIONS.findIndex(s => s.id === id) + 1;
+SLIDES.forEach((sl, i) => {
+  const d = document.createElement('section'); d.className = 'slide'; d.dataset.i = i;
+  const head = sl.title ? `<div class="eyebrow">${secNum(sl.sec)} · ${secTitle(sl.sec)}${sl.kind ? ` <span class="pill ${sl.kind}">${sl.kind === 'pr' ? 'PRINCIPLE' : 'PRACTICE'}</span>` : ''}</div><h2>${sl.title}</h2>` : '';
+  d.innerHTML = `${head}<div class="body ${sl.kind === 'pa' ? '' : 'scroll'}">${sl.body}</div><div class="foot"><span>W12 · Sentence Stress · RP</span><span>${i + 1} / ${SLIDES.length}</span></div>`;
+  stage.appendChild(d); sl.el = d;
+});
+let cur = 0;
+function show(i, push = true) {
+  i = Math.max(0, Math.min(SLIDES.length - 1, i));
+  try { speechSynthesis.cancel(); } catch (e) {}
+  stopRhythm();
+  SLIDES.forEach((s, j) => s.el.classList.toggle('active', j === i));
+  const sl = SLIDES[i];
+  if (sl.mount && !sl.mounted) { sl.mounted = true; const box = sl.el.querySelector('.exbox[id]'); sl.mount(box); }
+  if (sl.sec === 's10') updateAllDone();
+  cur = i;
+  document.getElementById('count').textContent = `${i + 1} / ${SLIDES.length}`;
+  document.getElementById('bPrev').disabled = i === 0;
+  document.getElementById('bNext').disabled = i === SLIDES.length - 1;
+  document.querySelector('#pbar i').style.width = ((i + 1) / SLIDES.length * 100) + '%';
+  try { localStorage.setItem(KEY + '-slide', String(i)); } catch (e) {}
+  if (push) history.replaceState(null, '', '#' + (i + 1));
+  if (document.body.classList.contains('fluid')) window.scrollTo({ top: 0 });
+}
+const next = () => show(cur + 1), prev = () => show(cur - 1);
+document.getElementById('bNext').onclick = next;
+document.getElementById('bPrev').onclick = prev;
+stage.addEventListener('click', e => {
+  const n = e.target.closest('[data-next]'); if (n) next();
+  const j = e.target.closest('[data-jump]'); if (j) show(SLIDES.findIndex(s => s.sec === j.dataset.jump));
+});
+
+/* scaling: fixed 16:9 canvas on wide screens, fluid on phones/portrait */
+function layout() {
+  const w = window.innerWidth, h = window.innerHeight;
+  const fluid = w < 760 || (w < 1024 && h > w);
+  document.body.classList.toggle('fluid', fluid);
+  if (fluid) { stage.style.transform = ''; return; }
+  const availW = w - 32, availH = h - 76 - 16;
+  const sc = Math.min(availW / 1280, availH / 720);
+  stage.style.transform = `scale(${sc})`;
+  stage.style.left = ((w - 1280 * sc) / 2) + 'px';
+  stage.style.top = (8 + (availH - 720 * sc) / 2) + 'px';
+}
+window.addEventListener('resize', layout);
+
+/* keyboard */
+document.addEventListener('keydown', e => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (['input', 'textarea', 'select'].includes(tag)) return;
+  if (document.getElementById('overview').classList.contains('open')) { if (e.key === 'Escape' || e.key === 'm' || e.key === 'M') closeOv(); return; }
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+  else if (e.key === ' ' && (tag === 'body' || tag === 'section' || tag === 'div')) { e.preventDefault(); next(); }
+  else if (e.key === 'Home') show(0); else if (e.key === 'End') show(SLIDES.length - 1);
+  else if (e.key === 'f' || e.key === 'F') toggleFS();
+  else if (e.key === 'm' || e.key === 'M') openOv();
+});
+document.querySelectorAll('#bar button').forEach(b => b.addEventListener('mouseup', () => b.blur()));
+
+/* swipe (phones) */
+let tx = null, ty = null;
+document.addEventListener('touchstart', e => { if (e.touches.length === 1) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; } }, { passive: true });
+document.addEventListener('touchend', e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = null;
+  if (Math.abs(dx) > 70 && Math.abs(dy) < 50 && !e.target.closest('input, select, textarea, audio')) { dx < 0 ? next() : prev(); }
+});
+
+/* full screen */
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.style.display = 'block'; clearTimeout(toast.h); toast.h = setTimeout(() => el.style.display = 'none', 7000); }
+function fsBlocked() { toast('Full screen is blocked in this viewer. Open the lesson directly in Chrome, Edge or Safari (e.g. from GitHub Pages), or press F11 (Windows) / Ctrl+Cmd+F (Mac).'); }
+function toggleFS() {
+  const root = document.documentElement;
+  if (fsEl()) { try { const r = (document.exitFullscreen || document.webkitExitFullscreen).call(document); if (r && r.catch) r.catch(() => {}); } catch (e) {} return; }
+  const req = root.requestFullscreen || root.webkitRequestFullscreen;
+  const allowed = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+  if (!req || allowed === false) { fsBlocked(); return; }
+  try { const r = req.call(root); if (r && r.catch) r.catch(fsBlocked); } catch (e) { fsBlocked(); }
+}
+document.getElementById('bFull').onclick = toggleFS;
+
+/* overview */
+function updateBar() {
+  const n = SECTIONS.filter(s => progress[s.id]).length;
+  const p = document.getElementById('ovProg'); if (p) p.textContent = `${n} of ${SECTIONS.length} sections complete`;
+}
+function openOv() {
+  const g = document.getElementById('ovGrid'); g.innerHTML = '';
+  SECTIONS.forEach((s, k) => {
+    const first = SLIDES.findIndex(x => x.sec === s.id), cnt = SLIDES.filter(x => x.sec === s.id).length;
+    const b = document.createElement('button'); b.className = 'card ov-item' + (progress[s.id] ? ' done' : '');
+    b.innerHTML = `<span class="num">${progress[s.id] ? '&#10003;' : k + 1}</span><span>${s.title}<small>Slides ${first + 1}–${first + cnt}${SLIDES[cur].sec === s.id ? ' · you are here' : ''}</small></span>`;
+    b.onclick = () => { closeOv(); show(first); };
+    g.appendChild(b);
+  });
+  updateBar();
+  document.getElementById('overview').classList.add('open');
+}
+function closeOv() { document.getElementById('overview').classList.remove('open'); }
+document.getElementById('bMenu').onclick = openOv;
+document.getElementById('ovClose').onclick = closeOv;
+document.getElementById('ovReset').onclick = () => {
+  progress = {}; saveProgress();
+  try { localStorage.removeItem(KEY + '-slide'); } catch (e) {}
+  history.replaceState(null, '', '#1'); location.reload();
+};
+
+/* start */
+layout();
+let start = 0;
+const hn = parseInt((location.hash || '').slice(1), 10);
+if (hn >= 1 && hn <= SLIDES.length) start = hn - 1;
+else { try { const s = parseInt(localStorage.getItem(KEY + '-slide'), 10); if (s >= 0 && s < SLIDES.length) start = s; } catch (e) {} }
+show(start);
+window.addEventListener('hashchange', () => { const n = parseInt(location.hash.slice(1), 10); if (n >= 1 && n <= SLIDES.length && n - 1 !== cur) show(n - 1, false); });
+</script>
+</body>
+</html>
