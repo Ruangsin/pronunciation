@@ -14,7 +14,8 @@
 | [`the-journey/`](https://ruangsin.github.io/pronunciation/the-journey/) | The Journey — เนื้อหาต่อเนื่องด้าน Final Sound เจาะลึกเพิ่มเติม |
 | [`IPA_Transcription_Practice.html`](https://ruangsin.github.io/pronunciation/IPA_Transcription_Practice.html) | IPA Transcription Practice — แบบฝึกหัดถอดเสียงสัทอักษรสากล (IPA) |
 | [`SentenceStress_Lesson.html`](https://ruangsin.github.io/pronunciation/SentenceStress_Lesson.html) | Sentence Stress — บทเรียนการเน้นเสียงในประโยค |
-
+| [`Lesson_ConnectedSpeech.html`](https://ruangsin.github.io/pronunciation/Lesson_ConnectedSpeech.html) | Connected Speech — บทเรียนการออกเสียงเชื่อมคำ |
+| [`SentenceStress_Listening.html`](https://ruangsin.github.io/pronunciation/SentenceStress_Listening.html) | Sentence Stress Listening — แบบฝึกฟังการเน้นเสียงในประโยค |
 ---
 
 ### 📁 โครงสร้างโปรเจกต์
