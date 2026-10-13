@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>English Intonation | English Pronunciation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600&family=Sora:wght@500;600;700;800&family=Anton&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF7FF;--ink:#241F3D;--muted:#6B6585;--blue:#0284C7;--pink:#DB2777;--purple:#9333EA;--glass:rgba(255,255,255,.68);--line:rgba(147,51,234,.18);--ok:#16A34A;--bad:#DC2626}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Noto Sans","Noto Sans Thai",system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+ radial-gradient(620px 420px at 8% 0%,rgba(147,51,234,.18),transparent 70%),
+ radial-gradient(620px 440px at 95% 8%,rgba(2,132,199,.15),transparent 70%),
+ radial-gradient(760px 520px at 50% 100%,rgba(219,39,119,.13),transparent 70%)}
+h1,h2,h3{font-family:Sora,"Noto Sans","Noto Sans Thai",sans-serif;margin:0;line-height:1.25}
+.ipa{font-family:"Noto Sans","Doulos SIL","Charis SIL","Segoe UI","Arial Unicode MS",sans-serif;font-weight:500;letter-spacing:.02em}
+button{font-family:inherit;cursor:pointer}
+.glass{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.85);box-shadow:0 8px 28px rgba(80,40,140,.10);border-radius:20px}
+
+header{position:sticky;top:0;z-index:20;padding:10px 18px;background:rgba(250,247,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hrow{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:Sora,"Noto Sans",system-ui,sans-serif;font-weight:800;font-size:1.05rem}
+.brand b{background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(147,51,234,.1);color:var(--purple)}
+.sp{flex:1}
+.prog{flex:1 1 160px;max-width:260px;height:10px;border-radius:99px;background:rgba(147,51,234,.12);overflow:hidden}
+.prog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));transition:width .5s}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 14px;border-radius:12px;font-weight:600;font-size:.88rem;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(80,40,140,.15)}
+.btn.pri{background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;border:0}
+.btn:focus-visible,.mc:focus-visible,.opt:focus-visible,.dots button:focus-visible,nav.chips a:focus-visible,.road button:focus-visible,.sh-x:focus-visible,.spk:focus-visible{outline:3px solid var(--purple);outline-offset:2px}
+nav.chips{max-width:1060px;margin:8px auto 0;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+nav.chips a{white-space:nowrap;font-size:.8rem;font-weight:600;text-decoration:none;color:var(--ink);padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid var(--line);cursor:pointer;transition:all .25s}
+nav.chips a:hover{background:#fff;color:var(--purple)}
+nav.chips a.active{background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;border-color:transparent}
+
+main{max-width:1060px;margin:0 auto;padding:0 18px 90px}
+.sec-head{margin-bottom:16px}
+.sec-head h2{font-size:clamp(1.3rem,3vw,1.8rem)}
+.sec-head p{margin:4px 0 0;color:var(--muted);max-width:760px}
+.sec-head p b{color:var(--ink)}
+.hint{display:inline-block;margin:0 0 12px;font-size:.82rem;color:var(--purple);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;align-items:start}
+.grid.wide{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+
+/* motion cards */
+.mc{position:relative;padding:18px 18px 16px;cursor:pointer;overflow:hidden;animation:rise .55s backwards;animation-delay:calc(var(--i,0)*70ms);transition:transform .25s,box-shadow .25s,border-color .25s;outline:none}
+.mc::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--c)}
+.mc:hover,.mc:focus-visible{transform:translateY(-4px);box-shadow:0 14px 34px rgba(80,40,140,.18)}
+.mc-top{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.tag{font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--c)}
+.chev{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.9);border:1px solid var(--line);color:var(--c);font-size:.95rem}
+.mc h3{font-size:1.08rem;margin:6px 0 4px}
+.mc p{margin:2px 0 4px;color:var(--ink);font-size:.93rem}
+.mc .big{font-family:Sora,sans-serif;font-weight:800;font-size:1.8rem;color:var(--c);margin-top:6px}
+.cit{color:var(--muted);font-size:1.1rem;text-align:center}
+.tap{font-size:.76rem;color:var(--c);font-weight:600;margin-top:6px}
+.mc.seen::after{content:"\2713  opened";position:absolute;right:14px;bottom:12px;font-size:.7rem;font-weight:700;color:var(--ok)}
+.mc.seen .tap{padding-right:64px}
+svg.contour{width:100%;height:auto;display:block;overflow:visible;margin:6px 0 2px}
+.spill{display:inline-block;margin-left:10px;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(147,51,234,.1);color:var(--purple);vertical-align:middle}
+.spill.full{background:rgba(22,163,74,.14);color:#166534}
+.spk{margin-left:auto;border:0;background:var(--c,var(--purple));color:#fff;border-radius:99px;padding:6px 14px;font-weight:600;font-size:.82rem}
+.spk:hover{filter:brightness(1.1)}
+.mini{border:0;background:var(--c,var(--purple));color:#fff;border-radius:99px;width:30px;height:30px;cursor:pointer;flex:none}
+
+/* quiz */
+.qset{padding:20px}
+.q{padding:14px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.qn{font-size:.75rem;font-weight:700;color:var(--purple)}
+.qt{font-size:1.02rem;margin:2px 0 10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:#fff;font-size:1rem;font-weight:600;color:var(--ink);transition:transform .15s,border-color .15s,background .2s}
+.opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--purple)}
+.opt.wrong{background:#FEE2E2;border-color:var(--bad);color:var(--bad);opacity:.85;animation:shake .3s}
+.opt.wrong.old{animation:none}
+.opt.right{background:#DCFCE7;border-color:var(--ok);color:#166534}
+.opt:disabled{cursor:not-allowed}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.fb{margin-top:8px;font-size:.88rem;color:#166534;display:none}
+.q.done .fb{display:block;animation:rise .4s backwards}
+.try{margin-top:8px;font-size:.85rem;color:var(--bad);font-weight:600}
+.sent{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 12px;margin-bottom:10px;border-radius:14px;background:rgba(255,255,255,.85);border:1px solid var(--line)}
+.sent .ipa{color:var(--blue);font-size:1.15rem}
+.score{padding:26px;text-align:center;margin-top:16px;animation:rise .5s backwards}
+.score .big{font-family:Sora,"Noto Sans",system-ui,sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.note{font-size:.8rem;color:var(--muted);margin-top:10px}
+.prow{display:grid;grid-template-columns:34px 1fr 1.2fr 56px;gap:10px;align-items:center;padding:8px 14px;border-top:1px solid var(--line);font-size:.92rem}
+.prow:first-child{border-top:0}
+.prow .bar{height:10px;border-radius:99px;background:rgba(147,51,234,.12);overflow:hidden}
+.prow .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink))}
+
+/* deck */
+.deck-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 14px}
+.dots{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.dots button{border:1px solid var(--line);background:rgba(255,255,255,.85);border-radius:99px;padding:6px 12px;font:600 .78rem/1 "Noto Sans",system-ui,sans-serif;color:var(--ink);cursor:pointer;display:inline-flex;gap:6px;align-items:center;transition:transform .25s,box-shadow .25s,background .3s}
+.dots button:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px var(--purple)}
+.dots button.on{background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;border-color:transparent;box-shadow:0 8px 20px -8px var(--purple)}
+.dots button.ok::after{content:"\2713";color:var(--ok);font-weight:800}
+.dots button.on.ok::after{color:#fff}
+.dots .dn{opacity:.7}
+#deckCount{font-size:.82rem;color:var(--muted);font-weight:600}
+.deck-stage{position:relative;min-height:420px}
+.deck-stage section.slide{display:none;margin:0}
+.deck-stage section.slide.active{display:block;animation:slideInR .6s cubic-bezier(.2,.8,.2,1)}
+.deck-stage section.slide.active.dirL{animation-name:slideInL}
+@keyframes slideInR{from{opacity:0;transform:translateX(56px) scale(.98)}}
+@keyframes slideInL{from{opacity:0;transform:translateX(-56px) scale(.98)}}
+.deck-nav{display:flex;align-items:center;gap:12px;margin-top:18px}
+.deck-nav .bar{flex:1;height:6px;border-radius:99px;background:rgba(147,51,234,.12);overflow:hidden}
+.deck-nav .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));transition:width .5s}
+.deck-nav .btn:disabled{opacity:.4;pointer-events:none}
+
+/* cover */
+.cover{padding:30px;position:relative;overflow:hidden}
+.cover::before{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(147,51,234,.22),transparent 65%);animation:floaty 7s ease-in-out infinite}
+@keyframes floaty{50%{transform:translate(-30px,24px)}}
+.cover h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.05}
+.cover h1 span{background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover p.lead{margin:12px 0 0;color:var(--muted);max-width:640px;font-size:1.05rem}
+.w{padding:5px 12px;border-radius:12px;background:#fff;border:1px solid var(--line);font-family:Sora,"Noto Sans",system-ui,sans-serif;font-weight:600;font-size:1.05rem}
+.cover-chain{display:flex;align-items:center;flex-wrap:wrap;margin:22px 0 4px;gap:26px;animation:breathe 4.2s ease-in-out infinite}
+.cover-chain .w{font-size:clamp(1.1rem,3.4vw,1.7rem)}
+@keyframes breathe{0%,100%{gap:26px}50%{gap:6px}}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:18px}
+.legend div{padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid var(--line);font-size:.9rem}
+.legend .ipa{font-size:1.15rem;color:var(--purple)}
+.road{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.road button{text-align:left;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.8);cursor:pointer;font:inherit;color:var(--ink);border-top:4px solid var(--c);animation:rise .6s backwards;animation-delay:calc(var(--i)*80ms);transition:transform .25s,box-shadow .25s}
+.road button:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 28px -10px var(--c)}
+.road b{display:block;font-family:Sora,"Noto Sans",system-ui,sans-serif;font-size:.95rem}
+.road small{color:var(--muted)}
+
+/* focus lab */
+.demo{padding:22px}
+.dtabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.dtabs button{border:1px solid var(--line);background:rgba(255,255,255,.85);border-radius:99px;padding:6px 14px;font:600 .82rem "Noto Sans",system-ui,sans-serif;color:var(--ink);cursor:pointer;transition:all .25s}
+.dtabs button.on{background:var(--pink);color:#fff;border-color:transparent}
+.dstage{padding:20px 14px;margin:6px 0;text-align:center;border-radius:18px;background:rgba(255,255,255,.7);border:1px dashed var(--line)}
+.dnote{margin:10px 0 0;font-size:.95rem;text-align:center}
+.dnote span{display:block;color:var(--muted)}
+.dctl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+
+/* expanded sheet */
+body.sheet-open{overflow:hidden}
+#sheet{position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;padding:14px}
+#sheet.show{display:flex}
+.sheet-bg{position:absolute;inset:0;background:rgba(36,31,61,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .4s}
+#sheet.in .sheet-bg{opacity:1}
+.sheet-card{position:relative;width:min(880px,100%);max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);overflow-y:auto;overflow-x:hidden;background:rgba(255,255,255,.95);border-radius:26px;border:1px solid #fff;border-top:7px solid var(--c);box-shadow:0 30px 80px -20px rgba(60,20,120,.5),0 0 60px -18px var(--c);padding:20px 24px 22px;transform-origin:top left}
+.sheet-card.fly{transition:transform .5s cubic-bezier(.2,.9,.25,1),opacity .35s}
+.sheet-card>*{opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s}
+#sheet.in .sheet-card>*{opacity:1;transform:none}
+#sheet.in .sheet-card>*:nth-child(1){transition-delay:.18s}
+#sheet.in .sheet-card>*:nth-child(2){transition-delay:.26s}
+#sheet.in .sheet-card>*:nth-child(3){transition-delay:.34s}
+#sheet.in .sheet-card>*:nth-child(4){transition-delay:.42s}
+#sheet.in .sheet-card>*:nth-child(5){transition-delay:.5s}
+#sheet.in .sheet-card>*:nth-child(6){transition-delay:.58s}
+#sheet.in .sheet-card>*:nth-child(7){transition-delay:.66s}
+.sheet-card.swap>*{animation:swapIn .45s backwards}
+@keyframes swapIn{from{opacity:0;transform:translateX(24px)}}
+.sh-head{display:flex;align-items:flex-start;gap:12px}
+.sh-head h3{font-size:clamp(1.2rem,3.4vw,1.7rem);margin:2px 0 0}
+.sh-pos{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--muted);padding-top:4px;white-space:nowrap}
+.sh-x{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1rem;color:var(--ink);flex:none;transition:transform .25s}
+.sh-x:hover{transform:rotate(90deg)}
+.sh-stage{margin:14px 0 6px;padding:18px 14px;border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.55));border:1px dashed var(--c);text-align:center}
+.sh-stage .btn{margin-top:10px;padding:4px 12px;font-size:.78rem}
+.sh-stage .w{font-size:clamp(1.2rem,4vw,2.1rem);border-color:var(--c);color:var(--c)}
+.sh-ipa{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.85);border:1px solid var(--line)}
+.sh-ipa>div{display:flex;flex-direction:column}
+.sh-ipa .ipa{font-size:1.35rem;color:var(--c)}
+.sh-ipa .lbl{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase}
+.sh-ex h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:14px 0 6px}
+.sh-ex p{margin:0;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.7);border-left:4px solid var(--c);font-size:1rem}
+.sh-ex p[lang=th]{font-size:1.04rem;line-height:1.75}
+.sh-foot{display:flex;align-items:center;gap:10px;margin-top:16px}
+.sh-foot .sp{flex:1}
+.sh-foot .btn:disabled{opacity:.4;pointer-events:none}
+
+/* present mode */
+#pbar{display:none}
+body.present nav.chips,body.present .deck-top,body.present .deck-nav{display:none}
+body.present main{max-width:1180px;font-size:1.08rem}
+body.present #pbar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:30;justify-content:center;align-items:center;gap:14px;padding:10px;background:rgba(250,247,255,.9);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+body.present .mc h3{font-size:1.3rem}
+@media (max-width:640px){
+  .sheet-card{padding:16px 14px 18px;border-radius:20px}
+  .dots .dt{display:none}.dots button.on .dt{display:inline}
+  .cover{padding:20px}
+  .prow{grid-template-columns:28px 1fr 56px}.prow .bar{display:none}
+  .grid.wide{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+/* ===== larger type ===== */
+html{font-size:112.5%}
+.tag,.qn,.tap,.spill,.badge,.hint,.note,#deckCount,.sh-pos,.sh-ex h4,.sh-ipa .lbl,nav.chips a,.btn,.dt,.try,.fb{font-size:max(.88rem,1em)}
+.mc p{font-size:1.02rem}.qt{font-size:1.15rem}.opt{font-size:1.08rem}.sh-ex p,.sh-ex p[lang=th]{font-size:1.12rem}
+.sent .ipa,.sh-ipa .ipa{font-size:1.4rem}
+/* ===== views ===== */
+#login,#trackerView{display:none}
+body.st-login header,body.st-login main,body.st-login #pbar{display:none}
+body.st-login #login{display:grid}
+body.st-tracker main,body.st-tracker nav.chips,body.st-tracker .prog,body.st-tracker #fsBtn,body.st-tracker #presentBtn,body.st-tracker #pbar{display:none}
+body.st-tracker #trackerView{display:block}
+.who{font-weight:700;font-size:.95rem;color:var(--ink);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* ===== login ===== */
+#login{min-height:100vh;place-items:center;padding:24px 16px}
+.lg-card{width:100%;max-width:600px;background:#fff;border:1px solid rgba(147,51,234,.14);border-radius:28px;padding:34px 34px 30px;box-shadow:0 24px 70px rgba(99,70,200,.16)}
+.lg-badge{display:inline-block;font-weight:700;font-size:.9rem;color:#5B4FD6;background:#EEF0FB;border-radius:99px;padding:7px 14px}
+.lg-title{margin:14px 0 8px;font-family:Anton,Sora,Impact,sans-serif;font-weight:400;font-size:clamp(2.6rem,9vw,3.9rem);line-height:1.02;letter-spacing:.01em;text-transform:uppercase;color:#1B1838}
+.lg-title em{font-style:normal;background:linear-gradient(90deg,#0284C7,#9333EA 55%,#DB2777);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lg-sub{margin:0 0 20px;color:var(--muted);font-size:1.02rem}
+.lg-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:#EEF0FB;border-radius:18px;margin-bottom:20px}
+.lg-tabs button{border:0;background:transparent;padding:13px 8px;border-radius:13px;font-weight:700;font-size:1.05rem;color:#3D3A5C}
+.lg-tabs button.on{background:#fff;color:#5B4FD6;box-shadow:0 4px 14px rgba(99,70,200,.18)}
+.lg-card label{display:block;font-weight:700;font-size:1rem;margin:0 0 8px}
+.lg-card select,.lg-card input{width:100%;font:inherit;font-size:1.1rem;padding:14px 16px;border-radius:16px;border:1.5px solid #DAD9F0;background:#fff;color:var(--ink);margin-bottom:14px}
+.lg-card select:focus,.lg-card input:focus,.lg-tabs button:focus-visible,.lg-go:focus-visible{outline:3px solid rgba(147,51,234,.45);outline-offset:2px}
+.lg-go{width:100%;border:0;border-radius:16px;padding:16px;font-weight:800;font-size:1.15rem;color:#fff;background:linear-gradient(90deg,#0284C7,#9333EA 55%,#DB2777);box-shadow:0 10px 26px rgba(147,51,234,.28)}
+.lg-go:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.lg-err{min-height:1.4em;margin:10px 0 0;color:var(--bad);font-weight:700;font-size:.98rem}
+.lg-note{margin:12px 0 0;color:var(--muted);font-size:.92rem;line-height:1.65}
+.lg-warn{margin:12px 0 0;padding:10px 14px;border-radius:12px;background:#FFF7E6;border:1px solid #F5D9A0;color:#7A5200;font-size:.9rem}
+/* ===== tracker ===== */
+.tv{max-width:1240px;margin:0 auto;padding:26px 18px 70px}
+.tv h2{font-size:clamp(1.7rem,4vw,2.3rem)}
+.tv .sub{color:var(--muted);margin:6px 0 20px;font-size:1.05rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.stat{padding:16px 20px}.stat b{display:block;font-family:Sora,sans-serif;font-size:2.4rem;line-height:1.1;background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-weight:600;color:var(--muted);font-size:1rem}
+.tbl{overflow:auto;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:0 8px 28px rgba(80,40,140,.10)}
+.tbl table{border-collapse:collapse;width:100%;font-size:1.05rem;min-width:940px}
+.tbl th,.tbl td{padding:12px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{background:#F4EEFF;font-weight:800;position:sticky;top:0}
+.tbl td:nth-child(2),.tbl th:nth-child(2){text-align:left}
+.tbl tfoot th{background:#F4EEFF;border-bottom:0}
+.cell{font-weight:700}
+.cell.full{background:#DCFCE7;color:#166534}.cell.part{background:#DBEAFE;color:#1E40AF}.cell.none{color:#6B6585;font-weight:500}
+.dot{display:inline-block;width:13px;height:13px;border-radius:50%;background:#CBD5E1;margin-right:6px;vertical-align:-1px}
+.dot.on{background:var(--ok);box-shadow:0 0 0 4px rgba(22,163,74,.2)}
+.legend2{margin:14px 2px 0;color:var(--muted);font-size:.98rem}
+.tv .warn{margin:0 0 16px;padding:10px 14px;border-radius:12px;background:#FFF7E6;border:1px solid #F5D9A0;color:#7A5200;font-size:.95rem}
+.spill{font-size:.9rem!important}.who{max-width:200px}
+.sync{font-size:.9rem;font-weight:700;color:var(--ok)}.sync.bad{color:var(--bad)}
+.tbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}.tbar .upd{color:var(--muted);font-weight:600;font-size:1rem;margin-right:auto}
+.btn.danger{border-color:#F3B4B4;color:#B91C1C;background:#FFF5F5}.btn.mini2{padding:5px 12px;font-size:.9rem}
+.cfm{position:fixed;inset:0;z-index:80;background:rgba(36,31,61,.45);display:grid;place-items:center;padding:20px}.cfm div{background:#fff;border-radius:22px;padding:26px;max-width:460px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.3)}.cfm p{margin:0 0 18px;font-size:1.12rem;line-height:1.6}.cfm .row{display:flex;gap:10px;justify-content:flex-end}
+
+@media (max-width:560px){.sync{display:none}.lg-card{padding:26px 20px}.who{display:none}}
+</style>
+</head>
+<body class="st-login">
+<div id="login"><div class="lg-card" id="lgCard"></div></div>
+<header>
+  <div class="hrow">
+    <div class="brand"><b>English</b> Intonation</div>
+    <span class="badge">RP</span>
+    <div class="sp"></div>
+    <div class="prog" title="Progress"><i id="bar"></i></div>
+    <span class="sync" id="sync" aria-live="polite"></span>
+    <span class="who" id="who"></span>
+    <button class="btn" id="viewBtn" style="display:none"></button>
+    <button class="btn" id="outBtn">Log out</button>
+    <button class="btn" id="fsBtn" title="Full screen (F)">&#x26F6; Full screen</button>
+    <button class="btn" id="presentBtn" title="Present (P)">Present</button>
+  </div>
+  <nav class="chips" id="partNav" aria-label="Parts"></nav>
+</header>
+<section id="trackerView"><div class="tv" id="tvBody"></div></section>
+<main>
+  <div class="deck-top"><div class="dots" id="deckDots"></div><span id="deckCount"></span></div>
+  <div class="deck-stage" id="stage" aria-live="polite"></div>
+  <div class="deck-nav"><button class="btn" type="button" id="deckPrev">&larr; Back</button><div class="bar"><i id="deckBar"></i></div><button class="btn pri" type="button" id="deckNext">Next &rarr;</button></div>
+</main>
+<div id="pbar"><button class="btn" id="pPrev">&larr;</button><span id="pCount" class="badge"></span><button class="btn pri" id="pNext">&rarr;</button><button class="btn" id="pExit">Exit</button></div>
+<div id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle"><div class="sheet-bg" data-act="shx"></div><div class="sheet-card" id="shCard"></div></div>
+
+<script>
+(function(){
+'use strict';
+var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- sentence data (RP; no stress marks; length marks kept) ---------- */
+var TONES={
+ fall:{sym:'↘',name:'Falling',color:'#DB2777'},
+ rise:{sym:'↗',name:'Rising',color:'#0284C7'},
+ risefall:{sym:'↗↘',name:'Rise-fall',color:'#9333EA'},
+ fallrise:{sym:'↘↗',name:'Fall-rise',color:'#B45309'},
+ list:{sym:'↗ ↗ ↘',name:'List',color:'#0D9488'},
+ choice:{sym:'↗ ↘',name:'Choice',color:'#0D9488'}
+};
+var S={};
+function W(w,p,n){return {w:w,p:p,n:!!n};}
+function def(id,t,ipa,tone,w){S[id]={id:id,t:t,ipa:ipa,tone:tone,w:w};}
+def('f1',"I'm going home.",'aɪm ɡəʊɪŋ həʊm','fall',[W("I'm",[60,58]),W('going',[62,60]),W('home',[88,12],1)]);
+def('f2','What time is it?','wɒt taɪm ɪz ɪt','fall',[W('What',[64,62]),W('time',[92,26],1),W('is',[20,18]),W('it',[16,12])]);
+def('f3','Close the door.','kləʊz ðə dɔː','fall',[W('Close',[70,66]),W('the',[56,54]),W('door',[90,10],1)]);
+def('f4',"It's raining.",'ɪts reɪnɪŋ','fall',[W("It's",[56,54]),W('raining',[90,10],1)]);
+def('f5','Where do you live?','weə də ju lɪv','fall',[W('Where',[76,72]),W('do',[52,50]),W('you',[48,46]),W('live',[88,10],1)]);
+def('f6',"It's far.",'ɪts fɑː','fall',[W("It's",[56,54]),W('far',[88,10],1)]);
+def('r1','Are you ready?','ɑː ju redi','rise',[W('Are',[56,52]),W('you',[48,46]),W('ready',[34,86],1)]);
+def('r2','Is it far?','ɪz ɪt fɑː','rise',[W('Is',[52,48]),W('it',[46,42]),W('far',[30,86],1)]);
+def('r3','Can I sit here?','kæn aɪ sɪt hɪə','rise',[W('Can',[54,50]),W('I',[48,46]),W('sit',[46,44]),W('here',[30,86],1)]);
+def('r4','Do you like coffee?','duː ju laɪk kɒfi','rise',[W('Do',[56,52]),W('you',[48,46]),W('like',[46,44]),W('coffee',[32,86],1)]);
+def('rf1',"That's brilliant!",'ðæts brɪljənt','risefall',[W("That's",[52,50]),W('brilliant',[48,96,10],1)]);
+def('rf2','How lovely!','haʊ lʌvli','risefall',[W('How',[62,60]),W('lovely',[50,96,10],1)]);
+def('rf3','I told you so!','aɪ təʊld ju səʊ','risefall',[W('I',[56,54]),W('told',[56,54]),W('you',[50,48]),W('so',[44,94,10],1)]);
+def('fr1','Well, I might.','wel aɪ maɪt','fallrise',[W('Well',[60,58]),W('I',[52,50]),W('might',[90,12,70],1)]);
+def('fr2','Maybe later.','meɪbi leɪtə','fallrise',[W('Maybe',[62,56]),W('later',[90,12,68],1)]);
+def('fr3',"It's possible, but\u2026",'ɪts pɒsəbəl bʌt','fallrise',[W("It's",[54,52]),W('possible',[90,12,60],1),W('but',[62,70])]);
+def('fr4',"I'd love to, but\u2026",'aɪd lʌv tuː bʌt','fallrise',[W("I'd",[54,52]),W('love',[90,12,64],1),W('to',[58,58]),W('but',[62,70])]);
+def('l1','Red, white, and blue.','red waɪt ənd bluː','list',[W('Red',[40,70],1),W('white',[42,72],1),W('and',[50,48]),W('blue',[84,10],1)]);
+def('l2','We need bread, milk, and eggs.','wi niːd bred mɪlk ənd eɡz','list',[W('We',[52,50]),W('need',[52,50]),W('bread',[40,70],1),W('milk',[42,72],1),W('and',[48,46]),W('eggs',[84,10],1)]);
+def('l3','Apples, oranges, and bananas.','æpəlz ɒrɪndʒɪz ənd bənɑːnəz','list',[W('Apples',[40,72],1),W('oranges',[42,72],1),W('and',[50,48]),W('bananas',[84,10],1)]);
+def('c1','Tea or coffee?','tiː ɔː kɒfi','choice',[W('Tea',[40,74],1),W('or',[52,50]),W('coffee',[80,8],1)]);
+def('t1',"It's cold, isn't it?",'ɪts kəʊld ɪzənt ɪt','fall',[W("It's",[52,50]),W('cold',[86,58]),W("isn't",[52,48]),W('it',[44,10],1)]);
+def('t2',"You're coming, aren't you?",'jɔː kʌmɪŋ ɑːnt ju','rise',[W("You're",[54,52]),W('coming',[86,56]),W("aren't",[50,46]),W('you',[30,86],1)]);
+def('x1','She bought a red car.','ʃi bɔːt ə red kɑː','fall',[W('She',[58,56]),W('bought',[58,56]),W('a',[58,56]),W('red',[58,56]),W('car',[90,12],1)]);
+var QUIZ=[[  {q:'Intonation is best described as\u2026',o:['the rise and fall of pitch across a phrase','the loudness of one syllable','the speed of speech','the spelling of a word'],a:0,why:'Intonation is the pitch melody of speech.'},
+  {q:'The syllable that carries the main pitch movement is the\u2026',o:['nucleus (tonic syllable)','pre-head','tail','head'],a:0,why:'The nucleus is where the major pitch movement happens.'},
+  {q:'Which symbol shows a falling tone?',o:['\u2198','\u2197','\u2198\u2197','\u2197\u2198'],a:0,why:'\u2198 = fall. \u2197 = rise. \u2198\u2197 = fall-rise. \u2197\u2198 = rise-fall.'},
+  {q:'Which tone is normally used for a plain statement?',o:['Falling','Rising','Fall-rise','Rise-fall'],a:0,why:'Statements normally end with a fall, showing completeness.'},
+  {q:'Syllables that come after the nucleus are called the\u2026',o:['tail','head','pre-head','onset'],a:0,why:'The tail follows the nucleus.',s:'f2'}],
+[  {q:'\u201CI\u2019m going home.\u201D (a statement). Which tone is normal?',o:['\u2198 Falling','\u2197 Rising'],a:0,why:'Statements fall.',s:'f1'},
+  {q:'\u201CWhere do you live?\u201D is a wh-question. Which tone is normal?',o:['\u2198 Falling','\u2197 Rising'],a:0,why:'Wh-questions normally fall.',s:'f5'},
+  {q:'Which of these normally ends with a fall?',o:['Close the door.','Is it far?','Are you ready?','Can I sit here?'],a:0,why:'Commands fall; the other three are yes/no questions (they rise).'},
+  {q:'A falling tone on \u201CClose the door.\u201D sounds\u2026',o:['firm, finished, certain','politely unsure','surprised','like a request for permission'],a:0,why:'A fall signals certainty and completeness.',s:'f3'},
+  {q:'In \u201CWhat time is it?\u201D, which word carries the nucleus?',o:['time','What','is','it'],a:0,why:'The nucleus is on \u201Ctime\u201D; \u201Cis it\u201D is the low tail.',s:'f2'}],
+[  {q:'\u201CAre you ready?\u201D (a yes/no question). Which tone is normal?',o:['\u2197 Rising','\u2198 Falling'],a:0,why:'Yes/no questions normally rise.',s:'r1'},
+  {q:'Which of these normally RISES at the end?',o:['Is it far?','Close the door.','I\u2019m going home.','Where do you live?'],a:0,why:'Only the yes/no question rises.'},
+  {q:'Yes/no questions usually use which tone?',o:['Rising','Falling','Fall-rise','Rise-fall'],a:0,why:'They usually rise on the nucleus.'},
+  {q:'A rise on a question makes it sound\u2026',o:['open, friendly, asking','cold and final','angry','bored'],a:0,why:'A rise leaves the conversation open.',s:'r4'},
+  {q:'In \u201CCan I sit here?\u201D the rise begins on which word?',o:['here','Can','I','sit'],a:0,why:'The nucleus is \u201Chere\u201D, the last content word.',s:'r3'}],
+[  {q:'\u201CThat\u2019s brilliant!\u201D with a rise-fall shows\u2026',o:['strong feeling, impressed','uncertainty','a polite request','a list'],a:0,why:'Rise-fall expresses strong feeling.',s:'rf1'},
+  {q:'\u201CMaybe later.\u201D with a fall-rise shows\u2026',o:['non-committal, not decided','strong excitement','a firm command','a plain fact'],a:0,why:'Fall-rise often signals reservation.',s:'fr2'},
+  {q:'\u201CIt\u2019s possible, but\u2026\u201D The fall-rise suggests\u2026',o:['a hidden reservation','finished and certain','an order','a wh-question'],a:0,why:'Fall-rise often hints at \u201Cbut\u2026\u201D.',s:'fr3'},
+  {q:'Which symbol is the fall-rise?',o:['\u2198\u2197','\u2197\u2198','\u2198','\u2197'],a:0,why:'\u2198\u2197 = falls then rises.'},
+  {q:'\u201CHow lovely!\u201D (very impressed). Which pattern?',o:['\u2197\u2198 rise-fall','\u2198\u2197 fall-rise','\u2197 rise','\u2198 fall'],a:0,why:'Rise-fall expresses strong feeling.',s:'rf2'}],
+[  {q:'Best contour for \u201CRed, white, and blue.\u201D',o:['Red \u2197 white \u2197 blue \u2198','All \u2198','All \u2197','Red \u2198 white \u2198 blue \u2197'],a:0,why:'Non-final items rise; the last item falls.',s:'l1'},
+  {q:'\u201CTea or coffee?\u201D (a choice). Best contour:',o:['Tea \u2197 \u2026 coffee \u2198','Both \u2197','Both \u2198','Tea \u2198 \u2026 coffee \u2197'],a:0,why:'First option rises, last option falls.',s:'c1'},
+  {q:'\u201CIt\u2019s cold, isn\u2019t it?\u201D The speaker expects agreement. The tag:',o:['falls \u2198','rises \u2197'],a:0,why:'A falling tag seeks confirmation.',s:'t1'},
+  {q:'\u201CYou\u2019re coming, aren\u2019t you?\u201D The speaker is genuinely unsure. The tag:',o:['rises \u2197','falls \u2198'],a:0,why:'A rising tag is a real question.',s:'t2'},
+  {q:'The last item in a list\u2026',o:['falls to show the list is complete','rises','stays flat','is silent'],a:0,why:'The final fall signals completeness.'}],
+[  {q:'\u201CDid she buy a blue car?\u201D \u2192 \u201CShe bought a red car.\u201D Which word carries the nucleus?',o:['red','She','bought','car'],a:0,why:'The new, contrasting information is \u201Cred\u201D.'},
+  {q:'\u201CWho bought a red car?\u201D \u2192 \u201C___ bought a red car.\u201D Nucleus on:',o:['She','bought','red','car'],a:0,why:'The answer to \u201CWho?\u201D is \u201CShe\u201D.'},
+  {q:'\u201CDid she rent a red car?\u201D \u2192 \u201CShe bought a red car.\u201D Nucleus on:',o:['bought','She','red','car'],a:0,why:'\u201Cbought\u201D contrasts with \u201Crent\u201D.'},
+  {q:'\u201CDid she buy a red bike?\u201D \u2192 \u201CShe bought a red car.\u201D Nucleus on:',o:['car','She','bought','red'],a:0,why:'\u201Ccar\u201D contrasts with \u201Cbike\u201D.'},
+  {q:'With no special contrast, the nucleus normally falls on the\u2026',o:['last content word','first word','a small word like \u201Ca\u201D','any random word'],a:0,why:'The default nucleus is the last content word.'}],
+[  {q:'\u201CIs the shop open?\u201D Normal tone:',o:['\u2197 Rising','\u2198 Falling'],a:0,why:'Yes/no question \u2192 rise.'},
+  {q:'\u201CPut it on the table.\u201D Normal tone:',o:['\u2198 Falling','\u2197 Rising'],a:0,why:'Command \u2192 fall.'},
+  {q:'\u201CTea or coffee?\u201D (choice). Pattern:',o:['\u2197 \u2198','\u2198 \u2197','\u2197 \u2197','\u2198 \u2198'],a:0,why:'First option rises, last falls.',s:'c1'},
+  {q:'\u201CI\u2019d love to, but\u2026\u201D The speaker is\u2026',o:['declining politely or hesitating','completely certain','giving an order','asking a wh-question'],a:0,why:'Fall-rise = reservation.',s:'fr4'},
+  {q:'\u201CWow, that\u2019s amazing!\u201D (very impressed). Pattern:',o:['\u2197\u2198 rise-fall','\u2198\u2197 fall-rise','\u2197 rise','flat'],a:0,why:'Rise-fall shows strong feeling.'},
+  {q:'\u201CWhere\u2019s the station?\u201D Normal tone:',o:['\u2198 Falling','\u2197 Rising'],a:0,why:'Wh-question \u2192 fall.'},
+  {q:'\u201CDid he arrive on Monday?\u201D \u2192 \u201CHe arrived on Tuesday.\u201D Nucleus on:',o:['Tuesday','arrived','He','on'],a:0,why:'\u201CTuesday\u201D contrasts with \u201CMonday\u201D.'},
+  {q:'\u201CWe need bread, milk, and eggs.\u201D Which item falls?',o:['eggs','bread','milk','need'],a:0,why:'The last item falls.',s:'l2'},
+  {q:'Which tone makes \u201CYes.\u201D sound reserved or unsure?',o:['Fall-rise','Falling','Rise-fall','Flat'],a:0,why:'Fall-rise often signals reservation.'},
+  {q:'\u201CShe\u2019s late, isn\u2019t she?\u201D (expects agreement). The tag:',o:['falls \u2198','rises \u2197'],a:0,why:'A falling tag expects agreement.'}]];
+/* ---------- bilingual explanations ---------- */
+var EX={
+x1:["The nucleus “car” carries the main fall: the new information is the kind of thing she bought, not a bike or a van.","พยางค์หลัก “car” ตกลงชัดเจน เพราะข้อมูลใหม่คือสิ่งที่เธอซื้อ ไม่ใช่จักรยานหรือรถตู้"],
+f1:["A statement normally ends with a fall. The voice drops on the nucleus “home”, which tells the listener the sentence is finished.","ประโยคบอกเล่าโดยปกติลงท้ายด้วยเสียงตก เสียงตกลงที่พยางค์หลัก “home” บอกผู้ฟังว่าประโยคจบแล้ว"],
+f2:["In a wh-question the nucleus is “time”. The tail “is it” stays low and flat.","ในคำถามขึ้นต้นด้วย Wh- พยางค์หลักคือ “time” ส่วนท้าย “is it” อยู่ระดับต่ำและราบ"],
+f3:["Commands fall. The drop on “door” sounds firm and certain.","ประโยคคำสั่งใช้เสียงตก การตกที่ “door” ฟังดูหนักแน่นและมั่นใจ"],
+f4:["A simple fact also falls. The nucleus is “raining” and the voice goes down to a low pitch.","ข้อเท็จจริงง่าย ๆ ก็ใช้เสียงตก พยางค์หลักคือ “raining” และเสียงลงไปที่ระดับต่ำ"],
+f5:["Wh-questions (where, what, who…) usually fall, so they sound direct and complete.","คำถาม Wh- (where, what, who …) มักใช้เสียงตก ฟังตรงไปตรงมาและสมบูรณ์"],
+f6:["Compare with “Is it far?”: the same words, but a fall makes this a statement.","เทียบกับ “Is it far?” คำเดียวกัน แต่เสียงตกทำให้เป็นประโยคบอกเล่า"],
+r1:["Yes/no questions usually rise on the nucleus “ready”. The rise leaves the answer open to the listener.","คำถามแบบ Yes/No มักใช้เสียงขึ้นที่พยางค์หลัก “ready” เสียงขึ้นเปิดโอกาสให้ผู้ฟังตอบ"],
+r2:["The rise on “far” turns the words into a question. In writing the question mark helps; in speech only the melody does.","เสียงขึ้นที่ “far” ทำให้เป็นคำถาม ในการเขียนมีเครื่องหมายคำถามช่วย แต่ในการพูดมีเพียงทำนองเสียง"],
+r3:["A low start and a rise on “here” sounds polite and friendly when you ask permission.","เริ่มจากระดับต่ำแล้วขึ้นที่ “here” ฟังสุภาพเป็นมิตรเมื่อขออนุญาต"],
+r4:["The voice stays low, then rises on the last content word “coffee”.","เสียงอยู่ระดับต่ำ แล้วขึ้นที่คำเนื้อหาคำสุดท้าย “coffee”"],
+rf1:["Rise-fall: the pitch rises then falls on “brilliant”. It shows strong feeling, such as being impressed.","เสียงขึ้น-ตก: ระดับเสียงขึ้นแล้วตกที่ “brilliant” แสดงความรู้สึกแรง เช่น ประทับใจ"],
+rf2:["The rise-fall on “lovely” sounds warm and enthusiastic.","เสียงขึ้น-ตกที่ “lovely” ฟังอบอุ่นและกระตือรือร้น"],
+rf3:["A rise-fall on “so” can sound triumphant or self-assured: “I was right!”","เสียงขึ้น-ตกที่ “so” อาจฟังเหมือนผู้พูดมั่นใจหรือได้ชัยชนะ: “ฉันพูดถูกแล้ว!”"],
+fr1:["Fall-rise: the pitch falls then rises on “might”. It shows uncertainty or reservation.","เสียงตก-ขึ้น: ระดับเสียงตกแล้วขึ้นที่ “might” แสดงความไม่แน่ใจหรือยังไม่เต็มใจ"],
+fr2:["“Maybe later” with a fall-rise is non-committal: the decision is not final.","“Maybe later” ที่ใช้เสียงตก-ขึ้นแปลว่ายังไม่ตกลง การตัดสินใจยังไม่เด็ดขาด"],
+fr3:["The fall-rise on “possible” hints at a hidden “but…”: there is a problem the speaker has not said.","เสียงตก-ขึ้นที่ “possible” บอกใบ้ว่ามี “but…” ซ่อนอยู่ คือมีข้อติดขัดที่ยังไม่ได้พูด"],
+fr4:["A polite way to hesitate or decline. The fall-rise on “love” leaves the reason unspoken.","วิธีลังเลหรือปฏิเสธอย่างสุภาพ เสียงตก-ขึ้นที่ “love” ปล่อยให้เหตุผลไม่ถูกพูดออกมา"],
+l1:["In a list, every item except the last rises (more is coming). The last item falls (the list is finished).","ในรายการ ทุกรายการยกเว้นรายการสุดท้ายใช้เสียงขึ้น (ยังมีต่อ) รายการสุดท้ายใช้เสียงตก (จบรายการ)"],
+l2:["Same list pattern: “bread” and “milk” rise; “eggs” falls to close the list.","รูปแบบรายการเดิม: “bread” และ “milk” เสียงขึ้น ส่วน “eggs” เสียงตกเพื่อปิดรายการ"],
+l3:["Longer items follow the same rule. The final fall on “bananas” shows the list is complete.","รายการที่ยาวขึ้นก็ใช้กฎเดียวกัน เสียงตกที่ “bananas” แสดงว่ารายการจบแล้ว"],
+c1:["A choice question: the first option rises and the last option falls. The speaker offers a closed set of options.","คำถามให้เลือก: ตัวเลือกแรกเสียงขึ้น ตัวเลือกสุดท้ายเสียงตก เป็นการเสนอตัวเลือกที่จำกัด"],
+t1:["A falling tag expects agreement. The speaker is fairly sure it is cold.","tag question ที่เสียงตกคาดหวังให้ผู้ฟังเห็นด้วย ผู้พูดค่อนข้างมั่นใจว่าอากาศหนาว"],
+t2:["A rising tag is a real question: the speaker is not sure the listener is coming.","tag question ที่เสียงขึ้นเป็นคำถามจริง ผู้พูดไม่แน่ใจว่าผู้ฟังจะมาหรือไม่"]
+};
+var PT=['','What is Intonation?','Falling Tone ↘','Rising Tone ↗','Fall-Rise & Rise-Fall','Lists, Choices & Tags','Nucleus & Focus','Review & Practice'];
+var C={
+ i1:{t:'Melody carries meaning',en:'Words give the message; intonation tells the listener how to take it: a question or a statement, sure or unsure, warm or cold. “Is it far?” and “It’s far.” use the same words but mean different things.',th:'คำบอกเนื้อหา ส่วนทำนองเสียง (intonation) บอกผู้ฟังว่าควรตีความอย่างไร เป็นคำถามหรือประโยคบอกเล่า มั่นใจหรือไม่แน่ใจ อบอุ่นหรือเย็นชา เช่น “Is it far?” กับ “It’s far.” ใช้คำเดียวกันแต่ความหมายต่างกัน',sent:'r2'},
+ i2:{t:'Being understood',en:'Listeners use pitch to find the most important word and to know when you have finished speaking. With an unclear melody, even a correct sentence can be confusing.',th:'ผู้ฟังใช้ระดับเสียงเพื่อหาคำที่สำคัญที่สุด และรู้ว่าเราพูดจบแล้วหรือยัง ถ้าทำนองไม่ชัด แม้ประโยคจะถูกต้องก็อาจฟังสับสนได้',sent:'f2'},
+ i3:{t:'Sounding polite and friendly',en:'A gentle rise on a request sounds open and polite. A flat or sharply falling voice can sound cold or abrupt, even when the words are polite.',th:'เสียงขึ้นเบา ๆ ตอนขอร้องฟังเปิดกว้างและสุภาพ ส่วนเสียงราบหรือตกแรงอาจฟังเย็นชาหรือห้วน แม้คำพูดจะสุภาพก็ตาม',sent:'r3'},
+ i4:{t:'Different from Thai tones',en:'In Thai, pitch changes the meaning of a word. In English, pitch works across a whole phrase and changes the speaker’s message. Habits from Thai can make an English sentence sound flat, so practise the melody on purpose.',th:'ในภาษาไทย ระดับเสียงเปลี่ยนความหมายของคำ แต่ในภาษาอังกฤษ ระดับเสียงทำงานทั้งวลีและเปลี่ยนสารที่ผู้พูดต้องการสื่อ นิสัยการพูดแบบไทยอาจทำให้ประโยคอังกฤษฟังราบ จึงควรฝึกทำนองอย่างตั้งใจ'},
+ fn1:{t:'Statement or question',en:'A fall marks a statement; a rise marks a yes/no question. In speech, only the melody separates “It’s far.” from “Is it far?”.',th:'เสียงตกบอกว่าเป็นประโยคบอกเล่า เสียงขึ้นบอกว่าเป็นคำถาม Yes/No เวลาพูด มีเพียงทำนองเสียงที่แยก “It’s far.” ออกจาก “Is it far?”',sent:'r2'},
+ fn2:{t:'Attitude and feeling',en:'A rise-fall shows strong feeling such as being impressed or surprised. The same words said flatly sound much less enthusiastic.',th:'เสียงขึ้น-ตกแสดงความรู้สึกแรง เช่น ประทับใจหรือประหลาดใจ ถ้าพูดคำเดียวกันด้วยเสียงราบ จะฟังไม่กระตือรือร้นเท่า',sent:'rf1'},
+ fn3:{t:'Finished or not finished',en:'A fall says “I have finished”. A fall-rise says “there is more”: a reservation or condition left unspoken, as in “I’d love to, but…”.',th:'เสียงตกบอกว่า “พูดจบแล้ว” ส่วนเสียงตก-ขึ้นบอกว่า “ยังมีต่อ” เช่นมีข้อแม้หรือข้อสงวนที่ไม่ได้พูดออกมา อย่างใน “I’d love to, but…”',sent:'fr4'},
+ fn4:{t:'Lists and choices',en:'In a list, each item rises (more is coming) and the last item falls (the list is complete). In “Tea or coffee?” the first option rises and the last falls.',th:'ในรายการ แต่ละรายการเสียงขึ้น (ยังมีต่อ) และรายการสุดท้ายเสียงตก (จบรายการ) ใน “Tea or coffee?” ตัวเลือกแรกขึ้น ตัวเลือกสุดท้ายตก',sent:'c1'},
+ fn5:{t:'Focus: what is new',en:'The nucleus marks the most important new information. Move it and the meaning changes: “She bought a RED car” (not a blue one) versus “She bought a red CAR” (not a bike).',th:'พยางค์หลัก (nucleus) ชี้ข้อมูลใหม่ที่สำคัญที่สุด ย้ายตำแหน่งแล้วความหมายเปลี่ยน “She bought a RED car” (ไม่ใช่สีฟ้า) ต่างจาก “She bought a red CAR” (ไม่ใช่จักรยาน)',sent:'x1'},
+ prehead:{t:'Pre-head',en:'Unstressed syllables before the first prominent syllable. They are said quickly at a fairly low level.',th:'พยางค์ไม่เน้นที่อยู่ก่อนพยางค์เด่นตัวแรก พูดเร็วและระดับเสียงค่อนข้างต่ำ'},
+ head:{t:'Head',en:'The stretch from the first prominent syllable up to the nucleus. Prominent syllables carry the rhythm.',th:'ช่วงตั้งแต่พยางค์เด่นตัวแรกจนถึงพยางค์หลัก (nucleus) พยางค์เด่นเป็นตัวกำหนดจังหวะ'},
+ nucleus:{t:'Nucleus (tonic syllable)',en:'The syllable with the main pitch movement (fall, rise, fall-rise or rise-fall). It is the most important syllable of the unit.',th:'พยางค์ที่มีการเคลื่อนไหวของระดับเสียงหลัก (ตก ขึ้น ตก-ขึ้น หรือ ขึ้น-ตก) เป็นพยางค์สำคัญที่สุดของหน่วยเสียง',sent:'f2'},
+ tail:{t:'Tail',en:'Syllables after the nucleus. After a fall they stay low and flat; after a rise they keep going upward.',th:'พยางค์หลังพยางค์หลัก หลังเสียงตกจะต่ำและราบ หลังเสียงขึ้นจะไต่ระดับต่อ'},
+ w1:{t:'One main movement',en:'Give each unit one main movement on the nucleus. Do not give every word its own up-and-down tune.',th:'ใส่การเคลื่อนไหวหลักเพียงหนึ่งครั้งที่พยางค์หลัก หลีกเลี่ยงการทำเสียงสูงต่ำให้ทุกคำ'},
+ w2:{t:'Fall all the way',en:'Start the fall on the nucleus and let it reach a low pitch. A fall that stops halfway sounds unfinished.',th:'เริ่มตกที่พยางค์หลักและให้ถึงระดับต่ำจริง ถ้าตกไม่สุดจะฟังเหมือนยังพูดไม่จบ'},
+ dflt:{t:'Default nucleus position',en:'With no special contrast, the nucleus falls on the last content word of the unit.',th:'เมื่อไม่มีการเน้นเป็นพิเศษ nucleus จะอยู่ที่คำเนื้อหา (content word) คำสุดท้ายของหน่วยเสียง',sent:'f1'},
+ ctx1:{t:'Contrast: red, not blue',en:'“Did she buy a blue car?” → “She bought a RED car.” The listener mentioned blue, so “red” is the new, contrasting information.',th:'ผู้ฟังถามถึงสีฟ้า คำตอบจึงเน้น “red” ซึ่งเป็นข้อมูลใหม่ที่ขัดกับที่ถาม'},
+ ctx2:{t:'Answering “Who?”',en:'“Who bought a red car?” → “SHE bought a red car.” The answer to “Who?” carries the nucleus.',th:'คำตอบของคำถาม “Who?” คือ “She” จึงเป็นคำที่มี nucleus'},
+ ctx3:{t:'Contrast: bought, not rented',en:'“Did she rent a red car?” → “She BOUGHT a red car.” “bought” contrasts with “rent”.',th:'“bought” ตรงข้ามกับ “rent” ที่ผู้ฟังถามมา จึงเป็นคำที่มี nucleus'},
+ cs_fall:{t:'Falling ↘',sym:'↘',color:'#DB2777',en:'Use a fall for statements, wh-questions and commands. It signals that you are finished and certain.',th:'ใช้เสียงตกกับประโยคบอกเล่า คำถาม Wh- และคำสั่ง เพื่อบอกว่าพูดจบแล้วและมั่นใจ',sent:'f5'},
+ cs_rise:{t:'Rising ↗',sym:'↗',color:'#0284C7',en:'Use a rise for yes/no questions and open, friendly requests. The answer is left to the listener.',th:'ใช้เสียงขึ้นกับคำถาม Yes/No และการขอร้องอย่างเปิดกว้าง ปล่อยให้ผู้ฟังเป็นผู้ตอบ',sent:'r1'},
+ cs_fallrise:{t:'Fall-rise ↘↗',sym:'↘↗',color:'#B45309',en:'Use a fall-rise for reservation, uncertainty or a hidden “but…”. The speaker is not finished.',th:'ใช้เสียงตก-ขึ้นเมื่อมีข้อแม้ ไม่แน่ใจ หรือมี “but…” ซ่อนอยู่ ผู้พูดยังพูดไม่จบ',sent:'fr3'},
+ cs_risefall:{t:'Rise-fall ↗↘',sym:'↗↘',color:'#9333EA',en:'Use a rise-fall for strong feeling: surprise, enthusiasm or being very sure.',th:'ใช้เสียงขึ้น-ตกเพื่อแสดงความรู้สึกแรง เช่น ประหลาดใจ กระตือรือร้น หรือมั่นใจมาก',sent:'rf1'},
+ cs_list:{t:'List ↗ ↗ ↘',sym:'↗↗↘',color:'#0D9488',en:'In a list, each item rises except the last one, which falls to close the list.',th:'ในรายการ ทุกรายการเสียงขึ้น ยกเว้นรายการสุดท้ายเสียงตกเพื่อปิดรายการ',sent:'l1'},
+ cs_choice:{t:'Choice ↗ ↘',sym:'↗↘',color:'#0D9488',en:'In a choice question, the first option rises and the last option falls.',th:'ในคำถามให้เลือก ตัวเลือกแรกเสียงขึ้น ตัวเลือกสุดท้ายเสียงตก',sent:'c1'},
+ p1:{t:'Part 1 · What is Intonation?',en:'Meet pitch, the nucleus and the four basic tones.',th:'ทำความรู้จักระดับเสียง พยางค์หลัก (nucleus) และเสียงพื้นฐาน 4 แบบ'},
+ p2:{t:'Part 2 · Falling Tone',en:'Statements, wh-questions and commands.',th:'เสียงตก: ประโยคบอกเล่า คำถาม Wh- และคำสั่ง'},
+ p3:{t:'Part 3 · Rising Tone',en:'Yes/no questions and open, friendly requests.',th:'เสียงขึ้น: คำถาม Yes/No และการขอร้องอย่างเปิดกว้าง'},
+ p4:{t:'Part 4 · Fall-Rise & Rise-Fall',en:'Attitude: uncertainty, reservation and strong feeling.',th:'เสียงตก-ขึ้น และ ขึ้น-ตก: แสดงทัศนคติ ความลังเล และความรู้สึกแรง'},
+ p5:{t:'Part 5 · Lists, Choices & Tags',en:'Intonation in longer patterns.',th:'ทำนองเสียงในรายการ คำถามให้เลือก และ tag question'},
+ p6:{t:'Part 6 · Nucleus & Focus',en:'Moving the nucleus changes the meaning.',th:'การย้ายตำแหน่ง nucleus ทำให้ความหมายเปลี่ยนไป'},
+ p7:{t:'Part 7 · Review & Practice',en:'A cheat sheet and mixed practice.',th:'สรุปรวมและฝึกฝนแบบผสม'}
+};
+var FOCUS_WORDS=['She','bought','a','red','car'];
+var FOCUS_NOTES={
+ 0:['SHE bought a red car. → it was she, not someone else.','เธอเป็นคนซื้อ ไม่ใช่คนอื่น'],
+ 1:['She BOUGHT a red car. → she did not rent or borrow it.','เธอซื้อ ไม่ได้เช่าหรือยืม'],
+ 3:['She bought a RED car. → not a blue or white one.','เป็นสีแดง ไม่ใช่สีอื่น'],
+ 4:['She bought a red CAR. → not a bike or a van.','เป็นรถยนต์ ไม่ใช่จักรยานหรือรถตู้']
+};
+
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function contourSVG(words){
+  var Wd=640,H=210,top=24,bot=50,n=words.length,slot=Wd/n,pts=[],rects='',labels='',dots='',i,k;
+  for(i=0;i<n;i++){
+    var wd=words[i],x0=i*slot+slot*.2,x1=(i+1)*slot-slot*.2,m=wd.p.length;
+    for(k=0;k<m;k++){var x=m===1?(x0+x1)/2:x0+(x1-x0)*k/(m-1);pts.push([x,top+(100-wd.p[k])/100*(H-top-bot)]);}
+    if(wd.n){rects+='<rect x="'+(i*slot+4)+'" y="6" width="'+(slot-8)+'" height="'+(H-12)+'" rx="16" fill="rgba(219,39,119,.09)" stroke="rgba(219,39,119,.35)"/>';}
+    labels+='<text x="'+(i*slot+slot/2)+'" y="'+(H-18)+'" text-anchor="middle" font-family="Sora,Noto Sans,sans-serif" font-size="'+(n>5?20:25)+'" font-weight="'+(wd.n?800:600)+'" fill="'+(wd.n?'#DB2777':'#241F3D')+'">'+esc(wd.w)+'</text>';
+  }
+  var d='M'+pts[0][0].toFixed(1)+' '+pts[0][1].toFixed(1);
+  for(i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i],cx=(a[0]+b[0])/2;d+=' C'+cx.toFixed(1)+' '+a[1].toFixed(1)+' '+cx.toFixed(1)+' '+b[1].toFixed(1)+' '+b[0].toFixed(1)+' '+b[1].toFixed(1);}
+  for(i=0;i<pts.length;i++){dots+='<circle class="dot" cx="'+pts[i][0].toFixed(1)+'" cy="'+pts[i][1].toFixed(1)+'" r="4.5" fill="#fff" stroke="#9333EA" stroke-width="2.5"/>';}
+  var gid='lg'+(window.__gid=(window.__gid||0)+1);
+  return '<svg class="contour" viewBox="0 0 '+Wd+' '+H+'" role="img" aria-label="Pitch contour of the sentence"><defs><linearGradient id="'+gid+'" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="'+Wd+'" y2="0"><stop offset="0" stop-color="#0284C7"/><stop offset=".55" stop-color="#9333EA"/><stop offset="1" stop-color="#DB2777"/></linearGradient></defs>'
+   +rects+'<line x1="0" x2="'+Wd+'" y1="'+(H-bot+6)+'" y2="'+(H-bot+6)+'" stroke="rgba(147,51,234,.25)"/>'
+   +'<path class="main" d="'+d+'" fill="none" stroke="url(#'+gid+')" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>'
+   +dots+labels+'<circle class="ball" r="9" fill="#DB2777" opacity="0" cx="'+pts[0][0]+'" cy="'+pts[0][1]+'"/></svg>';
+}
+function animateContours(root){
+  if(REDUCED)return;
+  var paths=root.querySelectorAll('svg path.main');
+  for(var j=0;j<paths.length;j++){(function(p){
+    var svg=p.ownerSVGElement,dots=svg.querySelectorAll('.dot'),L=p.getTotalLength();
+    p.style.transition='none';p.style.strokeDasharray=L;p.style.strokeDashoffset=L;
+    for(var a=0;a<dots.length;a++){dots[a].style.transition='none';dots[a].style.opacity=0;}
+    void p.getBoundingClientRect();
+    p.style.transition='stroke-dashoffset 1.2s cubic-bezier(.4,.1,.2,1) .25s';p.style.strokeDashoffset=0;
+    for(var b=0;b<dots.length;b++){dots[b].style.transition='opacity .45s ease '+(0.3+b*0.1)+'s';dots[b].style.opacity=1;}
+  })(paths[j]);}
+}
+function pickVoice(){
+  if(!('speechSynthesis' in window))return null;
+  var v=speechSynthesis.getVoices()||[];
+  for(var i=0;i<v.length;i++){if(/en[-_]GB/i.test(v[i].lang))return v[i];}
+  return null;
+}
+function speak(text){
+  if(!('speechSynthesis' in window))return;
+  try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.85;var v=pickVoice();if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}
+}
+function stopSpeech(){if('speechSynthesis' in window){try{speechSynthesis.cancel();}catch(e){}}}
+function playBall(host){
+  var svg=host.querySelector('svg.contour');if(!svg)return;
+  var path=svg.querySelector('path.main'),ball=svg.querySelector('.ball');if(!path||!ball)return;
+  var len=path.getTotalLength(),n=svg.querySelectorAll('text').length,dur=Math.max(1400,n*520),t0=null;
+  ball.setAttribute('opacity','1');
+  function step(ts){if(t0===null)t0=ts;var f=Math.min(1,(ts-t0)/dur),p=path.getPointAtLength(len*f);ball.setAttribute('cx',p.x);ball.setAttribute('cy',p.y);
+    if(f<1)requestAnimationFrame(step);else setTimeout(function(){ball.setAttribute('opacity','0');},500);}
+  requestAnimationFrame(step);
+}
+function focusWords(ni){return FOCUS_WORDS.map(function(w,i){return i===ni?W(w,[90,12],1):W(w,i<ni?[58,56]:[14,12],0);});}
+
+/* ---------- card builders ---------- */
+function sentCard(id){
+  var s=S[id],t=TONES[s.tone];
+  return '<article class="mc glass" style="--c:'+t.color+'" data-pop="s:'+id+'" data-s="'+id+'" tabindex="0" role="button" aria-haspopup="dialog">'
+   +'<div class="mc-top"><span class="tag">'+t.name+' '+t.sym+'</span><span class="chev" aria-hidden="true">⤢</span></div>'
+   +'<h3>'+esc(s.t)+'</h3>'+contourSVG(s.w)+'<div class="ipa cit">/'+s.ipa+'/</div><div class="tap">Tap to expand · แตะเพื่อขยาย</div></article>';
+}
+function conCard(key,tag,big,text,color){
+  var c=C[key];
+  return '<article class="mc glass" style="--c:'+(color||'#9333EA')+'" data-pop="c:'+key+'" tabindex="0" role="button" aria-haspopup="dialog">'
+   +'<div class="mc-top"><span class="tag">'+esc(tag)+'</span><span class="chev" aria-hidden="true">⤢</span></div>'
+   +(big?'<div class="big">'+big+'</div>':'')+'<h3>'+esc(c.t)+'</h3><p>'+esc(text)+'</p><div class="tap">Tap to expand · แตะเพื่อขยาย</div></article>';
+}
+function sentRow(id){var s=S[id];return '<div class="sent" style="--c:#0284C7"><button class="mini" data-say="'+esc(s.t)+'" aria-label="Listen">🔊</button><b>'+esc(s.t)+'</b><span class="ipa">/'+s.ipa+'/</span></div>';}
+
+/* ---------- deck engine ---------- */
+var PART_CHIPS=['Intro','Part 1 · Basics','Part 2 · Falling','Part 3 · Rising','Part 4 · Attitude','Part 5 · Lists & Tags','Part 6 · Focus','Part 7 · Review','Results'];
+var stage=document.getElementById('stage'),slides=[],cur=-1,partStart={};
+function add(part,title,short,body,opts){
+  var el=document.createElement('section');el.className='slide';el.setAttribute('aria-label',title);el.innerHTML=body;
+  stage.appendChild(el);
+  var sl={el:el,part:part,title:title,short:short,visited:false,seen:{},opts:opts||{}};
+  slides.push(sl);
+  if(partStart[part]===undefined)partStart[part]=slides.length-1;
+  return sl;
+}
+function sec(title,lead,withCount){
+  return '<div class="sec-head"><h2>'+title+(withCount?'<span class="spill" data-cnt></span>':'')+'</h2>'+(lead?'<p>'+lead+'</p>':'')+'</div>';
+}
+var TAPHINT='<div class="hint">Tap a card to expand it · แตะการ์ดเพื่อดูคำอธิบายไทย-อังกฤษ</div>';
+
+/* quiz state */
+var QS={};
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function qstate(p){
+  if(!QS[p]){var Q=QUIZ[p-1];QS[p]={st:Q.map(function(){return {wrong:[],done:false,ft:null};}),ord:Q.map(function(q){return shuffle(q.o.map(function(_,i){return i;}));})};}
+  return QS[p];
+}
+function qScore(p){var n=0;qstate(p).st.forEach(function(x){if(x.ft===true)n++;});return n;}
+function qFin(p){return qstate(p).st.every(function(x){return x.done;});}
+function qHTML(p,qi,fresh){
+  var Q=QUIZ[p-1],q=Q[qi],st=qstate(p),s=st.st[qi];
+  var opts=st.ord[qi].map(function(oi){
+    var cls='opt',dis=false;
+    if(s.done&&oi===q.a){cls+=' right';dis=true;}
+    else if(s.wrong.indexOf(oi)>-1){cls+=' wrong'+(oi===fresh?'':' old');dis=true;}
+    else if(s.done){dis=true;}
+    return '<button class="'+cls+'" data-act="qans" data-p="'+p+'" data-q="'+qi+'" data-o="'+oi+'"'+(dis?' disabled':'')+'>'+esc(q.o[oi])+'</button>';
+  }).join('');
+  return '<div class="q'+(s.done?' done':'')+'" id="q'+p+'_'+qi+'"><div class="qn">QUESTION '+(qi+1)+' / '+Q.length+'</div><div class="qt">'+esc(q.q)+'</div>'+(q.s?sentRow(q.s):'')
+   +'<div class="opts">'+opts+'</div>'+(!s.done&&s.wrong.length?'<div class="try">Not quite — try another option.</div>':'')+'<div class="fb">✔ '+esc(q.why)+'</div></div>';
+}
+function scoreHTML(p){
+  var n=QUIZ[p-1].length,sc=qScore(p);
+  return '<div class="score glass"><div class="big">'+sc+'/'+n+'</div><div>'+(sc===n?'Perfect first-try score!':'Part '+p+' complete')+'</div><div class="note">First-try score. Wrong answers lock until you find the right one.</div>'
+   +'<div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" data-act="qreset" data-p="'+p+'">Try again</button><button class="btn pri" data-act="next">'+(p<7?'Next part →':'See results →')+'</button></div></div>';
+}
+function renderQuiz(p){
+  var box=document.getElementById('qz'+p);if(!box)return;
+  var Q=QUIZ[p-1];
+  box.innerHTML='<div class="qset glass">'+Q.map(function(_,qi){return qHTML(p,qi,-1);}).join('')+'</div><div id="qsc'+p+'">'+(qFin(p)?scoreHTML(p):'')+'</div>';
+}
+function quizSlide(p,short){add(p,'Practice',short||'Practice',sec('Practice — Part '+p,'Choose the best answer. Your first-try score is counted.')+'<div id="qz'+p+'"></div>',{quiz:p,onEnter:function(){renderQuiz(p);}});}
+
+/* ---------- build slides ---------- */
+add(0,'Why intonation matters','Why it matters',sec('Why intonation matters','Intonation is the <b>melody of speech</b>. Words give the message; intonation tells the listener <b>how to take it</b>.',true)+TAPHINT+'<div class="grid">'
+ +conCard('i1','Meaning','♪','Same words, different message: a statement or a question.','#0284C7')
+ +conCard('i2','Clarity','◎','Listeners use pitch to find the key word and to know you have finished.','#9333EA')
+ +conCard('i3','Attitude','☺','The melody makes a request sound polite and friendly, or abrupt.','#DB2777')
+ +conCard('i4','Thai vs English','⇄','Thai pitch changes a word; English pitch changes the whole message.','#0D9488')
+ +'</div>');
+add(0,'What intonation does','Functions',sec('What intonation does','Five jobs of intonation, each with an example. Tap a card to see the pitch contour.',true)+TAPHINT+'<div class="grid">'
+ +conCard('fn1','Sentence type','↘ / ↗','“It’s far.” ↘ is a statement. “Is it far?” ↗ is a question.','#0284C7')
+ +conCard('fn2','Attitude and feeling','↗↘','“That’s brilliant!” sounds impressed and warm.','#9333EA')
+ +conCard('fn3','Finished or not','↘↗','“I’d love to, but…” leaves something unsaid.','#B45309')
+ +conCard('fn4','Lists and choices','↗ ↗ ↘','“Tea or coffee?” The last item falls: the list is complete.','#0D9488')
+ +conCard('fn5','Focus: what is new','CAR','“She bought a red CAR.” The nucleus marks the new information.','#DB2777')
+ +'</div>');
+add(0,'Hear the difference','Examples',sec('Hear the difference','Same melody idea, four sentences. Tap to expand, then press Play pitch or Listen.',true)+TAPHINT+'<div class="grid wide">'+sentCard('f6')+sentCard('r2')+sentCard('rf1')+sentCard('fr4')+'</div>');
+
+// Part 1
+add(1,'What is intonation?','Start',sec('Part 1 · What is intonation?','Intonation is the <b>rise and fall of the voice (pitch)</b> across a phrase. The same words change meaning when the melody changes.',true)+TAPHINT+'<div class="grid wide">'+sentCard('f6')+sentCard('r2')+'</div>');
+add(1,'Anatomy of an intonation unit','Anatomy',sec('Anatomy of an intonation unit','Four parts: pre-head, head, <b>nucleus</b> and tail.',true)+TAPHINT+'<div class="grid">'+conCard('prehead','Part 1','1','Unstressed syllables before the first prominent one.','#0284C7')+conCard('head','Part 2','2','From the first prominent syllable up to the nucleus.','#9333EA')+conCard('nucleus','Key part','3','The syllable with the main pitch movement.','#DB2777')+conCard('tail','Part 4','4','Everything after the nucleus.','#0D9488')+sentCard('f2')+'</div>');
+add(1,'Four basic tones','Tones',sec('Four basic tones','↘ falling · ↗ rising · ↘↗ fall-rise · ↗↘ rise-fall',true)+TAPHINT+'<div class="grid wide">'+sentCard('f1')+sentCard('r1')+sentCard('fr1')+sentCard('rf1')+'</div>');
+quizSlide(1);
+// Part 2
+add(2,'Falling = finished and certain','Falling',sec('Falling = finished and certain','A fall says: <b>“I have finished; this is complete.”</b> It is the most common tone in English.',true)+TAPHINT+'<div class="grid wide">'+sentCard('f1')+sentCard('f4')+'</div>');
+add(2,'Wh-questions and commands','Wh & commands',sec('Wh-questions and commands','Wh-questions (<i>what, where, who…</i>) and commands normally fall too.',true)+TAPHINT+'<div class="grid">'+sentCard('f5')+sentCard('f2')+sentCard('f3')+'</div>');
+add(2,'Watch out','Watch out',sec('Watch out','Two habits that make a fall sound unnatural.',true)+TAPHINT+'<div class="grid">'+conCard('w1','Tip','1','Give each sentence one main movement on the nucleus.','#9333EA')+conCard('w2','Tip','2','Let the fall reach a low pitch.','#DB2777')+sentCard('f3')+'</div>');
+quizSlide(2);
+// Part 3
+add(3,'Rising = open and asking','Rising',sec('Rising = open and asking','A rise says: <b>“I am asking; the answer is up to you.”</b> Typical for yes/no questions.',true)+TAPHINT+'<div class="grid wide">'+sentCard('r1')+sentCard('r2')+'</div>');
+add(3,'Friendly and open','Friendly',sec('Friendly and open','The voice stays low and <b>rises on the nucleus</b>, usually the last content word.',true)+TAPHINT+'<div class="grid wide">'+sentCard('r3')+sentCard('r4')+'</div>');
+add(3,'Same words, different tone','Compare',sec('Same words, different tone','Statement ↘ versus question ↗. In speech only the melody tells them apart.',true)+TAPHINT+'<div class="grid wide">'+sentCard('f6')+sentCard('r2')+'</div>');
+quizSlide(3);
+// Part 4
+add(4,'Fall-rise = not finished','Fall-rise',sec('Fall-rise = not finished','The pitch falls and then rises again. It often means <b>uncertainty, reservation or “not yet decided”</b>.',true)+TAPHINT+'<div class="grid wide">'+sentCard('fr1')+sentCard('fr2')+'</div>');
+add(4,'The hidden “but…”','Hidden but',sec('The hidden “but…”','A fall-rise suggests there is more to say: a condition left unspoken.',true)+TAPHINT+'<div class="grid wide">'+sentCard('fr3')+sentCard('fr4')+'</div>');
+add(4,'Rise-fall = strong feeling','Rise-fall',sec('Rise-fall = strong feeling','The pitch rises then falls: <b>impressed, surprised or very sure</b>.',true)+TAPHINT+'<div class="grid">'+sentCard('rf1')+sentCard('rf2')+sentCard('rf3')+'</div>');
+quizSlide(4);
+// Part 5
+add(5,'Lists: ↗ ↗ ↘','Lists',sec('Lists: ↗ ↗ ↘','Each item except the last <b>rises</b> (more is coming). The <b>last item falls</b> (the list is complete).',true)+TAPHINT+'<div class="grid">'+sentCard('l1')+sentCard('l2')+sentCard('l3')+'</div>');
+add(5,'Choices and question tags','Choices & tags',sec('Choices and question tags','A <b>falling tag</b> expects agreement. A <b>rising tag</b> is a real question.',true)+TAPHINT+'<div class="grid">'+sentCard('c1')+sentCard('t1')+sentCard('t2')+'</div>');
+quizSlide(5);
+// Part 6
+add(6,'Where does the nucleus go?','Nucleus',sec('Where does the nucleus go?','With no special contrast the nucleus falls on the <b>last content word</b>. Speakers can <b>move it</b> to highlight a word.',true)+TAPHINT+'<div class="grid wide">'+sentCard('f1')+conCard('dflt','Rule','↘','Default: the last content word.','#DB2777')+'</div>');
+add(6,'Focus Lab','Focus Lab',sec('Focus Lab: move the nucleus','Pick a word, then listen and read the meaning.')
+ +'<div class="demo glass"><div class="dtabs" id="fbtns">'+[0,1,3,4].map(function(i){return '<button type="button" data-act="focus" data-i="'+i+'"'+(i===4?' class="on"':'')+'>'+FOCUS_WORDS[i]+'</button>';}).join('')+'</div><div class="dstage" id="fbox" data-s="focus"></div><div class="dctl"><button class="btn pri" data-act="flplay">🔊 Listen</button></div></div>',{lab:true,onEnter:function(){setFocus(4,true);}});
+add(6,'Context decides','Context',sec('Context decides','The question tells you which word is new or contrasting.',true)+TAPHINT+'<div class="grid">'+conCard('ctx1','Contrast','RED','Did she buy a blue car?','#DB2777')+conCard('ctx2','Answer','SHE','Who bought a red car?','#0284C7')+conCard('ctx3','Contrast','BOUGHT','Did she rent a red car?','#9333EA')+'</div>');
+quizSlide(6);
+// Part 7
+add(7,'Cheat sheet','Cheat sheet',sec('Cheat sheet','Tap a card for the rule and an example.',true)+TAPHINT+'<div class="grid">'
+ +conCard('cs_fall','Falling','↘','Statements, wh-questions, commands','#DB2777')+conCard('cs_rise','Rising','↗','Yes/no questions, open requests','#0284C7')+conCard('cs_fallrise','Fall-rise','↘↗','Reservation, uncertainty, “but…”','#B45309')
+ +conCard('cs_risefall','Rise-fall','↗↘','Strong feeling','#9333EA')+conCard('cs_list','List','↗ ↗ ↘','Items rise, last item falls','#0D9488')+conCard('cs_choice','Choice','↗ ↘','Alternatives','#0D9488')+'</div>');
+quizSlide(7);
+add(8,'Results','Results',sec('Your results','First-try scores from the quizzes you completed.')+'<div id="sumbox"></div>',{onEnter:renderSummary});
+
+function renderSummary(){
+  var box=document.getElementById('sumbox'),tot=0,sc=0,rows='';
+  for(var p=1;p<=7;p++){
+    var n=QUIZ[p-1].length,fin=qFin(p),s=qScore(p);
+    if(fin){tot+=n;sc+=s;}
+    rows+='<div class="prow"><b>'+p+'</b><span>'+esc(PT[p])+'</span><div class="bar"><i style="width:'+(fin?Math.round(s/n*100):0)+'%"></i></div><b style="text-align:right">'+(fin?s+'/'+n:'–')+'</b></div>';
+  }
+  box.innerHTML='<div class="score glass" style="margin-top:0"><div class="big">'+(tot?Math.round(sc/tot*100)+'%':'–')+'</div><div>First-try score over completed quizzes</div><div class="note">'+sc+' of '+tot+' correct on the first try</div></div><div class="glass" style="margin-top:16px;padding:8px 0">'+rows+'</div>'
+   +'<div style="text-align:center;margin-top:16px"><button class="btn pri" data-act="restart">Restart deck</button></div>';
+}
+
+/* stagger index + card lists */
+slides.forEach(function(sl){
+  sl.cards=[].slice.call(sl.el.querySelectorAll('[data-pop]'));
+  sl.cards.forEach(function(c,i){c.style.setProperty('--i',i);});
+});
+
+/* focus lab */
+function setFocus(ni,quiet){
+  var box=document.getElementById('fbox');if(!box)return;
+  var bs=document.querySelectorAll('#fbtns [data-act="focus"]');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('on',+bs[i].getAttribute('data-i')===ni);}
+  box.innerHTML=contourSVG(focusWords(ni))+'<div class="ipa" style="color:var(--blue);font-size:1.3rem">/ʃi bɔːt ə red kɑː/</div><div class="dnote"><b>'+esc(FOCUS_NOTES[ni][0])+'</b><span lang="th">'+esc(FOCUS_NOTES[ni][1])+'</span></div>';
+  animateContours(box);
+  if(!quiet){var sl=slides[cur];if(sl)sl.used=true;speak('She bought a red car.');playBall(box);updateChrome();}
+}
+
+/* ---------- chrome ---------- */
+function slideDone(sl){
+  if(!sl.visited)return false;
+  if(sl.cards.length)return Object.keys(sl.seen).length>=sl.cards.length;
+  if(sl.opts.quiz)return qFin(sl.opts.quiz);
+  if(sl.opts.lab)return !!sl.used;
+  return true;
+}
+function updateCount(sl){
+  var sp=sl.el.querySelector('[data-cnt]');if(!sp)return;
+  var n=Object.keys(sl.seen).length,t=sl.cards.length;
+  sp.textContent='opened '+n+'/'+t;sp.classList.toggle('full',n>=t&&t>0);
+}
+function updateChrome(){
+  var sl=slides[cur],nav=document.getElementById('partNav');
+  nav.innerHTML=PART_CHIPS.map(function(t,i){return '<a data-p="'+i+'" class="'+(i===sl.part?'active':'')+'" tabindex="0" role="link">'+t+'</a>';}).join('');
+  var act=nav.querySelector('.active');if(act&&act.scrollIntoView){try{act.scrollIntoView({block:'nearest',inline:'center'});}catch(e){}}
+  var grp=[];slides.forEach(function(s,i){if(s.part===sl.part)grp.push(i);});
+  document.getElementById('deckDots').innerHTML=grp.map(function(gi,k){var s=slides[gi];
+    return '<button type="button" data-k="'+gi+'" class="'+(gi===cur?'on':'')+(slideDone(s)?' ok':'')+'"><span class="dn">'+(k+1)+'</span><span class="dt">'+esc(s.short)+'</span></button>';}).join('');
+  var pos=grp.indexOf(cur);
+  document.getElementById('deckCount').textContent=(pos+1)+' / '+grp.length+'  •  '+sl.title;
+  document.getElementById('deckBar').style.width=((pos+1)/grp.length*100)+'%';
+  document.getElementById('bar').style.width=((cur+1)/slides.length*100)+'%';
+  document.getElementById('deckPrev').disabled=cur===0;
+  document.getElementById('deckNext').disabled=cur===slides.length-1;
+  document.getElementById('pCount').textContent=(cur+1)+' / '+slides.length+' · '+sl.title;
+}
+function go(n,dir){
+  if(n<0||n>=slides.length||n===cur)return;
+  closeSheet(true);stopSpeech();
+  if(dir===undefined)dir=n>=cur?1:-1;
+  slides.forEach(function(s){s.el.classList.remove('active','dirL');});
+  var sl=slides[n];sl.el.classList.add('active');if(dir<0)sl.el.classList.add('dirL');
+  cur=n;sl.visited=true;
+  if(sl.opts.onEnter)sl.opts.onEnter();
+  updateCount(sl);updateChrome();animateContours(sl.el);
+  window.scrollTo({top:0,behavior:REDUCED?'auto':'smooth'});
+  try{history.replaceState(null,'','#'+(n+1));}catch(e){}
+  persist();if(typeof heartbeat==='function')heartbeat();
+}
+function next(){go(cur+1);}function prev(){go(cur-1);}
+
+/* ---------- expanded sheet ---------- */
+var sheet=document.getElementById('sheet'),shCard=document.getElementById('shCard'),shList=[],shIdx=0,shOpen=false,lastFocus=null,closeTimer=null;
+function popData(key){
+  if(key.indexOf('s:')===0){var id=key.slice(2),s=S[id],ex=EX[id]||['',''];return {t:s.t,sent:id,tag:TONES[s.tone].name+' '+TONES[s.tone].sym,en:ex[0],th:ex[1]};}
+  var c=C[key.slice(2)];return {t:c.t,sent:c.sent,tag:c.sym||'',en:c.en,th:c.th,sym:c.sym};
+}
+function renderSheet(swap){
+  var card=shList[shIdx],key=card.getAttribute('data-pop'),P=popData(key),col=card.style.getPropertyValue('--c')||'#9333EA';
+  shCard.style.setProperty('--c',col);
+  shCard.setAttribute('data-s',P.sent||'');
+  var stageHTML,ipaHTML='';
+  if(P.sent){var s=S[P.sent];stageHTML='<div class="sh-stage">'+contourSVG(s.w)+'<button class="btn" data-act="play">▶ Play pitch</button></div>';
+    ipaHTML='<div class="sh-ipa"><div><span class="lbl">IPA · RP</span><span class="ipa">/'+s.ipa+'/</span></div><button class="spk" data-act="play">🔊 Listen</button></div>';}
+  else{stageHTML='<div class="sh-stage"><span class="w">'+esc(P.sym||P.t)+'</span></div>';}
+  var one=shList.length<2;
+  shCard.innerHTML='<div class="sh-head"><div><span class="tag" style="color:var(--c)">'+esc(P.tag||'')+'</span><h3 id="shTitle">'+esc(P.t)+'</h3></div><span class="sh-pos">'+(shIdx+1)+' / '+shList.length+'</span><button class="sh-x" data-act="shx" aria-label="Close">✕</button></div>'
+   +stageHTML+ipaHTML
+   +'<div class="sh-ex"><h4>English</h4><p>'+esc(P.en)+'</p></div><div class="sh-ex"><h4>ภาษาไทย</h4><p lang="th">'+esc(P.th)+'</p></div>'
+   +'<div class="sh-foot"><button class="btn" data-act="shprev"'+(one?' disabled':'')+'>← Prev</button><span class="sp"></span><button class="btn pri" data-act="shnext"'+(one?' disabled':'')+'>Next →</button></div>';
+  shCard.classList.toggle('swap',!!swap);
+  var sl=slides[cur];if(sl){sl.seen[key]=1;card.classList.add('seen');updateCount(sl);updateChrome();}
+  animateContours(shCard);
+  if(swap){stopSpeech();}
+}
+function openSheet(card){
+  if(shOpen)return;
+  clearTimeout(closeTimer);
+  lastFocus=document.activeElement;
+  var sl=slides[cur];shList=sl.cards;shIdx=shList.indexOf(card);if(shIdx<0)return;
+  shOpen=true;
+  sheet.classList.add('show');document.body.classList.add('sheet-open');
+  renderSheet(false);
+  shCard.classList.remove('fly');shCard.style.transition='none';
+  if(!REDUCED){
+    var r=card.getBoundingClientRect(),c=shCard.getBoundingClientRect();
+    shCard.style.transform='translate('+(r.left-c.left)+'px,'+(r.top-c.top)+'px) scale('+(r.width/c.width)+','+(r.height/c.height)+')';
+    shCard.style.opacity='.15';
+  }
+  void shCard.offsetWidth;
+  shCard.classList.add('fly');shCard.style.transition='';shCard.style.transform='';shCard.style.opacity='';
+  sheet.classList.add('in');
+  setTimeout(function(){shCard.classList.remove('swap');var x=shCard.querySelector('.sh-x');if(x)x.focus({preventScroll:true});},60);
+}
+function closeSheet(immediate){
+  if(!shOpen)return;
+  shOpen=false;stopSpeech();
+  sheet.classList.remove('in');
+  var card=shList[shIdx];
+  if(!immediate&&!REDUCED&&card){
+    var r=card.getBoundingClientRect(),c=shCard.getBoundingClientRect();
+    shCard.style.transform='translate('+(r.left-c.left)+'px,'+(r.top-c.top)+'px) scale('+(r.width/c.width)+','+(r.height/c.height)+')';
+    shCard.style.opacity='0';
+  }
+  var done=function(){sheet.classList.remove('show');document.body.classList.remove('sheet-open');shCard.classList.remove('fly');shCard.style.transform='';shCard.style.opacity='';shCard.innerHTML='';
+    if(lastFocus&&lastFocus.focus){try{lastFocus.focus({preventScroll:true});}catch(e){}}};
+  if(immediate||REDUCED){done();}else{closeTimer=setTimeout(done,420);}
+}
+function shStep(d){
+  if(!shOpen||shList.length<2)return;
+  shIdx=(shIdx+d+shList.length)%shList.length;
+  shCard.classList.remove('swap');void shCard.offsetWidth;renderSheet(true);
+}
+
+/* ---------- present / fullscreen ---------- */
+function togglePresent(){document.body.classList.toggle('present');document.getElementById('presentBtn').textContent=document.body.classList.contains('present')?'Exit present':'Present';}
+function toggleFS(){try{if(document.fullscreenElement){document.exitFullscreen();}else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen().catch(function(){});}}catch(e){}}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  var sayEl=t.closest('[data-say]');if(sayEl){speak(sayEl.getAttribute('data-say'));return;}
+  var act=t.closest('[data-act]');
+  if(act){
+    var a=act.getAttribute('data-act');
+    switch(a){
+      case 'play':var host=act.closest('[data-s]');if(host){var sid=host.getAttribute('data-s');if(S[sid]){speak(S[sid].t);playBall(host);}}return;
+      case 'next':next();return;
+      case 'shx':closeSheet();return;
+      case 'shprev':shStep(-1);return;
+      case 'shnext':shStep(1);return;
+      case 'focus':setFocus(+act.getAttribute('data-i'));return;
+      case 'flplay':var b=document.getElementById('fbox');speak('She bought a red car.');playBall(b);var s2=slides[cur];if(s2){s2.used=true;updateChrome();}return;
+      case 'qans':{
+        var p=+act.getAttribute('data-p'),qi=+act.getAttribute('data-q'),oi=+act.getAttribute('data-o'),st=qstate(p),s=st.st[qi],q=QUIZ[p-1][qi];
+        if(s.done)return;
+        if(oi===q.a){s.done=true;if(s.ft!==false)s.ft=true;}else{s.wrong.push(oi);s.ft=false;}
+        var old=document.getElementById('q'+p+'_'+qi);
+        var tmp=document.createElement('div');tmp.innerHTML=qHTML(p,qi,oi===q.a?-1:oi);old.parentNode.replaceChild(tmp.firstChild,old);
+        if(qFin(p)){var sc=document.getElementById('qsc'+p);if(sc&&!sc.innerHTML)sc.innerHTML=scoreHTML(p);}
+        updateChrome();trackSave(p);persist();return;}
+      case 'qreset':{var p4=+act.getAttribute('data-p');delete QS[p4];renderQuiz(p4);updateChrome();persist();return;}
+      case 'restart':QS={};persist();slides.forEach(function(s){s.seen={};s.visited=false;s.used=false;s.cards.forEach(function(c){c.classList.remove('seen');});});go(0,-1);return;
+    }
+  }
+  var card=t.closest('[data-pop]');if(card){openSheet(card);return;}
+  var road=t.closest('[data-slide]');if(road){go(partStart[+road.getAttribute('data-slide')]);return;}
+  var chip=t.closest('nav.chips a');if(chip){go(partStart[+chip.getAttribute('data-p')]);return;}
+  var dot=t.closest('.dots button');if(dot){go(+dot.getAttribute('data-k'));return;}
+});
+document.addEventListener('keydown',function(e){
+  if(shOpen){
+    if(e.key==='Escape'){closeSheet();return;}
+    if(e.key==='ArrowRight'){shStep(1);e.preventDefault();return;}
+    if(e.key==='ArrowLeft'){shStep(-1);e.preventDefault();return;}
+    if(e.key==='Tab'){var f=shCard.querySelectorAll('button:not(:disabled)');if(!f.length)return;var first=f[0],last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}}
+    return;
+  }
+  var ae=document.activeElement;
+  if((e.key==='Enter'||e.key===' ')&&ae&&ae.hasAttribute&&ae.hasAttribute('data-pop')){openSheet(ae);e.preventDefault();return;}
+  if((e.key==='Enter'||e.key===' ')&&ae&&ae.matches&&ae.matches('nav.chips a')){go(partStart[+ae.getAttribute('data-p')]);e.preventDefault();return;}
+  var onBtn=ae&&ae.tagName==='BUTTON';
+  switch(e.key){
+    case 'ArrowRight':case 'PageDown':next();e.preventDefault();break;
+    case 'ArrowLeft':case 'PageUp':prev();e.preventDefault();break;
+    case ' ':if(!onBtn){next();e.preventDefault();}break;
+    case 'Home':go(0);break;
+    case 'End':go(slides.length-1);break;
+    case 'f':case 'F':toggleFS();break;
+    case 'p':case 'P':togglePresent();break;
+    case 'Escape':if(document.body.classList.contains('present'))togglePresent();break;
+  }
+});
+document.getElementById('deckPrev').addEventListener('click',prev);
+document.getElementById('deckNext').addEventListener('click',next);
+document.getElementById('pPrev').addEventListener('click',prev);
+document.getElementById('pNext').addEventListener('click',next);
+document.getElementById('pExit').addEventListener('click',togglePresent);
+document.getElementById('presentBtn').addEventListener('click',togglePresent);
+document.getElementById('fsBtn').addEventListener('click',toggleFS);
+if(!document.documentElement.requestFullscreen){document.getElementById('fsBtn').style.display='none';}
+/* swipe */
+(function(){
+  var x0=null,y0=null;
+  stage.addEventListener('touchstart',function(e){if(shOpen||e.touches.length!==1)return;x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(x0===null||shOpen)return;var dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;
+    if(Math.abs(dx)>70&&Math.abs(dy)<60){if(dx<0)next();else prev();}
+  },{passive:true});
+})();
+if('speechSynthesis' in window){try{speechSynthesis.onvoiceschanged=function(){};}catch(e){}}
+
+
+/* ============================================================
+   >>> PASTE YOUR APPS SCRIPT /exec URL IN  CONFIG.API_URL  BELOW <<<
+   ============================================================ */
+var CONFIG={
+  API_URL:'https://script.google.com/macros/s/AKfycbxn3A9QRtSIf07viwDSsPIGvi8uw6I_fGk9_QU2yFwUqhDNk0o1y82RN1UCEDiz5vLKFw/exec',   // paste the Apps Script /exec URL here. Empty = local demo mode (this browser only).
+  TEACHER_HASH:'6f5079fb82f094948b99b9de951a10ed0bfd6e4c28ad8f07246c6e02bd3039a9', // demo mode only: SHA-256 of the teacher code. In server mode the code is checked by Apps Script (TEACHER_PIN).
+  POLL_MS:15000,HB_MS:30000
+};
+var ROSTER=[
+['469618241001','กฤชพร พิบูลสุข'],
+['469618241002','กฤติน ภูเดช'],
+['469618241003','จักริน น่วมเจริญ'],
+['469618241004','ณัฏฐ์ชสรณ์ วรโชติปัญญารัตน์'],
+['469618241006','พิมประภัทร เมาฬีทอง'],
+['469618241007','ฟาริดา แก้วโยธา'],
+['469618241008','ภูดิท ภัทรเตชเวชณฐ์'],
+['469618241009','ริญญาภัทร์ มีแสง'],
+['469618241010','อาฐิตญา คำพุ่ม'],
+['469618241011','อารียา บุญพัก'],
+['469618241012','กานต์ธิดา พันธุรัตน์'],
+['469618241013','ธนัชชา ภาคมณี'],
+['469618241014','ปัญจรัตน์ รอดพันธ์ธนโชติ'],
+['469618241015','ปาริชาติ นัยรมย์'],
+['469618241016','ปรัชยาภรณ์ วงพิมล']
+];
+var DBK='intoDeckDB_v1',U=null,PIN='',tvTimer=null,deckPreview=false;
+function ldb(){try{var d=JSON.parse(localStorage.getItem(DBK));if(d)return d;}catch(e){}return {progress:{},hb:{},resets:{},locks:[true,false,false,false,false,false,false]};}
+function lset(d){try{localStorage.setItem(DBK,JSON.stringify(d));}catch(e){}}
+function sha(t){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');});}
+function localApi(a,p){
+  var d=ldb();
+  if(a==='state')return Promise.resolve({ok:true,locks:d.locks||[true,false,false,false,false,false,false]});
+  if(a==='save'){d.progress[p.id]=d.progress[p.id]||{};d.progress[p.id][p.part]={score:p.score,total:p.total,done:!!p.done,attempts:p.attempts||0};lset(d);return Promise.resolve({ok:true});}
+  if(a==='heartbeat'){d.hb[p.id]={part:p.part,t:Date.now()};lset(d);var rs=d.resets||{};return Promise.resolve({ok:true,reset:Math.max(rs['*']||0,rs[p.id]||0),locks:d.locks||[true,false,false,false,false,false,false]});}
+  if(a==='verify'||a==='progress'||a==='clear'||a==='setLocks'){
+    if(!(window.crypto&&crypto.subtle))return Promise.resolve({ok:false,error:'nocrypto'});
+    return sha(String(p.pin||'')).then(function(h){
+      var ok=h===CONFIG.TEACHER_HASH;
+      if(a==='verify')return {ok:ok};
+      if(ok&&a==='setLocks'){d.locks=p.locks;lset(d);return {ok:true,locks:d.locks};}
+      if(ok&&a==='clear'){d.resets=d.resets||{};var n=0;if(p.id){if(d.progress[p.id]){n=Object.keys(d.progress[p.id]).length;delete d.progress[p.id];}d.resets[p.id]=Date.now();}else{Object.keys(d.progress).forEach(function(k){n+=Object.keys(d.progress[k]).length;});d.progress={};d.resets['*']=Date.now();}lset(d);return {ok:true,removed:n};}
+      return ok?{ok:true,progress:d.progress,live:d.hb,locks:d.locks||[true,false,false,false,false,false,false],now:Date.now()}:{ok:false,error:'pin'};
+    });
+  }
+  return Promise.resolve({ok:false,error:'unknown'});
+}
+function api(a,p){
+  p=p||{};
+  if(!CONFIG.API_URL)return localApi(a,p);
+  return fetch(CONFIG.API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action:a},p))})
+    .then(function(r){return r.json();}).catch(function(){return {ok:false,error:'network'};});
+}
+function nameOf(id){for(var i=0;i<ROSTER.length;i++){if(ROSTER[i][0]===id)return ROSTER[i][1];}return id;}
+function curPart(){var s=slides[cur];return (s&&s.part>=1&&s.part<=7)?s.part:0;}
+var PEND={},syncBad=false;
+function setSync(){
+  var el=document.getElementById('sync');if(!el)return;
+  if(!U||U.type!=='student'){el.textContent='';return;}
+  var n=Object.keys(PEND).length;
+  el.className='sync'+(n&&syncBad?' bad':'');
+  el.textContent=n?(syncBad?'\u26A0 Not saved \u00B7 retrying':'Saving\u2026'):'\u2713 Saved';el.title=CONFIG.API_URL?'Scores are saved to the Google Sheet automatically':'Demo mode: saved in this browser only';
+}
+function flush(){
+  Object.keys(PEND).forEach(function(k){var pl=PEND[k];
+    api('save',pl).then(function(r){
+      if(r&&r.ok){if(PEND[k]===pl)delete PEND[k];syncBad=false;}else{syncBad=true;}
+      setSync();});});
+}
+function trackSave(p){
+  if(!U||U.type!=='student')return;
+  var st=qstate(p),n=st.st.length,wrong=0;st.st.forEach(function(x){wrong+=x.wrong.length;});
+  PEND[p]={id:U.id,name:U.name,part:p,score:qScore(p),total:n,done:qFin(p),attempts:wrong+st.st.filter(function(x){return x.done;}).length};
+  setSync();flush();
+}
+function wipeLocal(){
+  QS={};PEND={};try{localStorage.removeItem('intoDeckProg_'+U.id);}catch(e){}
+  var sl=slides[cur];if(sl&&sl.opts.quiz)renderQuiz(sl.opts.quiz);updateChrome();setSync();
+}
+function persist(){if(!U||U.type!=='student')return;try{localStorage.setItem('intoDeckProg_'+U.id,JSON.stringify({qs:QS,cur:cur}));}catch(e){}}
+var lastHB=0;
+function heartbeat(force){
+  if(!(U&&U.type==='student'))return;
+  var t=Date.now();if(!force&&t-lastHB<10000)return;lastHB=t;
+  var who=U;
+  api('heartbeat',{id:who.id,part:curPart()}).then(function(r){
+    if(!U||U.id!==who.id||!r||!r.ok)return;
+    var key='intoDeckReset_'+who.id,seen=0;try{seen=+localStorage.getItem(key)||0;}catch(e){}
+    if(r.reset&&r.reset>seen){try{localStorage.setItem(key,String(r.reset));}catch(e){}wipeLocal();}
+  });
+  if(Object.keys(PEND).length)flush();
+}
+
+function setView(v){document.body.className=v;}
+function showLogin(msg){
+  U=null;PIN='';clearInterval(tvTimer);deckPreview=false;
+  try{sessionStorage.removeItem('intoDeckUser');}catch(e){}
+  var opts='<option value="">\u2014 Select your name \u2014</option>'+ROSTER.map(function(r,i){return '<option value="'+r[0]+'">'+(i+1)+'. '+esc(r[1])+'</option>';}).join('');
+  document.getElementById('lgCard').innerHTML=
+   '<span class="lg-badge">English Pronunciation \u00B7 Online Lesson</span>'
+   +'<h1 class="lg-title">The English <em>Intonation</em> Deck</h1>'
+   +'<p class="lg-sub">\u0e1d\u0e36\u0e01\u0e17\u0e33\u0e19\u0e2d\u0e07\u0e40\u0e2a\u0e35\u0e22\u0e07\u0e20\u0e32\u0e29\u0e32\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29 (Intonation) \u0e14\u0e49\u0e27\u0e22\u0e01\u0e32\u0e23\u0e4c\u0e14\u0e17\u0e35\u0e48\u0e01\u0e14\u0e41\u0e25\u0e49\u0e27\u0e21\u0e35\u0e04\u0e33\u0e2d\u0e18\u0e34\u0e1a\u0e32\u0e22\u0e44\u0e17\u0e22-\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29</p>'
+   +'<div class="lg-tabs" role="tablist"><button type="button" role="tab" id="tabS" class="on" aria-selected="true">\uD83C\uDF93 Student</button><button type="button" role="tab" id="tabT" aria-selected="false">\uD83E\uDDD1\u200D\uD83C\uDFEB Teacher</button></div>'
+   +'<div id="lgS"><label for="stuSel">Select your name \u00B7 \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e0a\u0e37\u0e48\u0e2d\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13</label><select id="stuSel">'+opts+'</select><button type="button" class="lg-go" id="goS">Start \u2192</button></div>'
+   +'<div id="lgT" hidden><label for="tCode">Teacher code \u00B7 \u0e23\u0e2b\u0e31\u0e2a\u0e2d\u0e32\u0e08\u0e32\u0e23\u0e22\u0e4c</label><input id="tCode" type="password" autocomplete="off" placeholder="Teacher code"><button type="button" class="lg-go" id="goT">Log in \u2192</button></div>'
+   +'<div class="lg-err" id="lgErr" role="alert">'+(msg?esc(msg):'')+'</div>'
+   +'<p class="lg-note">\uD83D\uDD0E \u0e23\u0e30\u0e1a\u0e1a\u0e1a\u0e31\u0e19\u0e17\u0e36\u0e01\u0e04\u0e27\u0e32\u0e21\u0e04\u0e37\u0e1a\u0e2b\u0e19\u0e49\u0e32\u0e41\u0e25\u0e30\u0e04\u0e30\u0e41\u0e19\u0e19 \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e43\u0e2b\u0e49\u0e2d\u0e32\u0e08\u0e32\u0e23\u0e22\u0e4c\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21\u0e41\u0e25\u0e30\u0e43\u0e2b\u0e49\u0e04\u0e33\u0e41\u0e19\u0e30\u0e19\u0e33 \u00B7 \u0e2d\u0e2d\u0e01\u0e08\u0e32\u0e01\u0e23\u0e30\u0e1a\u0e1a\u0e41\u0e25\u0e49\u0e27\u0e01\u0e25\u0e31\u0e1a\u0e21\u0e32\u0e17\u0e33\u0e15\u0e48\u0e2d\u0e08\u0e32\u0e01\u0e08\u0e38\u0e14\u0e40\u0e14\u0e34\u0e21\u0e44\u0e14\u0e49 (\u0e43\u0e19\u0e40\u0e1a\u0e23\u0e32\u0e27\u0e4c\u0e40\u0e0b\u0e2d\u0e23\u0e4c\u0e40\u0e14\u0e34\u0e21)</p>'
+   +(CONFIG.API_URL?'':'<div class="lg-warn">Local demo mode: progress is stored only in this browser. Set CONFIG.API_URL to connect the Apps Script backend.</div>');
+  var sel=document.getElementById('stuSel'),goS=document.getElementById('goS'),tab=function(t){
+    document.getElementById('tabS').classList.toggle('on',t==='s');document.getElementById('tabT').classList.toggle('on',t==='t');
+    document.getElementById('tabS').setAttribute('aria-selected',t==='s');document.getElementById('tabT').setAttribute('aria-selected',t==='t');
+    document.getElementById('lgS').hidden=t!=='s';document.getElementById('lgT').hidden=t!=='t';document.getElementById('lgErr').textContent='';
+    var f=document.getElementById(t==='s'?'stuSel':'tCode');if(f)f.focus();};
+  goS.disabled=!sel.value;
+  sel.addEventListener('change',function(){goS.disabled=!sel.value;document.getElementById('lgErr').textContent='';});
+  document.getElementById('tabS').addEventListener('click',function(){tab('s');});
+  document.getElementById('tabT').addEventListener('click',function(){tab('t');});
+  goS.addEventListener('click',function(){if(sel.value)enterStudent(sel.value);});
+  document.getElementById('goT').addEventListener('click',loginTeacher);
+  document.getElementById('tCode').addEventListener('keydown',function(e){if(e.key==='Enter')loginTeacher();});
+  setView('st-login');
+}
+function enterStudent(id){
+  U={type:'student',id:id,name:nameOf(id)};
+  try{}catch(e){}
+  var d=null;try{d=JSON.parse(localStorage.getItem('intoDeckProg_'+id));}catch(e){}
+  QS=(d&&d.qs)||{};
+  document.getElementById('who').textContent=U.name;
+  document.getElementById('viewBtn').style.display='none';
+  setView('st-deck');
+  var target=(d&&d.cur>=0&&d.cur<slides.length)?d.cur:0;
+  if(target===cur){updateChrome();if(slides[cur].opts.onEnter)slides[cur].opts.onEnter();}else go(target,1);
+  updateChrome();heartbeat(true);setSync();
+}
+function loginTeacher(){
+  var code=document.getElementById('tCode').value,err=document.getElementById('lgErr'),btn=document.getElementById('goT');
+  if(!code){err.textContent='\u0e01\u0e23\u0e38\u0e13\u0e32\u0e43\u0e2a\u0e48\u0e23\u0e2b\u0e31\u0e2a\u0e2d\u0e32\u0e08\u0e32\u0e23\u0e22\u0e4c \u00B7 Please enter the teacher code.';return;}
+  btn.disabled=true;err.textContent='';
+  api('verify',{pin:code}).then(function(r){
+    btn.disabled=false;
+    if(r&&r.ok){PIN=code;U={type:'teacher',name:'Teacher'};document.getElementById('who').textContent='\uD83E\uDDD1\u200D\uD83C\uDFEB Teacher';showTracker();}
+    else if(r&&r.error==='nocrypto')err.textContent='Open this page over https (or directly as a file) to use teacher login in demo mode.';
+    else if(r&&r.error==='network')err.textContent='Cannot reach the server \u00B7 \u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d\u0e40\u0e0b\u0e34\u0e23\u0e4c\u0e1f\u0e40\u0e27\u0e2d\u0e23\u0e4c\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49';
+    else err.textContent='\u0e23\u0e2b\u0e31\u0e2a\u0e44\u0e21\u0e48\u0e16\u0e39\u0e01\u0e15\u0e49\u0e2d\u0e07 \u00B7 Wrong teacher code.';
+  });
+}
+function showTracker(){
+  deckPreview=false;closeSheet(true);stopSpeech();
+  var vb=document.getElementById('viewBtn');vb.style.display='';vb.textContent='\u25B6 Preview deck';
+  setView('st-tracker');setSync();
+  document.getElementById('tvBody').innerHTML='<h2>Student tracker</h2><p class="sub">\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21\u0e01\u0e32\u0e23\u0e40\u0e02\u0e49\u0e32\u0e1a\u0e17\u0e40\u0e23\u0e35\u0e22\u0e19\u0e41\u0e25\u0e30\u0e04\u0e30\u0e41\u0e19\u0e19\u0e02\u0e2d\u0e07\u0e19\u0e31\u0e01\u0e28\u0e36\u0e01\u0e29\u0e32 \u00B7 auto-refresh every 15 seconds</p>'
+    +(CONFIG.API_URL?'':'<div class="warn">Local demo mode: this tracker only shows students who used the deck in this same browser.</div>')
+        +'<div class="tbar"><span class="upd" id="upd">Loading\u2026</span><button type="button" class="btn" id="rfBtn">\u21BB Refresh now</button><button type="button" class="btn danger" id="clrAll">Clear all scores</button></div><div id="tvMsg" class="lg-err" role="status"></div><div id="trk">Loading\u2026</div>';
+  pollTracker();clearInterval(tvTimer);tvTimer=setInterval(pollTracker,CONFIG.POLL_MS);
+}
+function pollTracker(){
+  if(!U||U.type!=='teacher'||deckPreview)return;
+  api('progress',{pin:PIN}).then(function(d){var b=document.getElementById('trk');if(b&&!deckPreview&&U&&U.type==='teacher'){b.innerHTML=trackerHTML(d);var u=document.getElementById('upd');if(u&&d&&d.ok){var t=new Date();u.textContent='Last updated '+t.toLocaleTimeString('en-GB')+' \u00B7 auto-refresh every 15 sec';}}});
+}
+function trackerHTML(d){
+  if(!d||!d.ok)return '<p class="lg-err">Cannot load tracker ('+esc((d&&d.error)||'error')+').</p>';
+  var now=d.now||Date.now(),P=[1,2,3,4,5,6,7],online=0,started=0,sumS=0,sumN=0;
+  var sums=P.map(function(){return {n:0,s:0,c:0};});
+  var body=ROSTER.map(function(r,idx){
+    var id=r[0],pr=(d.progress||{})[id]||{},lv=(d.live||{})[id],on=lv&&(now-lv.t<90000),tot=0,tq=0;
+    if(on)online++;
+    var cells=P.map(function(p,i){
+      var x=pr[p];if(!x)return '<td class="cell none">\u2013</td>';
+      tot+=x.score;tq+=x.total;sums[i].n++;sums[i].s+=x.score/x.total;if(x.done)sums[i].c++;
+      return '<td class="cell '+(x.done?'full':'part')+'">'+(x.done?'\u2713 ':'')+x.score+'/'+x.total+'</td>';
+    }).join('');
+    if(tq){started++;sumS+=tot;sumN+=tq;}
+    return '<tr><td>'+(idx+1)+'</td><td>'+esc(r[1])+'</td><td><span class="dot'+(on?' on':'')+'"></span>'+(on?(lv.part?'Part '+lv.part:'online'):'offline')+'</td>'+cells+'<td><b>'+(tq?Math.round(tot/tq*100)+'%':'\u2013')+'</b></td><td><button type="button" class="btn mini2" data-clr="'+id+'" aria-label="Clear scores of '+esc(r[1])+'">Clear</button></td></tr>';
+  }).join('');
+  var head='<tr><th>#</th><th>Student</th><th>Now</th>'+P.map(function(p){return '<th>P'+p+'</th>';}).join('')+'<th>Total</th><th></th></tr>';
+  var foot='<tr><th></th><th>Class: done \u00B7 avg first-try</th><th></th>'+sums.map(function(x){return '<th>'+x.c+' \u00B7 '+(x.n?Math.round(x.s/x.n*100)+'%':'\u2013')+'</th>';}).join('')+'<th></th><th></th></tr>';
+  return '<div class="stats"><div class="stat glass"><b>'+online+'/'+ROSTER.length+'</b><span>Online now \u00B7 \u0e2d\u0e2d\u0e19\u0e44\u0e25\u0e19\u0e4c\u0e2d\u0e22\u0e39\u0e48</span></div>'
+   +'<div class="stat glass"><b>'+started+'/'+ROSTER.length+'</b><span>Started a quiz \u00B7 \u0e40\u0e23\u0e34\u0e48\u0e21\u0e17\u0e33\u0e41\u0e25\u0e49\u0e27</span></div>'
+   +'<div class="stat glass"><b>'+(sumN?Math.round(sumS/sumN*100)+'%':'\u2013')+'</b><span>Avg first-try score \u00B7 \u0e04\u0e30\u0e41\u0e19\u0e19\u0e40\u0e09\u0e25\u0e35\u0e48\u0e22</span></div></div>'
+   +'<div class="tbl"><table><thead>'+head+'</thead><tbody>'+body+'</tbody><tfoot>'+foot+'</tfoot></table></div>'
+   +'<p class="legend2">\u25CF green dot = active in the last 90 seconds (snapshot at the last refresh) \u00B7 \u2713 green cell = part complete \u00B7 blue cell = in progress \u00B7 cells show first-try score</p>';
+}
+
+function confirmBox(msg,okLabel,cb){
+  var o=document.createElement('div');o.className='cfm';o.setAttribute('role','alertdialog');o.setAttribute('aria-modal','true');
+  o.innerHTML='<div><p>'+esc(msg)+'</p><div class="row"><button type="button" class="btn" id="cfNo">Cancel</button><button type="button" class="btn danger" id="cfYes">'+esc(okLabel)+'</button></div></div>';
+  document.body.appendChild(o);
+  var close=function(){document.removeEventListener('keydown',kd,true);o.remove();};
+  var kd=function(e){if(e.key==='Escape'){e.stopPropagation();close();}};
+  document.addEventListener('keydown',kd,true);
+  o.querySelector('#cfNo').addEventListener('click',close);
+  o.querySelector('#cfYes').addEventListener('click',function(){close();cb();});
+  o.querySelector('#cfNo').focus();
+}
+function doClear(id){
+  var m=document.getElementById('tvMsg');m.textContent='';
+  api('clear',{pin:PIN,id:id||''}).then(function(r){
+    if(r&&r.ok){m.style.color='var(--ok)';m.textContent='\u2713 Cleared '+(id?nameOf(id):'all students')+' ('+(r.removed||0)+' records). Students\u2019 own pages reset on their next sync.';pollTracker();}
+    else{m.style.color='var(--bad)';m.textContent='Could not clear ('+((r&&r.error)||'error')+').';}
+  });
+}
+document.getElementById('tvBody').addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.id==='rfBtn'){pollTracker();return;}
+  if(t.id==='clrAll'){confirmBox('Clear ALL students\u2019 scores from the tracker and the Progress sheet? This cannot be undone.','Clear all',function(){doClear('');});return;}
+  var id=t.getAttribute('data-clr');
+  if(id)confirmBox('Clear scores of '+nameOf(id)+'? This cannot be undone.','Clear',function(){doClear(id);});
+});
+document.getElementById('outBtn').addEventListener('click',function(){showLogin();});
+document.getElementById('viewBtn').addEventListener('click',function(){
+  if(!U||U.type!=='teacher')return;
+  if(document.body.classList.contains('st-tracker')){deckPreview=true;clearInterval(tvTimer);document.getElementById('viewBtn').textContent='\u2190 Back to tracker';setView('st-deck');updateChrome();}
+  else showTracker();
+});
+setInterval(function(){heartbeat(true);},CONFIG.HB_MS);
+
+window.__deck={ROSTER:ROSTER,CONFIG:CONFIG,slides:slides,S:S,EX:EX,C:C,QUIZ:QUIZ,go:go,partStart:partStart,get cur(){return cur;}};
+var startN=parseInt((location.hash||'').slice(1),10);
+go(startN>=1&&startN<=slides.length?startN-1:0,1);
+showLogin();
+})();
+</script>
+</body>
+</html>
