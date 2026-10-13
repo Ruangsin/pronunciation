@@ -16,6 +16,7 @@
 | [`SentenceStress_Lesson.html`](https://ruangsin.github.io/pronunciation/SentenceStress_Lesson.html) | Sentence Stress — บทเรียนการเน้นเสียงในประโยค |
 | [`Lesson_ConnectedSpeech.html`](https://ruangsin.github.io/pronunciation/Lesson_ConnectedSpeech.html) | Connected Speech — บทเรียนการออกเสียงเชื่อมคำ |
 | [`SentenceStress_Listening.html`](https://ruangsin.github.io/pronunciation/SentenceStress_Listening.html) | Sentence Stress Listening — แบบฝึกฟังการเน้นเสียงในประโยค |
+| [`Intonation.html`](https://ruangsin.github.io/pronunciation/Intonation.html) | Intonation — บทเรียน/แบบฝึกหัดเรื่องการขึ้นลงของเสียง (intonation) |
 ---
 
 ### 📁 โครงสร้างโปรเจกต์
